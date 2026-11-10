@@ -8,7 +8,8 @@
 <title>HJH Gaming</title>
 <style>
 :root{color-scheme:dark;--bg:#090f20;--panel:#17243e;--line:#354b70;--accent:#8057ee;--text:#f4f6ff;--muted:#bdc9df}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;position:relative;isolation:isolate}
+body::before{content:"HJH";position:fixed;inset:0;display:grid;place-items:center;z-index:-1;pointer-events:none;font-size:clamp(150px,32vw,420px);font-weight:1000;letter-spacing:-.09em;color:transparent;-webkit-text-stroke:3px rgba(143,202,255,.10);text-shadow:0 0 55px rgba(128,87,238,.10);transform:rotate(-18deg);user-select:none}
 header{text-align:center;padding:28px 14px;background:linear-gradient(120deg,#12295a,#632a9c,#087b88)}
 header h1{font-size:clamp(32px,7vw,50px);margin:5px}header p{margin:8px}
 nav{position:sticky;top:0;z-index:5;display:flex;justify-content:center;flex-wrap:wrap;gap:7px;padding:10px;background:#111b30}
@@ -50,13 +51,13 @@ a{color:#8fcaff}canvas{background:#081322;border:1px solid #536789;max-width:100
 </nav>
 <main>
 <section id="home">
-<div class="panel"><h2>Welcome to HJH Gaming</h2><p>Play original games created by Houston Holt, explore the game library, or try embedded games from other creators.</p><input id="search" type="search" placeholder="Search games..." aria-label="Search games"></div>
-<h2>⭐ Featured Games</h2><div class="grid" id="featured"></div>
+<div class="panel"><h2>Welcome to HJH Gaming</h2><p>Every game collection is shown below on this homepage. Choose any Play button to launch it here.</p><input id="search" type="search" placeholder="Search games..." aria-label="Search games"></div>
+<h2>⭐ HJH Original Games</h2><div class="grid" id="featured"></div>
 </section>
-<section id="mine" class="hidden"><h2>👑 Games Created by Houston Holt</h2><p class="muted">These are the original HJH games.</p><div class="grid" id="myGames"></div></section>
-<section id="library" class="hidden"><h2>🕹️ HJH Game Library</h2><div class="grid" id="libraryGames"></div></section>
-<section id="other" class="hidden">
-<h2>🌎 Other Creators — Play Embedded</h2>
+<section id="mine"><h2>👑 More HJH Games Created by Houston Holt</h2><p class="muted">All original HJH games are listed here and can be launched right on this page.</p><div class="grid" id="myGames"></div></section>
+<section id="library"><h2>🕹️ All Games in the HJH Game Library</h2><div class="grid" id="libraryGames"></div></section>
+<section id="other">
+<h2>🌎 Games from Other Creators</h2>
 <p class="muted">Third-party games appear here when their hosts allow embedding. Use the Open Game link if a host blocks the player.</p>
 <div class="grid" id="embedGames"></div>
 <div class="panel" style="margin-top:18px"><h3>Add another game URL</h3><p class="muted">Paste an HTTPS game URL only if its creator or host allows embedding.</p><input id="customURL" type="url" placeholder="https://example.com/game/"><input id="customName" placeholder="Game name"><button id="addEmbed" type="button">Add game</button><p id="customMsg" aria-live="polite"></p></div>
@@ -129,7 +130,7 @@ const songs = [
 
 let activeCleanup = null;
 function stopGame(){if(activeCleanup){activeCleanup();activeCleanup=null;} $("player").classList.add("hidden");$("gameArea").replaceChildren();}
-function showSection(id){stopGame();["home","mine","library","other"].forEach(s=>$(s).classList.toggle("hidden",s!==id));window.scrollTo({top:0,behavior:"smooth"});}
+function showSection(id){const target=$(id);if(target)target.scrollIntoView({behavior:"smooth",block:"start"});}
 document.querySelectorAll("[data-section]").forEach(b=>b.addEventListener("click",()=>showSection(b.dataset.section)));
 $("closeGame").addEventListener("click",stopGame);
 function showGame(name,html){$("player").classList.remove("hidden");$("gameTitle").textContent=name;$("gameArea").innerHTML=html;$("player").scrollIntoView({behavior:"smooth",block:"start"});}
@@ -205,4 +206,4 @@ function game2048(){
  showGame("2048",`<p>Use arrow keys or buttons to combine matching tiles.</p><div class="board" id="b2048"></div><div><button data-dir="up">↑</button><br><button data-dir="left">←</button><button data-dir="down">↓</button><button data-dir="right">→</button></div><button id="restart2048">Restart</button><p id="score2048"></p>`);
  let score=0;
  function draw(){$("b2048").innerHTML=a.map(v=>`<div class="tile">${v||""}</div>`).join("");$("score2048").textContent="Score: "+score;}
- function move(dir){let changed=false;for(let k=0;k<4;k++){const ids=Array.from({length:4},(_,j)=>dir==="left"?k*4+j:dir==="right"?k*4+3-j:dir==="up"?j*4+k:(3-j)*4+k);const vals=ids.map(i=>a[i]).filter(Boolean),out=[];for(let j=0;j<vals.length;j++){if(vals[j]===vals[j+1]){out.push(vals[j]*2);score+=vals[j]*2;j++;}else out.push(vals[j]);}while(out.length<4)out.push(0);ids.forEach((id,j)=>{if(a[id]!==out[j])changed=true;a[id]=out[j];});}if(changed)add();dra
+ function move(dir){let changed=false;for(let k=0;k<4;k++){const ids=Array.from({length:4},(_,j)=>dir==="left"?k*4+j:dir==="right"?k*
