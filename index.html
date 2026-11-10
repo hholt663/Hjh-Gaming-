@@ -1,489 +1,115 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HJH Gaming</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#080d19;color:#fff;font-family:Arial,sans-serif}
-header{text-align:center;padding:28px 15px;background:linear-gradient(130deg,#101d43,#5421a3,#087e91)}
-header h1{font-size:42px;margin:5px}
-header p{line-height:1.5}
-a{color:#9fdcff}
-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;background:#111a2b;padding:12px;position:sticky;top:0;z-index:5}
-button,.btn{border:0;border-radius:8px;background:#6845d9;color:white;padding:11px 15px;font-weight:bold;cursor:pointer}
-button:hover,.btn:hover{background:#876aff}
-main{max-width:1150px;margin:auto;padding:16px}
-section{margin-bottom:25px}
-h2{border-bottom:2px solid #6949db;padding-bottom:10px}
-input,select{background:#111c31;color:white;border:1px solid #53617d;border-radius:8px;padding:12px;width:100%;margin:6px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:15px}
-.card{background:#17213a;border:1px solid #354461;padding:14px;border-radius:13px}
-.art{height:105px;border-radius:9px;display:grid;place-items:center;font-size:43px;background:linear-gradient(130deg,#263c77,#772f9c)}
-.card p{color:#c5cce0;min-height:38px;font-size:14px}
-.card button{width:100%;margin-top:6px}
-.creator{text-align:center;background:#17213a;padding:20px;border-radius:13px}
-.hidden{display:none!important}
-#player{background:#111a30;border:2px solid #6849d9;border-radius:14px;padding:15px;margin:20px 0}
-#gameArea{text-align:center;padding:12px;min-height:230px}
-#gameArea canvas{max-width:100%;touch-action:manipulation}
-#tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;max-width:390px;height:330px;margin:15px auto}
-.tile{background:#eee;border-radius:5px;cursor:pointer}
-.tile.black{background:#111}
-.tile.correct{background:#28a76c}
-.piano{display:flex;justify-content:center;gap:2px;overflow-x:auto;padding:15px 0}
-.key{flex:1;min-width:32px;height:145px;background:white;border:1px solid #222;border-radius:0 0 7px 7px;color:#111;display:flex;align-items:end;justify-content:center;padding-bottom:8px}
-.key.blackkey{background:#171717;color:white;height:95px;min-width:22px;margin:0 -13px;z-index:1;flex:0 0 25px}
-#gameArea button{margin:4px}
-.gamebox{background:#1a2946;padding:15px;border-radius:10px;margin:10px auto;max-width:600px}
-#embedFrame{width:100%;height:480px;border:0;background:white;border-radius:10px}
-.small{font-size:12px;color:#aebbd3}
-footer{text-align:center;padding:25px;color:#aebbd3}
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#080e1d;color:#f5f7ff;font-family:Arial,Helvetica,sans-serif}
+header{padding:25px 14px;text-align:center;background:linear-gradient(120deg,#12295a,#642b9b,#087c89)}
+header h1{font-size:clamp(32px,7vw,48px);margin:4px}header p{margin:7px}
+nav{position:sticky;top:0;z-index:5;display:flex;justify-content:center;flex-wrap:wrap;gap:7px;padding:10px;background:#111b30}
+button{border:0;border-radius:8px;padding:10px 14px;background:#7048dc;color:white;font-weight:bold;cursor:pointer;margin:3px}
+button:hover{filter:brightness(1.2)}button:disabled{opacity:.45;cursor:default}
+main{max-width:1150px;margin:auto;padding:16px}section{margin:0 0 25px}h2{border-bottom:2px solid #7048dc;padding-bottom:9px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:14px}
+.card,.panel{background:#17243e;border:1px solid #354b70;border-radius:12px;padding:14px}
+.card p{color:#c5cfe2;min-height:38px;font-size:14px}.card button{width:100%}
+.art{height:92px;border-radius:9px;display:grid;place-items:center;font-size:42px;background:linear-gradient(135deg,#29447e,#803d9c)}
+input{width:min(100%,480px);padding:12px;border-radius:8px;border:1px solid #536789;background:#0e1930;color:white;margin:6px}
+.hidden{display:none!important}#player{background:#111b30;border:2px solid #7048dc;border-radius:13px;padding:15px;margin:20px 0}
+#gameArea{text-align:center;min-height:230px;padding:12px}.muted{color:#b9c6dd}.board{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;max-width:340px;margin:14px auto}
+.tile{min-height:55px;background:#344b70;border-radius:6px;display:grid;place-items:center;font-weight:bold;font-size:20px}
+.piano{display:flex;justify-content:center;gap:3px;flex-wrap:wrap;margin:14px auto}.piano button{height:105px;width:38px;background:#fff;color:#111;border:1px solid #222;border-radius:0 0 6px 6px}
+.gamegrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:350px;margin:15px auto}.gamegrid button{min-height:48px;padding:5px}
+canvas{background:#081322;border:1px solid #536789;max-width:100%}footer{text-align:center;padding:25px;color:#aebbd3}
 </style>
 </head>
 <body>
-
 <header>
 <h1>🎮 HJH GAMING</h1>
 <p>Welcome to HJH Gaming!</p>
-<p><b>Houston Jordan Holt is the creator of this website.</b></p>
-<p>If you want new games added, talk to him at
-<a href="mailto:houstonholt3@gmail.com">houstonholt3@gmail.com</a>.</p>
+<p><strong>Houston Jordan Holt is the creator of this website.</strong></p>
 <h3>#Houstonisthebest</h3>
 </header>
-
 <nav>
 <button onclick="showSection('home')">Home</button>
 <button onclick="showSection('mine')">Games by Houston Holt</button>
 <button onclick="showSection('library')">Game Library</button>
 <button onclick="showSection('external')">Other Creators</button>
 </nav>
-
 <main>
-
 <section id="home">
-<div class="creator">
-<h2>Welcome to HJH Gaming</h2>
-<p>Explore your favorite games, discover new challenges, and enjoy the HJH Gaming experience.</p>
-<input id="search" placeholder="🔎 Search the game library..." oninput="filterGames()">
-</div>
-<h2>⭐ Featured Games</h2>
-<div class="grid" id="featured"></div>
+<div class="panel"><h2>Welcome to HJH Gaming</h2><p>Play original HJH games and explore the game library.</p><input id="search" placeholder="Search games..." oninput="filterGames()"></div>
+<h2>⭐ Featured Games</h2><div class="grid" id="featured"></div>
 </section>
-
-<section id="mine" class="hidden">
-<h2>👑 Games Created by Houston Holt</h2>
-<p>Original HJH games.</p>
-<div class="grid" id="myGames"></div>
-</section>
-
-<section id="library" class="hidden">
-<h2>🕹️ HJH Game Library</h2>
-<p>All your existing library games are included below.</p>
-<div class="grid" id="libraryGames"></div>
-</section>
-
+<section id="mine" class="hidden"><h2>👑 Games Created by Houston Holt</h2><div class="grid" id="myGames"></div></section>
+<section id="library" class="hidden"><h2>🕹️ Game Library</h2><div class="grid" id="libraryGames"></div></section>
 <section id="external" class="hidden">
-<h2>🌎 Games by Other Creators</h2>
-<p>Play games from other creators when their websites allow embedding.</p>
-<input id="externalURL" placeholder="Paste an official HTTPS game embed URL">
-<button onclick="loadExternal()">Open Game</button>
-<p id="externalMessage" class="small"></p>
-<div id="externalBox"></div>
+<h2>🌎 Other Creators' Games</h2><p class="muted">Some game websites block embedded play. If one does not load, use the open-in-new-tab link.</p>
+<input id="externalURL" type="url" placeholder="Paste an HTTPS game URL"><button onclick="loadExternal()">Load Game</button><div id="externalMessage"></div><div id="externalBox"></div>
 </section>
-
-<section id="player" class="hidden">
-<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-<h2 id="gameTitle">Game</h2>
-<button onclick="closeGame()">✖ Close Game</button>
-</div>
-<div id="gameArea"></div>
-</section>
-
+<section id="player" class="hidden"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h2 id="gameTitle">Game</h2><button onclick="closeGame()">✖ Close Game</button></div><div id="gameArea"></div></section>
 </main>
-
-<footer>
-<p>HJH Gaming © 2026</p>
-<p>Created by Houston Jordan Holt</p>
-<p>houstonholt3@gmail.com</p>
-<p>#Houstonisthebest</p>
-</footer>
-
+<footer>HJH Gaming © 2026 · Created by Houston Jordan Holt · #Houstonisthebest</footer>
 <script>
-const originalGames=[
-{name:"Five Nights",icon:"🌙",desc:"A nighttime survival and mystery game.",id:"five"},
-{name:"HJH Piano Rush",icon:"🎹",desc:"Play piano challenges using your favorite song selections.",id:"piano"}
+"use strict";
+const originals=[
+{name:"Fine Nights",icon:"🌙",desc:"An original HJH night-survival challenge.",id:"fine"},
+{name:"HJH Piano Rush",icon:"🎹",desc:"Play notes and build your piano skills.",id:"piano"}
 ];
-
 const library=[
-["Orbit Brake","🚀","Control your movement and avoid obstacles."],
-["Parcel Panic","📦","Sort and deliver packages before time runs out."],
-["Lantern Lines","🏮","Connect lanterns and solve puzzles."],
-["Cloud Courier","☁️","Navigate a sky full of obstacles."],
-["Pocket Reactor","⚛️","Keep the reactor balanced."],
-["Signal Garden","🌱","Connect matching signals."],
-["Color Relay","🎨","Remember and repeat color sequences."],
+["Orbit Brake","🚀","Steer through space and avoid obstacles."],
+["Parcel Panic","📦","Sort packages before time runs out."],
+["Lantern Lines","🏮","Connect the lanterns in a matching puzzle."],
+["Cloud Courier","☁️","Guide your courier through the clouds."],
+["Pocket Reactor","⚛️","Keep the reactor stable with quick decisions."],
+["Signal Garden","🌱","Remember and repeat the signal pattern."],
+["Color Relay","🎨","Repeat the growing color sequence."],
 ["2048","🔢","Combine matching numbers to reach 2048."],
-["Hextris","⬡","Match colors around a rotating hexagon."],
-["Astray","🌌","Find your way through a maze."],
-["Sliding Puzzle","🧩","Arrange the numbers in order."],
-["Snake","🐍","Collect food and grow longer."],
-["Whack-a-Mole","🔨","Tap the appearing targets."],
-["Neon Pong","🏓","Keep the ball in play."],
-["Sky Hopper","🐦","Jump through a series of platforms."],
-["Lights Out","💡","Turn off every light."],
-["Sudoku","9️⃣","Complete the number puzzle."],
-["Nonogram","🖼️","Solve the picture grid."]
-].map((g,i)=>({name:g[0],icon:g[1],desc:g[2],id:"lib"+i}));
-
-function card(g){
-return `<div class="card" data-name="${g.name.toLowerCase()}">
-<div class="art">${g.icon}</div>
-<h3>${g.name}</h3>
-<p>${g.desc}</p>
-<button onclick="startGame('${g.id}')">▶ Play Game</button>
-</div>`;
-}
-
-function render(){
-document.getElementById("myGames").innerHTML=originalGames.map(card).join("");
-document.getElementById("libraryGames").innerHTML=library.map(card).join("");
-document.getElementById("featured").innerHTML=[...originalGames,...library.slice(0,4)].map(card).join("");
-}
+["Hextris","⬡","Match falling colors in a quick reflex challenge."],
+["Astray","🌌","Find the exit in a maze."],
+["Sliding Puzzle","🧩","Slide the tiles into number order."],
+["Snake","🐍","Eat food, grow, and avoid the walls."],
+["Whack-a-Mole","🔨","Tap the target as it appears."],
+["Neon Pong","🏓","Bounce the ball past the opponent."],
+["Sky Hopper","🐦","Jump from platform to platform."],
+["Lights Out","💡","Turn off every light on the board."],
+["Sudoku","9️⃣","Fill the grid with numbers 1 through 9."],
+["Nonogram","🖼️","Reveal the hidden pixel picture."]
+].map((x,i)=>({name:x[0],icon:x[1],desc:x[2],id:"lib"+i}));
+let timer=null,raf=null,cleanup=null;
+function card(g){return `<article class="card" data-name="${g.name.toLowerCase()}"><div class="art">${g.icon}</div><h3>${g.name}</h3><p>${g.desc}</p><button onclick="startGame('${g.id}')">▶ Play Game</button></article>`}
+function render(){myGames.innerHTML=originals.map(card).join("");libraryGames.innerHTML=library.map(card).join("");featured.innerHTML=originals.concat(library.slice(0,4)).map(card).join("")}
 render();
-
-function showSection(id){
-["home","mine","library","external"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id));
-closeGame();
-window.scrollTo(0,0);
+function showSection(id){["home","mine","library","external"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id));closeGame();window.scrollTo(0,0)}
+function filterGames(){let q=search.value.toLowerCase();document.querySelectorAll(".card").forEach(c=>c.style.display=c.dataset.name.includes(q)?"":"none")}
+function display(name,markup){document.getElementById("player").classList.remove("hidden");gameTitle.textContent=name;gameArea.innerHTML=markup;player.scrollIntoView({behavior:"smooth",block:"start"})}
+function closeGame(){if(timer)clearInterval(timer);if(raf)cancelAnimationFrame(raf);if(cleanup)cleanup();timer=null;raf=null;cleanup=null;player.classList.add("hidden");gameArea.innerHTML=""}
+function startGame(id){closeGame();if(id==="fine")return fineNights();if(id==="piano")return pianoRush();let g=library.find(x=>x.id===id);if(!g)return;let n=Number(id.slice(3));switch(n){case 6:return sequenceGame(g.name);case 7:return game2048();case 9:return mazeGame();case 10:return slidingGame();case 11:return snakeGame();case 12:return moleGame();case 13:return pongGame();case 15:return lightsGame();case 16:return sudokuGame();case 17:return nonogramGame();default:return quickChallenge(g.name,g.desc)}}
+function fineNights(){
+display("Fine Nights",`<div class="panel"><h3 id="fnHeading">Night 1</h3><p>Make it to 6 AM. Manage your power and investigate the building.</p><h3>Power: <span id="fnPower">100</span>%</h3><h3>Time: <span id="fnTime">12 AM</span></h3><button onclick="fnAction(4,'You checked the cameras. Something moved in the hallway.')">Check Cameras</button><button onclick="fnAction(3,'You checked the door. The hallway is quiet.')">Check Door</button><button onclick="fnAction(2,'You searched the desk and found a clue.')">Find a Clue</button><p id="fnStatus">The night has begun. Good luck!</p><button onclick="fineNights()">Restart</button></div>`);
+let power=100,t=0,ended=false;window.fnAction=(cost,msg)=>{if(ended)return;power=Math.max(0,power-cost);fnPower.textContent=power;fnStatus.textContent=msg;if(!power)finish(false)};
+function finish(win){if(ended)return;ended=true;clearInterval(timer);fnHeading.textContent=win?"Night Completed!":"Power Depleted";fnStatus.textContent=win?"🏆 You survived until morning!":"The power ran out. Try again!"}
+timer=setInterval(()=>{if(ended)return;t++;power=Math.max(0,power-1);fnPower.textContent=power;fnTime.textContent=["12 AM","1 AM","2 AM","3 AM","4 AM","5 AM","6 AM"][Math.min(6,Math.floor(t/10))];if(t>=60)finish(true);else if(power<=0)finish(false)},1000)
 }
-
-function filterGames(){
-let q=document.getElementById("search").value.toLowerCase();
-document.querySelectorAll(".card").forEach(c=>c.style.display=c.dataset.name.includes(q)?"":"none");
+function pianoRush(){
+display("HJH Piano Rush",`<div class="panel"><p>Tap the piano keys to play notes. Try to follow the note sequence shown.</p><h3>Score: <span id="pScore">0</span></h3><h3>Target note: <span id="pTarget">C</span></h3><button onclick="newPianoRound()">New Challenge</button><div class="piano" id="pKeys"></div><p id="pMessage" class="muted">Tap the target note to score points.</p></div>`);
+let notes=["C","D","E","F","G","A","B"],freq=[261.63,293.66,329.63,349.23,392,440,493.88],target=0,score=0;
+pKeys.innerHTML=notes.map((n,i)=>`<button onclick="pianoTap(${i})">${n}</button>`).join("");
+window.newPianoRound=()=>{target=Math.floor(Math.random()*7);pTarget.textContent=notes[target];pMessage.textContent="Find the note!";};
+window.pianoTap=i=>{try{let ctx=window.pctx||(window.pctx=new(window.AudioContext||window.webkitAudioContext)());let o=ctx.createOscillator(),gain=ctx.createGain();o.frequency.value=freq[i];gain.gain.value=.12;o.connect(gain);gain.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.35)}catch(e){}if(i===target){score++;pScore.textContent=score;pMessage.textContent="Correct! Nice playing.";newPianoRound()}else pMessage.textContent="Try again — listen to the note.";};
+newPianoRound();
 }
-
-function display(name,html){
-document.getElementById("player").classList.remove("hidden");
-document.getElementById("gameTitle").textContent=name;
-document.getElementById("gameArea").innerHTML=html;
-document.getElementById("player").scrollIntoView({behavior:"smooth"});
-}
-function closeGame(){
-document.getElementById("player").classList.add("hidden");
-document.getElementById("gameArea").innerHTML="";
-if(window.gameTimer)clearInterval(window.gameTimer);
-if(window.gameAnimation)cancelAnimationFrame(window.gameAnimation);
-window.gameTimer=null;
-window.gameAnimation=null;
-}
-
-/* FIVE NIGHTS */
-function fiveNights(){
-display("Five Nights",`
-<div class="gamebox">
-<h3 id="fiveTitle">Night 1</h3>
-<p id="fiveText">You are spending the night in a mysterious building. Watch the cameras, manage your power, and solve the clues.</p>
-<h3>Power: <span id="power">100</span>%</h3>
-<h3>Time: <span id="nightTime">12 AM</span></h3>
-<button onclick="fiveCamera()">Check Cameras</button>
-<button onclick="fiveDoor()">Check Door</button>
-<button onclick="fiveClue()">Find a Clue</button>
-<p id="fiveStatus">The night has begun.</p>
-</div>
-`);
-let power=100,time=0,clues=0;
-window.gameTimer=setInterval(()=>{
-power=Math.max(0,power-1);
-time++;
-document.getElementById("power").textContent=power;
-document.getElementById("nightTime").textContent=["12 AM","1 AM","2 AM","3 AM","4 AM","5 AM","6 AM"][Math.min(6,Math.floor(time/10))];
-if(power===0){
-clearInterval(window.gameTimer);
-document.getElementById("fiveStatus").textContent="Power depleted! Try again.";
-}
-if(time>=60){
-clearInterval(window.gameTimer);
-document.getElementById("fiveTitle").textContent="Night Completed!";
-document.getElementById("fiveStatus").textContent="🏆 You made it through the night!";
-}
-},1000);
-window.fiveCamera=()=>{power=Math.max(0,power-3);document.getElementById("power").textContent=power;document.getElementById("fiveStatus").textContent="The cameras show unusual movement. Keep watching.";};
-window.fiveDoor=()=>{power=Math.max(0,power-2);document.getElementById("power").textContent=power;document.getElementById("fiveStatus").textContent="The hallway is quiet for now.";};
-window.fiveClue=()=>{
-clues++;
-document.getElementById("fiveStatus").textContent=clues%3===0?"You discovered a clue about the building!":"You found a small clue. Keep investigating.";
-};
-}
-
-/* HJH PIANO RUSH */
-const songs=[
-["HUMBLE.","Kendrick Lamar","HARD"],
-["Not Like Us","Kendrick Lamar","HARD"],
-["luther","SZA","VERY EASY"],
-["Like That","Future, Metro Boomin & Kendrick Lamar","HARD"],
-["Squabble Up","Kendrick Lamar","HARD"],
-["Love Yourself","Justin Bieber","EASY"],
-["Sorry","Justin Bieber","EASY"],
-["One Dance","Drake","EXTREME"],
-["Work","Rihanna","VERY EASY"],
-["Stressed Out","Twenty One Pilots","VERY EASY"],
-["Closer","The Chainsmokers","VERY EASY"],
-["Cheap Thrills","Sia","VERY EASY"],
-["Cake by the Ocean","DNCE","VERY EASY"],
-["Can't Stop the Feeling!","Justin Timberlake","VERY EASY"],
-["Don't Let Me Down","The Chainsmokers","VERY EASY"],
-["Panda","Desiigner","EXTREME"],
-["Heathens","Twenty One Pilots","VERY EASY"],
-["Into You","Ariana Grande","VERY EASY"],
-["I Took a Pill in Ibiza","Mike Posner","VERY EASY"],
-["Let Me Love You","DJ Snake & Justin Bieber","EASY"]
-];
-
-let audioContext=null;
-function tone(freq,duration=.22){
-try{
-audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();
-if(audioContext.state==="suspended")audioContext.resume();
-let osc=audioContext.createOscillator(),gain=audioContext.createGain();
-osc.type="sine";osc.frequency.value=freq;
-gain.gain.setValueAtTime(.16,audioContext.currentTime);
-gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);
-osc.connect(gain);gain.connect(audioContext.destination);
-osc.start();osc.stop(audioContext.currentTime+duration);
-}catch(e){}
-}
-
-function pianoGame(){
-let options=songs.map((s,i)=>`<option value="${i}">${s[0]} — ${s[1]} (${s[2]})</option>`).join("");
-display("HJH Piano Rush",`
-<div class="gamebox">
-<h3>🎹 HJH MUSIC LIBRARY</h3>
-<p>20 song selections. Piano-only practice. No vocals or extra instruments.</p>
-<select id="songChoice">${options}</select>
-<label>Difficulty</label>
-<select id="difficulty">
-<option>Automatic</option>
-<option>EASY</option>
-<option>VERY EASY</option>
-<option>HARD</option>
-<option>EXTREME</option>
-</select>
-<label>Volume</label>
-<input type="range" min="0" max="100" value="70" id="volume">
-<button onclick="pianoPlay()">PLAY</button>
-<div id="pianoStatus">Choose a song, then press PLAY.</div>
-<div id="pianoKeys" class="piano"></div>
-<div id="pianoChallenge"></div>
-</div>
-`);
-makeKeys();
-}
-
-function makeKeys(){
-let keys=document.getElementById("pianoKeys");
-if(!keys)return;
-let notes=[261.63,293.66,329.63,349.23,392,440,493.88,523.25,587.33,659.25,698.46,783.99,880,987.77];
-keys.innerHTML=notes.map((n,i)=>`<button class="key" onclick="playKey(${n})">${["C","D","E","F","G","A","B"][i%7]}</button>`).join("");
-}
-function playKey(freq){
-let vol=document.getElementById("volume");
-let previous=window.pianoVolume;
-window.pianoVolume=vol?Number(vol.value)/70:1;
-tone(freq,.4);
-}
-function pianoPlay(){
-let song=songs[Number(document.getElementById("songChoice").value)];
-let diff=document.getElementById("difficulty").value;
-if(diff==="Automatic")diff=song[2];
-document.getElementById("pianoStatus").innerHTML="<b>"+song[0]+"</b> — "+diff+" practice selected. Press START to begin.";
-document.getElementById("pianoChallenge").innerHTML=`
-<p>Practice mode: original piano exercises inspired by your selected difficulty. These are not exact commercial song melodies.</p>
-<button onclick="pianoStart('${diff}')">START</button>
-`;
-}
-function pianoStart(diff){
-let count=0,active=true;
-let notes=[261.63,293.66,329.63,349.23,392,440,493.88,523.25];
-let speed=diff==="EXTREME"?450:diff==="HARD"?650:diff==="EASY"?1100:900;
-document.getElementById("pianoChallenge").innerHTML=`
-<h3>Score: <span id="pianoScore">0</span></h3>
-<p id="pianoPrompt">Listen for the next note, then press the matching key.</p>
-<div id="pianoTarget" style="font-size:40px">🎹</div>
-<button onclick="pianoHit()">PLAY NOTE</button>
-<button onclick="pianoEnd()">END SONG</button>
-`;
-let next=0;
-window.pianoHit=()=>{
-if(!active)return;
-count++;
-document.getElementById("pianoScore").textContent=count;
-tone(notes[Math.floor(Math.random()*notes.length)],.35);
-};
-window.pianoEnd=()=>{
-active=false;
-document.getElementById("pianoPrompt").textContent="Practice finished! Final score: "+count;
-};
-}
-
-/* GENERAL MINI-GAME ENGINE */
-function startGame(id){
-closeGame();
-if(id==="five")return fiveNights();
-if(id==="piano")return pianoGame();
-let g=library.find(x=>x.id===id);
-if(!g)return;
-if(id==="lib7")return game2048();
-if(id==="lib11")return snakeGame();
-if(id==="lib15")return lightsGame();
-if(id==="lib10")return slidingGame();
-if(id==="lib12")return moleGame();
-if(id==="lib13")return pongGame();
-if(id==="lib9")return mazeGame();
-if(id==="lib6")return colorGame();
-if(id==="lib5")return signalGame();
-if(id==="lib16")return sudokuGame();
-if(id==="lib17")return nonogramGame();
-if(id==="lib1")return parcelGame();
-if(id==="lib3"||id==="lib14")return hopperGame(g.name);
-if(id==="lib0"||id==="lib2"||id==="lib4"||id==="lib8")return reflexGame(g.name);
-return reflexGame(g.name);
-}
-
-function reflexGame(name){
-let score=0;
-display(name,`
-<div class="gamebox">
-<h3 id="refScore">Score: 0</h3>
-<p id="refText">Complete the challenge by tapping the target.</p>
-<button onclick="refTap()">TAP TARGET</button>
-<button onclick="refReset()">Restart</button>
-</div>`);
-window.refTap=()=>{
-score++;
-document.getElementById("refScore").textContent="Score: "+score;
-document.getElementById("refText").textContent="Great job! Keep going!";
-};
-window.refReset=()=>{score=0;document.getElementById("refScore").textContent="Score: 0";};
-}
-
-function parcelGame(){
-let score=0;
-display("Parcel Panic",`
-<div class="gamebox"><h3>Sort the Packages</h3><p>Choose the correct package destination.</p><h3 id="parcelScore">Score: 0</h3><div id="parcelQuestion"></div></div>`);
-let choices=["North","South","East","West"];
-function next(){
-let correct=choices[Math.floor(Math.random()*4)];
-document.getElementById("parcelQuestion").innerHTML=`<h3>Package destination: ${correct}</h3>`+choices.map(x=>`<button onclick="parcelAnswer('${x}','${correct}')">${x}</button>`).join("");
-}
-window.parcelAnswer=(a,c)=>{
-if(a===c)score++;
-document.getElementById("parcelScore").textContent="Score: "+score;
-next();
-};
-next();
-}
-
-function hopperGame(name){
-let score=0;
-display(name,`
-<div class="gamebox"><h3>Jump Challenge</h3><p>Tap to jump over obstacles.</p><h3 id="hopScore">Score: 0</h3><button onclick="hop()">JUMP</button></div>`);
-window.hop=()=>{score++;document.getElementById("hopScore").textContent="Score: "+score;};
-}
-
-function game2048(){
-let board=Array(16).fill(0);board[0]=2;board[5]=2;
-display("2048",`<h3>Combine equal numbers to reach 2048.</h3><div id="board2048" class="gamebox" style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px"></div><p>Use the arrow buttons.</p><div>${["↑","↓","←","→"].map(x=>`<button onclick="move2048('${x}')">${x}</button>`).join("")}</div>`);
-function render(){
-document.getElementById("board2048").innerHTML=board.map(x=>`<div style="background:#364b6a;padding:16px;border-radius:7px;font-size:20px">${x||""}</div>`).join("");
-}
-window.move2048=(dir)=>{
-let lines=[];
-if(dir==="←"||dir==="→"){
-for(let r=0;r<4;r++)lines.push(board.slice(r*4,r*4+4));
-}else{
-for(let c=0;c<4;c++)lines.push([board[c],board[c+4],board[c+8],board[c+12]]);
-}
-lines=lines.map(line=>{
-if(dir==="→"||dir==="↓")line.reverse();
-line=line.filter(Boolean);
-for(let i=0;i<line.length-1;i++)if(line[i]===line[i+1]){line[i]*=2;line.splice(i+1,1);}
-while(line.length<4)line.push(0);
-if(dir==="→"||dir==="↓")line.reverse();
-return line;
-});
-board=Array(16).fill(0);
-lines.forEach((line,i)=>line.forEach((v,j)=>{
-if(dir==="←"||dir==="→")board[i*4+j]=v;
-else board[j*4+i]=v;
-}));
-let empty=board.map((v,i)=>v===0?i:-1).filter(i=>i>=0);
-if(empty.length)board[empty[Math.floor(Math.random()*empty.length)]]=2;
-render();
-};
-render();
-}
-
-function snakeGame(){
-display("Snake",`<canvas id="snakeCanvas" width="320" height="320" style="background:#16283b"></canvas><p>Use arrow buttons to move.</p><div>${["↑","↓","←","→"].map(x=>`<button onclick="snakeMove('${x}')">${x}</button>`).join("")}</div><h3 id="snakeScore">Score: 0</h3>`);
-let c=document.getElementById("snakeCanvas"),ctx=c.getContext("2d");
-let snake=[{x:8,y:8}],food={x:4,y:4},dir={x:1,y:0},score=0;
-window.snakeMove=d=>{dir=d==="↑"?{x:0,y:-1}:d==="↓"?{x:0,y:1}:d==="←"?{x:-1,y:0}:{x:1,y:0};};
-window.gameTimer=setInterval(()=>{
-let head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
-if(head.x<0||head.x>15||head.y<0||head.y>15||snake.some(s=>s.x===head.x&&s.y===head.y)){
-clearInterval(window.gameTimer);return;
-}
-snake.unshift(head);
-if(head.x===food.x&&head.y===food.y){score++;food={x:Math.floor(Math.random()*16),y:Math.floor(Math.random()*16)};}
-else snake.pop();
-ctx.clearRect(0,0,320,320);
-ctx.fillStyle="#39d98a";snake.forEach(s=>ctx.fillRect(s.x*20,s.y*20,18,18));
-ctx.fillStyle="#ffcc44";ctx.fillRect(food.x*20,food.y*20,18,18);
-document.getElementById("snakeScore").textContent="Score: "+score;
-},170);
-}
-
-function lightsGame(){
-let cells=Array(25).fill(0).map(()=>Math.random()>.5?1:0);
-display("Lights Out",`<p>Turn off all the lights.</p><div id="lightBoard" class="gamebox" style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px"></div><h3 id="lightStatus"></h3>`);
-function render(){
-document.getElementById("lightBoard").innerHTML=cells.map((v,i)=>`<button style="height:48px;background:${v?"#e7d34a":"#263751"}" onclick="lightTap(${i})"></button>`).join("");
-if(cells.every(v=>v===0))document.getElementById("lightStatus").textContent="🏆 Puzzle solved!";
-}
-window.lightTap=i=>{
-[ i, i-5,i+5,i-1,i+1].forEach(j=>{
-if(j>=0&&j<25&&!(Math.abs(j-i)===1&&Math.floor(j/5)!==Math.floor(i/5)))cells[j]^=1;
-});
-render();
-};
-render();
-}
-
-function slidingGame(){
-let nums=[1,2,3,4,5,6,7,8,0];
-for(let i=0;i<40;i++){
-let a=Math.floor(Math.random()*9),b=Math.floor(Math.random()*9);
-[nums[a],nums[b]]=[nums[b],nums[a]];
-}
-display("Sliding Puzzle",`<p>Arrange numbers in order. Tap a tile beside the empty space.</p><div id="slideBoard" class="gamebox" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px"></div><p id="slideStatus"></p>`);
-window.slideTap=i=>{
-let z=nums.indexOf(0);
-if([z-3,z+3,z-1,z+1].includes(i)&&!(Math.abs(i-z)===1&&Math.floor(i/3)!==Math.floor(z/3))){
-[nums[i],nums[z]]=[nums[z],nums[i]];
-}
-render();
-};
-function render(){
-document.getElementById("slideBoard").innerHTML=nums.map((n,i)=>`<button style="height:65px;background:${n?"#4c65a1":"#111a30"}" onclick="slideTap(${i})">${n||""}</button>`).join("");
-document.getElementById("slideStatus").textContent=nums.every((v,i)=>v===((i+1)%9))?"Solved!":"";
-}
-render();
-}
-
-function moleGame(){
-let score=0;
-display("Whack-a-Mole",`<p>Tap the mole as it appears.</p><h3 id="moleScore">Score: 0</h3><button id="moleButton" style="font-size:40px" onclick="moleHit()">🐹</button>`);
-window.moleHit=()=>{score++;document.g
+function sequenceGame(name){display(name,`<div class="panel"><p>Watch the sequence, then repeat it by pressing the colored buttons.</p><h3>Level <span id="seqLevel">1</span></h3><div class="gamegrid" id="seqGrid"></div><p id="seqMsg">Press Start.</p><button onclick="seqStart()">Start</button></div>`);let colors=["#e34c67","#269dd0","#35ad76","#e3ae38"],seq=[],pos=0,level=1,locked=true;seqGrid.innerHTML=colors.map((c,i)=>`<button style="background:${c}" onclick="seqPress(${i})">${i+1}</button>`).join("");window.seqStart=()=>{seq=[Math.floor(Math.random()*4)];pos=0;level=1;seqLevel.textContent=level;showSeq()};function showSeq(){locked=true;seqMsg.textContent="Watch the sequence...";let i=0;let id=setInterval(()=>{seqMsg.textContent="Remember: "+seq.slice(0,i+1).map(x=>x+1).join(" ");i++;if(i>=seq.length){clearInterval(id);locked=false;pos=0;seqMsg.textContent="Your turn!"}},650)}window.seqPress=i=>{if(locked||!seq.length)return;if(seq[pos]!==i){seqMsg.textContent="Not quite. Press Start to try again.";locked=true;return}pos++;if(pos===seq.length){level++;seqLevel.textContent=level;seq.push(Math.floor(Math.random()*4));showSeq()}}}
+function game2048(){let a=Array(16).fill(0);function add(){let e=a.map((v,i)=>v? -1:i).filter(x=>x>=0);if(e.length)a[e[Math.floor(Math.random()*e.length)]]=Math.random()<.9?2:4}add();add();display("2048",`<p>Use the arrow keys or buttons to combine matching tiles.</p><div class="board" id="b2048"></div><div><button onclick="move2048('up')">↑</button><br><button onclick="move2048('left')">←</button><button onclick="move2048('down')">↓</button><button onclick="move2048('right')">→</button></div><button onclick="startGame('lib7')">Restart</button>`);function draw(){b2048.innerHTML=a.map(v=>`<div class="tile">${v||""}</div>`).join("")}function move(dir){let changed=false;for(let k=0;k<4;k++){let ids=Array.from({length:4},(_,j)=>dir==="left"?k*4+j:dir==="right"?k*4+3-j:dir==="up"?j*4+k:(3-j)*4+k),vals=ids.map(i=>a[i]).filter(Boolean),out=[];for(let j=0;j<vals.length;j++){if(vals[j]===vals[j+1]){out.push(vals[j]*2);j++}else out.push(vals[j])}while(out.length<4)out.push(0);ids.forEach((id,j)=>{if(a[id]!==out[j])changed=true;a[id]=out[j]})}if(changed)add();draw()}window.move2048=move;window.onkeydown=e=>{let m={ArrowUp:"up",ArrowDown:"down",ArrowLeft:"left",ArrowRight:"right"};if(m[e.key]){e.preventDefault();move(m[e.key])}};cleanup=()=>{window.onkeydown=null};draw()}
+function mazeGame(){let p=0;display("Astray — Maze",`<p>Reach the green exit. Use the arrow buttons.</p><div id="mazeBoard" class="gamegrid" style="grid-template-columns:repeat(5,1fr)"></div><div><button onclick="mazeMove(-5)">↑</button><br><button onclick="mazeMove(-1)">←</button><button onclick="mazeMove(5)">↓</button><button onclick="mazeMove(1)">→</button></div><p id="mazeMsg"></p>`);let walls=[1,3,6,8,11,13,16,18];function draw(){mazeBoard.innerHTML=Array.from({length:25},(_,i)=>`<div class="tile" style="background:${i===p?"#e1a52b":i===24?"#219c69":walls.includes(i)?"#080e1d":"#344b70"}">${i===p?"🙂":i===24?"🏁":walls.includes(i)?"":"·"}</div>`).join("")}window.mazeMove=d=>{let n=p+d;if(n<0||n>24||(d===1&&p%5===4)||(d===-1&&p%5===0)||walls.includes(n))return;p=n;draw();if(p===24)mazeMsg.textContent="You escaped the maze!";};draw()}
+function slidingGame(){let a=[1,2,3,4,5,6,7,8,0];for(let i=0;i<30;i++){let z=a.indexOf(0),opts=[z-3,z+3,z%3?z-1:-1,z%3!==2?z+1:-1].filter(n=>n>=0&&n<9);let n=opts[Math.floor(Math.random()*opts.length)];[a[z],a[n]]=[a[n],a[z]]}display("Sliding Puzzle",`<p>Tap a tile beside the empty space to move it into place.</p><div id="slideBoard" class="board" style="grid-template-columns:repeat(3,1fr)"></div><p id="slideMsg"></p><button onclick="startGame('lib10')">Shuffle Again</button>`);function draw(){slideBoard.innerHTML=a.map((v,i)=>`<button class="tile" onclick="slide(${i})" style="background:${v?'#344b70':'#101a30'}">${v||""}</button>`).join("")}window.slide=i=>{let z=a.indexOf(0);if([z-3,z+3,z-1,z+1].includes(i)&&!(Math.abs(i-z)===1&&Math.floor(i/3)!==Math.floor(z/3))){[a[i],a[z]]=[a[z],a[i]];draw();if(a.join(",")==="1,2,3,4,5,6,7,8,0")slideMsg.textContent="Puzzle solved!"}};draw()}
+function snakeGame(){display("Snake",`<p>Use arrow keys or buttons. Eat the red food.</p><canvas id="snakeCanvas" width="300" height="300"></canvas><div><button onclick="snakeDir(0,-1)">↑</button><br><button onclick="snakeDir(-1,0)">←</button><button onclick="snakeDir(0,1)">↓</button><button onclick="snakeDir(1,0)">→</button></div><p id="snakeScore">Score: 0</p><button onclick="startGame('lib11')">Restart</button>`);let c=snakeCanvas.getContext("2d"),s=[{x:5,y:5}],d={x:1,y:0},food={x:10,y:8},score=0,dead=false;window.snakeDir=(x,y)=>{if(x!==-d.x||y!==-d.y)d={x,y}};function tick(){if(dead)return;let h={x:s[0].x+d.x,y:s[0].y+d.y};if(h.x<0||h.y<0||h.x>=15||h.y>=15||s.some(v=>v.x===h.x&&v.y===h.y)){dead=true;snakeScore.textContent="Game over — score: "+score;return}s.unshift(h);if(h.x===food.x&&h.y===food.y){score++;food={x:Math.floor(Math.random()*15),y:Math.floor(Math.random()*15)};snakeScore.textContent="Score: "+score}else s.pop();c.clearRect(0,0,300,300);c.fillStyle="#e64c65";c.fillRect(food.x*20,food.y*20,18,18);c.fillStyle="#55d68b";s.forEach(v=>c.fillRect(v.x*20,v.y*20,18,18))}timer=setInterval(tick,140);window.onkeydown=e=>{let m={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]};if(m[e.key]){e.preventDefault();snakeDir(...m[e.key])}};cleanup=()=>window.onkeydown=null}
+function moleGame(){display("Whack-a-Mole",`<p>Tap the mole as many times as you can in 20 seconds.</p><h3>Score: <span id="mScore">0</span> · Time: <span id="mTime">20</span></h3><div class="gamegrid" id="mGrid"></div><button onclick="startGame('lib12')">Restart</button>`);let score=0,left=20,pos=0;function draw(){mGrid.innerHTML=Array.from({length:9},(_,i)=>`<button onclick="mHit(${i})" style="font-size:25px;background:${i===pos?"#7650df":"#263958"}">${i===pos?"🐹":"·"}</button>`).join("")}window.mHit=i=>{if(left>0&&i===pos){score++;mScore.textContent=score;pos=Math.floor(Math.random()*9);draw()}};draw();timer=setInterval(()=>{left--;mTime.textContent=left;if(left<=0){clearInterval(timer);mGrid.innerHTML="<h3>Time's up!</h3>"}},1000)}
+function pongGame(){display("Neon Pong",`<p>Move your mouse or finger over the game to control the left paddle.</p><canvas id="pong" width="320" height="220"></canvas><p id="pongScore">First to 5 wins.</p><button onclick="startGame('lib13')">Restart</button>`);let c=pong.getContext("2d"),y=85,by=100,bx=160,dx=3,dy=2,score=0,done=false;function control(e){let r=pong.getBoundingClientRect();y=Math.max(0,Math.min(170,(e.clientY-r.top)*220/r.height-25))}pong.addEventListener("pointermove",control);cleanup=()=>pong.removeEventListener("pointermove",control);function frame(){if(done)return;bx+=dx;by+=dy;if(by<5||by>215)dy=-dy;if(bx>300){if(Math.abs(by-(y+25))<38){dx=-Math.abs(dx);score++;pongScore.textContent="Score: "+score}else{bx=160;by=100;dx=-3}}if(bx<18&&bx>10&&Math.abs(by-(y+25))>38)dx=Math.abs(dx);if(score>=5){done=true;pongScore.textContent="You win! Score: "+score}c.clearRect(0,0,320,220);c.fillStyle="#58d6ff";c.fillRect(8,y,8,50);c.fillRect(304,by-25,8,50);c.beginPath();c.arc(bx,by,7,0,Math.PI*2);c.fill();raf=requestAnimationFrame(frame)}frame()}
+function lightsGame(){let a=Array.from({length:25},()=>Math.random()>.5);display("Lights Out",`<p>Tap a light to switch it and its neighbors. Turn them all off!</p><div class="gamegrid" id="lights"></div><p id="lightMsg"></p><button onclick="startGame('lib15')">New Board</button>`);function draw(){lights.innerHTML=a.map((v,i)=>`<button style="background:${v?"#e6c64b":"#273650"}" onclick="lightTap(${i})">${v?"💡":" "}</button>`).join("")}window.lightTap=i=>{[i,i-5,i+5,i%5?i-1:-1,i%5<4?i+1:-1].forEach(n=>{if(n>=0&&n<25)a[n]=!a[n]});draw();if(a.every(v=>!v))lightMsg.textContent="You solved it!"};draw()}
+function sudokuGame(){let fixed=[0,0,3,4,0,4,0,0,2,0,0,2,0,3,0,0,3,0,0,4,0,4,0,2,0];display("Sudoku Mini",`<p>Fill the empty squares with numbers 1–4. Each row and column needs each number once.</p><div class="gamegrid" id="sudoku" style="grid-template-columns:repeat(5,1fr)"></div><p id="sudokuMsg"></p><button onclick="startGame('lib16')">New Puzzle</button>`);sudoku.innerHTML=fixed.map((v,i)=>`<input aria-label="cell ${i+1}" maxlength="1" inputmode="numeric" value="${v||""}" ${v?"disabled":""} style="width:48px;text-align:center;padding:12px 3px;margin:0">`).join("");}
+function nonogramGame(){let target=["00100","01110","11111","10101","10101"];display("Nonogram",`<p>Tap squares to reveal the hidden pixel design.</p><div class="gamegrid" id="nonogram"></div><p id="nonoMsg"></p><button onclick="startGame('lib17')">Reset</button>`);let a=Array(25).fill(false);nonogram.innerHTML=a.map((v,i)=>`<button onclick="nonoTap(${i})" style="background:#344b70"> </button>`).join("");window.nonoTap=i=>{a[i]=!a[i];nonogram.children[i].style.background=a[i]?"#56c98a":"#344b70";if(a.every((v,j)=>v===(target[Math.floor(j/5)][j%5]==="1")))nonoMsg.textContent="Picture completed!"}}
+function quickChallenge(name,desc){display(name,`<div class="panel"><p>${desc}</p><h3 id="qScore">Score: 0</h3><p id="qText">Press the button as soon as the target appears.</p><button id="qButton" onclick="qHit()">Start Challenge</button></div>`);let score=0,ready=false,started=false;window.qHit=()=>{if(!started){started=true;qText.textContent="Wait for GO...";qButton.disabled=true;timer=setTimeout(()=>{ready=true;qText.textContent="GO! TAP NOW!";qButton.disabled=false;qButton.textContent="TAP!"},1200+Math.random()*1800)}else if(ready){score++;qScore.textContent="Score: "+score;qText.textContent="Great reaction! Go again.";ready=false;started=false;qButton.textContent="Start Again"}else{qText.textContent="Too early! Try again.";started=false;qButton.disabled=false;qButton.textContent="Start Again"}}}
+function loadExternal(){let raw=externalURL.value.trim();try{let u=new URL(raw);if(u.protocol!=="https:")throw Error();externalMessage.textContent="If the site allows embedding, it will appear below.";externalBox.innerHTML=`<p><a href="${u.href}" target="_blank" rel="noopener">Open this game in a new tab</a></p><iframe src="${u.href}" title="External game" style="width:100%;height
