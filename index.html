@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,179 +6,484 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HJH Gaming</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#080d19;color:#fff;font-family:Arial,sans-serif}
-header{background:linear-gradient(120deg,#101e42,#122d5b,#07101e);padding:28px 15px;text-align:center;border-bottom:3px solid #168cff}
-header h1{font-size:40px;color:#42a5ff;margin:0 0 12px}header p{max-width:750px;margin:10px auto;line-height:1.6}
-a{color:#62b5ff}#search{display:block;width:90%;max-width:550px;padding:15px;margin:24px auto;border:2px solid #258cff;border-radius:12px;background:#111c31;color:white;font-size:16px}
-.categories,.toolbar{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:10px}
-.categories button,.toolbar button{background:#172b4b;color:white;border:1px solid #278cff;padding:11px 17px;border-radius:10px;cursor:pointer}
-.categories button.active{background:#168cff}main{max-width:1200px;margin:auto;padding:15px}h2{color:#51aaff;text-align:center}
-.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:17px}
-.game{background:#121e32;border:1px solid #263f61;border-radius:14px;padding:20px;text-align:center}
-.game h3{margin-top:5px}.game p{color:#b9c8dc;min-height:38px}
-.game button,.primary{width:100%;padding:13px;background:#087cff;color:white;border:0;border-radius:9px;font-weight:bold;cursor:pointer}
-.game button:hover,.primary:hover{background:#005ac4}
-.own-heading{margin-top:45px;padding:16px;background:#10294c;border:1px solid #278cff;border-radius:12px}
-#ownGames .game{border-color:#168cff;background:linear-gradient(145deg,#142744,#101b2d)}
-#playerSection,#originalGame{display:none;margin:30px auto;padding:15px;background:#111c30;border:2px solid #168cff;border-radius:15px}
-#gameFrame{width:100%;height:600px;border:0;border-radius:10px;background:#000}
-.close{background:#d62e42;color:white;padding:12px 20px;border:0;border-radius:8px;cursor:pointer;margin-bottom:15px}
-footer{text-align:center;background:#101b2d;padding:30px 15px;margin-top:40px;color:#bdcce0}
-.hidden{display:none!important}.panel{background:#0b172b;border:1px solid #28517d;border-radius:12px;padding:15px;margin:12px 0}
-.toolbar button,.menu-button{background:#087cff;color:white;border:0;border-radius:8px;padding:12px 18px;font-weight:bold;cursor:pointer}
-.hud{display:flex;flex-wrap:wrap;justify-content:space-around;gap:12px;background:#07101e;padding:12px;border-radius:10px;margin:10px auto;max-width:850px}
-.healthOuter{height:18px;background:#48252a;border-radius:10px;overflow:hidden;width:150px}#healthFill{height:100%;width:100%;background:#35d66c}
-#finiteCanvas{display:block;width:100%;max-width:850px;height:auto;margin:auto;background:#152b25;border:2px solid #456b55;border-radius:10px;touch-action:none}
-#finiteControls{display:flex;justify-content:center;align-items:center;gap:12px;margin:12px auto;flex-wrap:wrap}
-#finiteControls button{width:58px;height:48px;background:#203e60;color:white;border:1px solid #5a91c5;border-radius:10px;font-size:20px;touch-action:none}
-.song-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
-.song{background:#172b4b;color:white;border:1px solid #37618e;border-radius:9px;padding:12px;text-align:left;cursor:pointer}
-.song.selected{border:2px solid #35a7ff;background:#17416d}.song small{display:block;color:#b8d9ff;margin-top:6px}
-#pianoBoard{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:650px;margin:15px auto}
-.pianoTile{height:180px;border:2px solid #4b78a8;border-radius:9px;background:linear-gradient(#18345a,#0b172b);color:white;font-size:25px;font-weight:bold;cursor:pointer;touch-action:manipulation}
-.pianoTile.active{background:#168cff}.small-note{color:#b9c8dc;text-align:center;font-size:13px;line-height:1.5}
-@media(max-width:600px){header h1{font-size:32px}#gameFrame{height:480px}.pianoTile{height:140px}}
+*{box-sizing:border-box}
+body{margin:0;background:#080d19;color:#fff;font-family:Arial,sans-serif}
+header{text-align:center;padding:28px 15px;background:linear-gradient(130deg,#101d43,#5421a3,#087e91)}
+header h1{font-size:42px;margin:5px}
+header p{line-height:1.5}
+a{color:#9fdcff}
+nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;background:#111a2b;padding:12px;position:sticky;top:0;z-index:5}
+button,.btn{border:0;border-radius:8px;background:#6845d9;color:white;padding:11px 15px;font-weight:bold;cursor:pointer}
+button:hover,.btn:hover{background:#876aff}
+main{max-width:1150px;margin:auto;padding:16px}
+section{margin-bottom:25px}
+h2{border-bottom:2px solid #6949db;padding-bottom:10px}
+input,select{background:#111c31;color:white;border:1px solid #53617d;border-radius:8px;padding:12px;width:100%;margin:6px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:15px}
+.card{background:#17213a;border:1px solid #354461;padding:14px;border-radius:13px}
+.art{height:105px;border-radius:9px;display:grid;place-items:center;font-size:43px;background:linear-gradient(130deg,#263c77,#772f9c)}
+.card p{color:#c5cce0;min-height:38px;font-size:14px}
+.card button{width:100%;margin-top:6px}
+.creator{text-align:center;background:#17213a;padding:20px;border-radius:13px}
+.hidden{display:none!important}
+#player{background:#111a30;border:2px solid #6849d9;border-radius:14px;padding:15px;margin:20px 0}
+#gameArea{text-align:center;padding:12px;min-height:230px}
+#gameArea canvas{max-width:100%;touch-action:manipulation}
+#tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;max-width:390px;height:330px;margin:15px auto}
+.tile{background:#eee;border-radius:5px;cursor:pointer}
+.tile.black{background:#111}
+.tile.correct{background:#28a76c}
+.piano{display:flex;justify-content:center;gap:2px;overflow-x:auto;padding:15px 0}
+.key{flex:1;min-width:32px;height:145px;background:white;border:1px solid #222;border-radius:0 0 7px 7px;color:#111;display:flex;align-items:end;justify-content:center;padding-bottom:8px}
+.key.blackkey{background:#171717;color:white;height:95px;min-width:22px;margin:0 -13px;z-index:1;flex:0 0 25px}
+#gameArea button{margin:4px}
+.gamebox{background:#1a2946;padding:15px;border-radius:10px;margin:10px auto;max-width:600px}
+#embedFrame{width:100%;height:480px;border:0;background:white;border-radius:10px}
+.small{font-size:12px;color:#aebbd3}
+footer{text-align:center;padding:25px;color:#aebbd3}
 </style>
 </head>
 <body>
+
 <header>
 <h1>🎮 HJH GAMING</h1>
-<p><b>Houston Jordan Holt is the creator of this website</b></p>
-<p>Welcome to HJH Gaming! Play a collection of games created by other developers, right here on our website.</p>
-<p>If you want new games added, talk to him at <a href="mailto:houstonholt3@gmail.com">houstonholt3@gmail.com</a> and he will see what he can do.</p>
-<p>#Houstonisthebest</p>
+<p>Welcome to HJH Gaming!</p>
+<p><b>Houston Jordan Holt is the creator of this website.</b></p>
+<p>If you want new games added, talk to him at
+<a href="mailto:houstonholt3@gmail.com">houstonholt3@gmail.com</a>.</p>
+<h3>#Houstonisthebest</h3>
 </header>
-<input id="search" type="search" placeholder="🔎 Search for games..." oninput="filterGames()">
-<div class="categories">
-<button class="active" onclick="setCategory('all',this)">All Games</button>
-<button onclick="setCategory('arcade',this)">Arcade</button>
-<button onclick="setCategory('puzzle',this)">Puzzle</button>
-<button onclick="setCategory('adventure',this)">Adventure</button>
-<button onclick="setCategory('strategy',this)">Strategy</button>
-<button onclick="setCategory('casual',this)">Casual</button>
-</div>
+
+<nav>
+<button onclick="showSection('home')">Home</button>
+<button onclick="showSection('mine')">Games by Houston Holt</button>
+<button onclick="showSection('library')">Game Library</button>
+<button onclick="showSection('external')">Other Creators</button>
+</nav>
+
 <main>
-<h2>🔥 GAME LIBRARY</h2>
-<div class="games" id="games">
-<div class="game" data-category="arcade"><h3>Orbit Brake</h3><p>One-button gravity arcade game.</p><button onclick="playGame('Orbit Brake','https://www.uploadarcade.com/embed/orbit-brake')">PLAY NOW</button></div>
-<div class="game" data-category="puzzle"><h3>Parcel Panic</h3><p>Sort packages before the conveyor belt fills up.</p><button onclick="playGame('Parcel Panic','https://www.uploadarcade.com/embed/parcel-panic')">PLAY NOW</button></div>
-<div class="game" data-category="puzzle"><h3>Lantern Lines</h3><p>Connect matching points without crossing lines.</p><button onclick="playGame('Lantern Lines','https://www.uploadarcade.com/embed/lantern-lines')">PLAY NOW</button></div>
-<div class="game" data-category="arcade"><h3>Cloud Courier</h3><p>Keep your flying courier in the air.</p><button onclick="playGame('Cloud Courier','https://www.uploadarcade.com/embed/cloud-courier')">PLAY NOW</button></div>
-<div class="game" data-category="strategy"><h3>Pocket Reactor</h3><p>Balance an energy grid in this strategy game.</p><button onclick="playGame('Pocket Reactor','https://www.uploadarcade.com/embed/pocket-reactor')">PLAY NOW</button></div>
-<div class="game" data-category="casual"><h3>Signal Garden</h3><p>Remember and repeat the growing pattern.</p><button onclick="playGame('Signal Garden','https://www.uploadarcade.com/embed/signal-garden')">PLAY NOW</button></div>
-<div class="game" data-category="arcade"><h3>Color Relay</h3><p>Match colors and pass through the gates.</p><button onclick="playGame('Color Relay','https://www.uploadarcade.com/embed/color-relay')">PLAY NOW</button></div>
-<div class="game" data-category="puzzle"><h3>2048</h3><p>Combine matching numbers to reach 2048.</p><button onclick="playGame('2048','https://playbolt.app/play/2048/')">PLAY NOW</button></div>
-<div class="game" data-category="arcade"><h3>Hextris</h3><p>A fast-paced hexagon puzzle game.</p><button onclick="playGame('Hextris','https://playbolt.app/play/hextris/')">PLAY NOW</button></div>
-<div class="game" data-category="adventure"><h3>Astray</h3><p>Explore a maze and find your way through.</p><button onclick="playGame('Astray','https://playbolt.app/play/astray/')">PLAY NOW</button></div>
-<div class="game" data-category="puzzle"><h3>Sliding Puzzle</h3><p>Put the mixed-up tiles back in order.</p><button onclick="playGame('Sliding Puzzle','https://playbolt.app/play/sliding-puzzle/')">PLAY NOW</button></div>
-<div class="game" data-category="arcade"><h3>Snake</h3><p>Grow your snake and avoid running into yourself.</p><button onclick="playGame('Snake','https://playbolt.app/play/snake/')">PLAY NOW</button></div>
-<div class="game" data-category="casual"><h3>Whack-a-Mole</h3><p>Test your reflexes in this classic game.</p><button onclick="playGame('Whack-a-Mole','https://playbolt.app/play/whack-a-mole/')">PLAY NOW</button></div>
-<div class="game" data-category="arcade"><h3>Neon Pong</h3><p>A glowing arcade version of classic Pong.</p><button onclick="playGame('Neon Pong','https://playbolt.app/play/neon-pong/')">PLAY NOW</button></div>
-<div class="game" data-category="arcade"><h3>Sky Hopper</h3><p>Jump your way through the sky.</p><button onclick="playGame('Sky Hopper','https://playbolt.app/play/sky-hopper/')">PLAY NOW</button></div>
-<div class="game" data-category="puzzle"><h3>Lights Out</h3><p>Switch off every light to solve the puzzle.</p><button onclick="playGame('Lights Out','https://playbolt.app/play/lights-out/')">PLAY NOW</button></div>
-<div class="game" data-category="puzzle"><h3>Sudoku</h3><p>Complete the number puzzle.</p><button onclick="playGame('Sudoku','https://playbolt.app/play/sudoku/')">PLAY NOW</button></div>
-<div class="game" data-category="puzzle"><h3>Nonogram</h3><p>Reveal pictures by solving number clues.</p><button onclick="playGame('Nonogram','https://playbolt.app/play/nonogram/')">PLAY NOW</button></div>
+
+<section id="home">
+<div class="creator">
+<h2>Welcome to HJH Gaming</h2>
+<p>Explore your favorite games, discover new challenges, and enjoy the HJH Gaming experience.</p>
+<input id="search" placeholder="🔎 Search the game library..." oninput="filterGames()">
 </div>
-<h2 class="own-heading">⭐ GAMES CREATED BY HOUSTON HOLT</h2>
-<div class="games" id="ownGames">
-<div class="game"><h3>🧟 Finite</h3><p>Survive zombie waves, collect ammo, and earn points.</p><button onclick="openOriginal('finite')">PLAY FINITE</button></div>
-<div class="game"><h3>🎹 HJH Piano Rush</h3><p>Choose songs and tap piano tiles in four difficulty levels.</p><button onclick="openOriginal('piano')">PLAY PIANO RUSH</button></div>
-</div>
-<div id="playerSection">
-<button class="close" onclick="closeGame()">✖ CLOSE GAME</button>
-<h2 id="gameTitle">Now Playing</h2>
-<iframe id="gameFrame" src="about:blank" title="HJH Gaming embedded game" allow="fullscreen; autoplay; gamepad" allowfullscreen loading="lazy"></iframe>
-<p class="small-note">This game is provided by its original developer. Some websites may block embedded play.</p>
-</div>
-<section id="originalGame">
-<button class="close" onclick="closeOriginal()">✖ BACK TO GAME LIBRARY</button>
-<div id="finiteApp" class="hidden">
-<div id="finiteMenu" class="panel">
-<h2>🧟 FINITE</h2><p style="text-align:center">Survive zombie waves! Collect ammo, protect your health, and earn one point for every zombie defeated.</p>
-<div class="toolbar"><button onclick="startFinite()">START GAME</button></div>
-<p class="small-note">Computer: WASD or arrow keys to move; click the game to aim and fire. Phone: use the direction and FIRE buttons.</p>
-</div>
-<div id="finitePlay" class="hidden">
-<div class="hud">
-<div>❤️ HEALTH<div class="healthOuter"><div id="healthFill"></div></div></div>
-<div>⭐ POINTS: <b id="score">0</b></div><div>🔋 AMMO: <b id="ammo">20</b></div><div>🧟 ZOMBIES: <b id="zombieCount">0</b></div>
-</div>
-<canvas id="finiteCanvas" width="850" height="520"></canvas>
-<div id="finiteControls">
-<div>
-<button onpointerdown="holdMove('up',true)" onpointerup="holdMove('up',false)" onpointerleave="holdMove('up',false)">▲</button><br>
-<button onpointerdown="holdMove('left',true)" onpointerup="holdMove('left',false)" onpointerleave="holdMove('left',false)">◀</button>
-<button onpointerdown="holdMove('down',true)" onpointerup="holdMove('down',false)" onpointerleave="holdMove('down',false)">▼</button>
-<button onpointerdown="holdMove('right',true)" onpointerup="holdMove('right',false)" onpointerleave="holdMove('right',false)">▶</button>
-</div>
-<button style="background:#b52e43;color:white;font-weight:bold;width:100px;height:65px;border:0;border-radius:12px" onclick="shootFinite()">FIRE</button>
-</div>
-<p class="small-note">Ammo boxes appear every 60 seconds. Walk over one to collect it. Tap or click the playfield to aim and fire.</p>
-<div id="finiteOver" class="panel hidden" style="text-align:center"><h2>GAME OVER</h2><p>Your final score: <b id="finalScore">0</b></p><button class="menu-button" onclick="startFinite()">PLAY AGAIN</button></div>
-</div>
-</div>
-<div id="pianoApp" class="hidden">
-<div id="pianoMenu" class="panel"><h2>🎹 HJH PIANO RUSH</h2><p style="text-align:center">Welcome to Piano Rush! Press PLAY to enter the music library.</p><button class="primary" onclick="showPianoLibrary()">PLAY</button></div>
-<div id="pianoLibrary" class="hidden">
-<div class="panel"><h2>🎵 HJH MUSIC LIBRARY</h2><p style="text-align:center">Choose a song and difficulty, then press START GAME.</p>
-<div class="song-grid" id="songGrid"></div>
-<div class="toolbar"><button onclick="startPiano()">START GAME</button><button onclick="showPianoMenu()">MAIN MENU</button></div>
-<p class="small-note">This game plays original generated piano-note patterns associated with each song title. It does not contain official recordings, vocals, or exact copyrighted melodies.</p>
-</div></div>
-<div id="pianoPlay" class="hidden"><div class="panel">
-<h2 id="pianoSongTitle">Piano Rush</h2><p style="text-align:center">Score: <b id="pianoScore">0</b> | Misses: <b id="pianoMisses">0</b></p>
-<p id="pianoMessage" style="text-align:center;color:#b8d9ff">Tap the highlighted lane!</p>
-<div id="pianoBoard"><button class="pianoTile" onclick="hitLane(0)">D</button><button class="pianoTile" onclick="hitLane(1)">F</button><button class="pianoTile" onclick="hitLane(2)">J</button><button class="pianoTile" onclick="hitLane(3)">K</button></div>
-<div class="toolbar"><button onclick="stopPiano()">STOP GAME</button></div>
-</div></div>
-</div>
+<h2>⭐ Featured Games</h2>
+<div class="grid" id="featured"></div>
 </section>
+
+<section id="mine" class="hidden">
+<h2>👑 Games Created by Houston Holt</h2>
+<p>Original HJH games.</p>
+<div class="grid" id="myGames"></div>
+</section>
+
+<section id="library" class="hidden">
+<h2>🕹️ HJH Game Library</h2>
+<p>All your existing library games are included below.</p>
+<div class="grid" id="libraryGames"></div>
+</section>
+
+<section id="external" class="hidden">
+<h2>🌎 Games by Other Creators</h2>
+<p>Play games from other creators when their websites allow embedding.</p>
+<input id="externalURL" placeholder="Paste an official HTTPS game embed URL">
+<button onclick="loadExternal()">Open Game</button>
+<p id="externalMessage" class="small"></p>
+<div id="externalBox"></div>
+</section>
+
+<section id="player" class="hidden">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+<h2 id="gameTitle">Game</h2>
+<button onclick="closeGame()">✖ Close Game</button>
+</div>
+<div id="gameArea"></div>
+</section>
+
 </main>
-<footer><h2>HJH GAMING</h2><p>Created by Houston Jordan Holt</p><p>Game rights belong to their respective creators.</p><p>Contact: houstonholt3@gmail.com</p><p>#Houstonisthebest</p></footer>
+
+<footer>
+<p>HJH Gaming © 2026</p>
+<p>Created by Houston Jordan Holt</p>
+<p>houstonholt3@gmail.com</p>
+<p>#Houstonisthebest</p>
+</footer>
+
 <script>
-let selectedCategory='all';
-function playGame(name,url){closeOriginal();document.getElementById('gameTitle').textContent=name;document.getElementById('gameFrame').src=url;document.getElementById('playerSection').style.display='block';document.getElementById('playerSection').scrollIntoView({behavior:'smooth'});}
-function closeGame(){document.getElementById('gameFrame').src='about:blank';document.getElementById('playerSection').style.display='none';}
-function setCategory(category,button){selectedCategory=category;document.querySelectorAll('.categories button').forEach(b=>b.classList.remove('active'));button.classList.add('active');filterGames();}
-function filterGames(){let term=document.getElementById('search').value.toLowerCase();document.querySelectorAll('#games .game').forEach(g=>{g.style.display=g.innerText.toLowerCase().includes(term)&&(selectedCategory==='all'||g.dataset.category===selectedCategory)?'block':'none';});}
-function openOriginal(which){closeGame();stopFinite();stopPiano();document.getElementById('originalGame').style.display='block';document.getElementById('finiteApp').classList.toggle('hidden',which!=='finite');document.getElementById('pianoApp').classList.toggle('hidden',which!=='piano');document.getElementById('originalGame').scrollIntoView({behavior:'smooth'});if(which==='finite'){document.getElementById('finiteMenu').classList.remove('hidden');document.getElementById('finitePlay').classList.add('hidden');}else showPianoMenu();}
-function closeOriginal(){stopFinite();stopPiano();document.getElementById('originalGame').style.display='none';}
-</script>
-<script>
-const canvas=document.getElementById('finiteCanvas'),ctx=canvas.getContext('2d');
-let player={x:425,y:260,r:14},zombies=[],bullets=[],boxes=[],score=0,ammo=20,health=100,finiteRunning=false,finiteTimer=null,lastSpawn=0,lastAmmo=0,keys={},moving={},aim={x:600,y:260};
-function updateHud(){document.getElementById('healthFill').style.width=health+'%';document.getElementById('score').textContent=score;document.getElementById('ammo').textContent=ammo;document.getElementById('zombieCount').textContent=zombies.length;}
-function startFinite(){stopFinite();player={x:425,y:260,r:14};zombies=[];bullets=[];boxes=[];score=0;ammo=20;health=100;lastSpawn=0;lastAmmo=performance.now();document.getElementById('finiteMenu').classList.add('hidden');document.getElementById('finitePlay').classList.remove('hidden');document.getElementById('finiteOver').classList.add('hidden');finiteRunning=true;updateHud();finiteLoop();}
-function stopFinite(){finiteRunning=false;if(finiteTimer)cancelAnimationFrame(finiteTimer);finiteTimer=null;}
-function holdMove(direction,on){moving[direction]=on;}
-window.addEventListener('keydown',e=>{let k=e.key.toLowerCase();keys[k]=true;if(['arrowup','arrowdown','arrowleft','arrowright',' '].includes(k))e.preventDefault();if(k===' '&&finiteRunning)shootFinite();});
-window.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
-function shootFinite(){if(!finiteRunning||ammo<=0)return;ammo--;let dx=aim.x-player.x,dy=aim.y-player.y,d=Math.hypot(dx,dy)||1;bullets.push({x:player.x,y:player.y,vx:dx/d*8,vy:dy/d*8,life:65});updateHud();}
-canvas.addEventListener('pointerdown',e=>{let r=canvas.getBoundingClientRect();aim={x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height};shootFinite();});
-function spawnZombie(){let side=Math.floor(Math.random()*4),x=side===0?0:side===1?850:Math.random()*850,y=side===2?0:side===3?520:Math.random()*520;zombies.push({x,y,r:15,speed:.55+Math.random()*.45,hp:2,attack:0});}
-function finiteLoop(){
-if(!finiteRunning)return;let now=performance.now();
-if(now-lastSpawn>2200){spawnZombie();lastSpawn=now;}
-if(now-lastAmmo>=60000){boxes.push({x:40+Math.random()*770,y:40+Math.random()*440});lastAmmo=now;}
-let dx=0,dy=0;if(keys.w||keys.arrowup||moving.up)dy--;if(keys.s||keys.arrowdown||moving.down)dy++;if(keys.a||keys.arrowleft||moving.left)dx--;if(keys.d||keys.arrowright||moving.right)dx++;
-let len=Math.hypot(dx,dy)||1;player.x=Math.max(15,Math.min(835,player.x+dx/len*3.2));player.y=Math.max(15,Math.min(505,player.y+dy/len*3.2));
-bullets.forEach(b=>{b.x+=b.vx;b.y+=b.vy;b.life--;});bullets=bullets.filter(b=>b.life>0&&b.x>=0&&b.x<=850&&b.y>=0&&b.y<=520);
-zombies.forEach(z=>{let x=player.x-z.x,y=player.y-z.y,d=Math.hypot(x,y)||1;if(d>24){z.x+=x/d*z.speed;z.y+=y/d*z.speed;}else{z.attack++;if(z.attack>35){health=Math.max(0,health-8);z.attack=0;}}});
-bullets.forEach(b=>zombies.forEach(z=>{if(z.hp>0&&Math.hypot(b.x-z.x,b.y-z.y)<z.r+5){z.hp=0;b.life=0;score++;}}));zombies=zombies.filter(z=>z.hp>0);
-boxes=boxes.filter(box=>{if(Math.hypot(box.x-player.x,box.y-player.y)<25){ammo+=12;return false;}return true;});updateHud();
-ctx.clearRect(0,0,850,520);ctx.fillStyle='#18382b';ctx.fillRect(0,0,850,520);ctx.strokeStyle='#234b38';
-for(let x=0;x<850;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,520);ctx.stroke();}for(let y=0;y<520;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(850,y);ctx.stroke();}
-boxes.forEach(b=>{ctx.fillStyle='#e9bd38';ctx.fillRect(b.x-10,b.y-10,20,20);ctx.fillStyle='#252525';ctx.fillRect(b.x-2,b.y-8,4,16);});
-bullets.forEach(b=>{ctx.fillStyle='#ffe66a';ctx.beginPath();ctx.arc(b.x,b.y,4,0,Math.PI*2);ctx.fill();});
-zombies.forEach(z=>{ctx.fillStyle='#79bd68';ctx.beginPath();ctx.arc(z.x,z.y,z.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#182b20';ctx.fillRect(z.x-6,z.y-4,4,4);ctx.fillRect(z.x+3,z.y-4,4,4);});
-ctx.fillStyle='#56aaff';ctx.beginPath();ctx.arc(player.x,player.y,player.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='white';ctx.fillRect(player.x-4,player.y-3,8,6);
-if(health<=0){finiteRunning=false;document.getElementById('finalScore').textContent=score;document.getElementById('finiteOver').classList.remove('hidden');return;}
-finiteTimer=requestAnimationFrame(finiteLoop);
+const originalGames=[
+{name:"Five Nights",icon:"🌙",desc:"A nighttime survival and mystery game.",id:"five"},
+{name:"HJH Piano Rush",icon:"🎹",desc:"Play piano challenges using your favorite song selections.",id:"piano"}
+];
+
+const library=[
+["Orbit Brake","🚀","Control your movement and avoid obstacles."],
+["Parcel Panic","📦","Sort and deliver packages before time runs out."],
+["Lantern Lines","🏮","Connect lanterns and solve puzzles."],
+["Cloud Courier","☁️","Navigate a sky full of obstacles."],
+["Pocket Reactor","⚛️","Keep the reactor balanced."],
+["Signal Garden","🌱","Connect matching signals."],
+["Color Relay","🎨","Remember and repeat color sequences."],
+["2048","🔢","Combine matching numbers to reach 2048."],
+["Hextris","⬡","Match colors around a rotating hexagon."],
+["Astray","🌌","Find your way through a maze."],
+["Sliding Puzzle","🧩","Arrange the numbers in order."],
+["Snake","🐍","Collect food and grow longer."],
+["Whack-a-Mole","🔨","Tap the appearing targets."],
+["Neon Pong","🏓","Keep the ball in play."],
+["Sky Hopper","🐦","Jump through a series of platforms."],
+["Lights Out","💡","Turn off every light."],
+["Sudoku","9️⃣","Complete the number puzzle."],
+["Nonogram","🖼️","Solve the picture grid."]
+].map((g,i)=>({name:g[0],icon:g[1],desc:g[2],id:"lib"+i}));
+
+function card(g){
+return `<div class="card" data-name="${g.name.toLowerCase()}">
+<div class="art">${g.icon}</div>
+<h3>${g.name}</h3>
+<p>${g.desc}</p>
+<button onclick="startGame('${g.id}')">▶ Play Game</button>
+</div>`;
 }
-</script>
-<script>
+
+function render(){
+document.getElementById("myGames").innerHTML=originalGames.map(card).join("");
+document.getElementById("libraryGames").innerHTML=library.map(card).join("");
+document.getElementById("featured").innerHTML=[...originalGames,...library.slice(0,4)].map(card).join("");
+}
+render();
+
+function showSection(id){
+["home","mine","library","external"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id));
+closeGame();
+window.scrollTo(0,0);
+}
+
+function filterGames(){
+let q=document.getElementById("search").value.toLowerCase();
+document.querySelectorAll(".card").forEach(c=>c.style.display=c.dataset.name.includes(q)?"":"none");
+}
+
+function display(name,html){
+document.getElementById("player").classList.remove("hidden");
+document.getElementById("gameTitle").textContent=name;
+document.getElementById("gameArea").innerHTML=html;
+document.getElementById("player").scrollIntoView({behavior:"smooth"});
+}
+function closeGame(){
+document.getElementById("player").classList.add("hidden");
+document.getElementById("gameArea").innerHTML="";
+if(window.gameTimer)clearInterval(window.gameTimer);
+if(window.gameAnimation)cancelAnimationFrame(window.gameAnimation);
+window.gameTimer=null;
+window.gameAnimation=null;
+}
+
+/* FIVE NIGHTS */
+function fiveNights(){
+display("Five Nights",`
+<div class="gamebox">
+<h3 id="fiveTitle">Night 1</h3>
+<p id="fiveText">You are spending the night in a mysterious building. Watch the cameras, manage your power, and solve the clues.</p>
+<h3>Power: <span id="power">100</span>%</h3>
+<h3>Time: <span id="nightTime">12 AM</span></h3>
+<button onclick="fiveCamera()">Check Cameras</button>
+<button onclick="fiveDoor()">Check Door</button>
+<button onclick="fiveClue()">Find a Clue</button>
+<p id="fiveStatus">The night has begun.</p>
+</div>
+`);
+let power=100,time=0,clues=0;
+window.gameTimer=setInterval(()=>{
+power=Math.max(0,power-1);
+time++;
+document.getElementById("power").textContent=power;
+document.getElementById("nightTime").textContent=["12 AM","1 AM","2 AM","3 AM","4 AM","5 AM","6 AM"][Math.min(6,Math.floor(time/10))];
+if(power===0){
+clearInterval(window.gameTimer);
+document.getElementById("fiveStatus").textContent="Power depleted! Try again.";
+}
+if(time>=60){
+clearInterval(window.gameTimer);
+document.getElementById("fiveTitle").textContent="Night Completed!";
+document.getElementById("fiveStatus").textContent="🏆 You made it through the night!";
+}
+},1000);
+window.fiveCamera=()=>{power=Math.max(0,power-3);document.getElementById("power").textContent=power;document.getElementById("fiveStatus").textContent="The cameras show unusual movement. Keep watching.";};
+window.fiveDoor=()=>{power=Math.max(0,power-2);document.getElementById("power").textContent=power;document.getElementById("fiveStatus").textContent="The hallway is quiet for now.";};
+window.fiveClue=()=>{
+clues++;
+document.getElementById("fiveStatus").textContent=clues%3===0?"You discovered a clue about the building!":"You found a small clue. Keep investigating.";
+};
+}
+
+/* HJH PIANO RUSH */
 const songs=[
-['HUMBLE.','Kendrick Lamar','HARD'],['Not Like Us','Kendrick Lamar','HARD'],['luther','Kendrick Lamar & SZA','HARD'],['Like That','Future, Metro Boomin & Kendrick Lamar','HARD'],['Squabble Up','Kendrick Lamar','HARD'],
-['Love Yourself','Justin Bieber','EASY'],['Sorry','Justin Bieber','EASY'],
-['One Dance','Drake ft. Wizkid & Kyla','EXTREME'],['Work','Rihanna ft. Drake','EXTREME'],
-['Stressed Out','Twenty One Pilots','VERY EASY'],['Closer','The Chainsmokers ft. Halsey','VERY EASY'],['Cheap Thrills','Sia ft. Sean Paul','VERY EASY'],['Cake by the Ocean','DNCE','VERY EASY'],["Can't Stop the Feeling!",'Justin Timberlake','VERY EASY'],["Don't Let Me Down",'The Chainsmokers ft. Daya','VERY EASY'],['Panda','Desiigner','EXTREME'],['Heathens','Twenty One Pilots','VERY EASY'],['Into You','Ariana Grande','VERY EA
+["HUMBLE.","Kendrick Lamar","HARD"],
+["Not Like Us","Kendrick Lamar","HARD"],
+["luther","SZA","VERY EASY"],
+["Like That","Future, Metro Boomin & Kendrick Lamar","HARD"],
+["Squabble Up","Kendrick Lamar","HARD"],
+["Love Yourself","Justin Bieber","EASY"],
+["Sorry","Justin Bieber","EASY"],
+["One Dance","Drake","EXTREME"],
+["Work","Rihanna","VERY EASY"],
+["Stressed Out","Twenty One Pilots","VERY EASY"],
+["Closer","The Chainsmokers","VERY EASY"],
+["Cheap Thrills","Sia","VERY EASY"],
+["Cake by the Ocean","DNCE","VERY EASY"],
+["Can't Stop the Feeling!","Justin Timberlake","VERY EASY"],
+["Don't Let Me Down","The Chainsmokers","VERY EASY"],
+["Panda","Desiigner","EXTREME"],
+["Heathens","Twenty One Pilots","VERY EASY"],
+["Into You","Ariana Grande","VERY EASY"],
+["I Took a Pill in Ibiza","Mike Posner","VERY EASY"],
+["Let Me Love You","DJ Snake & Justin Bieber","EASY"]
+];
+
+let audioContext=null;
+function tone(freq,duration=.22){
+try{
+audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();
+if(audioContext.state==="suspended")audioContext.resume();
+let osc=audioContext.createOscillator(),gain=audioContext.createGain();
+osc.type="sine";osc.frequency.value=freq;
+gain.gain.setValueAtTime(.16,audioContext.currentTime);
+gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);
+osc.connect(gain);gain.connect(audioContext.destination);
+osc.start();osc.stop(audioContext.currentTime+duration);
+}catch(e){}
+}
+
+function pianoGame(){
+let options=songs.map((s,i)=>`<option value="${i}">${s[0]} — ${s[1]} (${s[2]})</option>`).join("");
+display("HJH Piano Rush",`
+<div class="gamebox">
+<h3>🎹 HJH MUSIC LIBRARY</h3>
+<p>20 song selections. Piano-only practice. No vocals or extra instruments.</p>
+<select id="songChoice">${options}</select>
+<label>Difficulty</label>
+<select id="difficulty">
+<option>Automatic</option>
+<option>EASY</option>
+<option>VERY EASY</option>
+<option>HARD</option>
+<option>EXTREME</option>
+</select>
+<label>Volume</label>
+<input type="range" min="0" max="100" value="70" id="volume">
+<button onclick="pianoPlay()">PLAY</button>
+<div id="pianoStatus">Choose a song, then press PLAY.</div>
+<div id="pianoKeys" class="piano"></div>
+<div id="pianoChallenge"></div>
+</div>
+`);
+makeKeys();
+}
+
+function makeKeys(){
+let keys=document.getElementById("pianoKeys");
+if(!keys)return;
+let notes=[261.63,293.66,329.63,349.23,392,440,493.88,523.25,587.33,659.25,698.46,783.99,880,987.77];
+keys.innerHTML=notes.map((n,i)=>`<button class="key" onclick="playKey(${n})">${["C","D","E","F","G","A","B"][i%7]}</button>`).join("");
+}
+function playKey(freq){
+let vol=document.getElementById("volume");
+let previous=window.pianoVolume;
+window.pianoVolume=vol?Number(vol.value)/70:1;
+tone(freq,.4);
+}
+function pianoPlay(){
+let song=songs[Number(document.getElementById("songChoice").value)];
+let diff=document.getElementById("difficulty").value;
+if(diff==="Automatic")diff=song[2];
+document.getElementById("pianoStatus").innerHTML="<b>"+song[0]+"</b> — "+diff+" practice selected. Press START to begin.";
+document.getElementById("pianoChallenge").innerHTML=`
+<p>Practice mode: original piano exercises inspired by your selected difficulty. These are not exact commercial song melodies.</p>
+<button onclick="pianoStart('${diff}')">START</button>
+`;
+}
+function pianoStart(diff){
+let count=0,active=true;
+let notes=[261.63,293.66,329.63,349.23,392,440,493.88,523.25];
+let speed=diff==="EXTREME"?450:diff==="HARD"?650:diff==="EASY"?1100:900;
+document.getElementById("pianoChallenge").innerHTML=`
+<h3>Score: <span id="pianoScore">0</span></h3>
+<p id="pianoPrompt">Listen for the next note, then press the matching key.</p>
+<div id="pianoTarget" style="font-size:40px">🎹</div>
+<button onclick="pianoHit()">PLAY NOTE</button>
+<button onclick="pianoEnd()">END SONG</button>
+`;
+let next=0;
+window.pianoHit=()=>{
+if(!active)return;
+count++;
+document.getElementById("pianoScore").textContent=count;
+tone(notes[Math.floor(Math.random()*notes.length)],.35);
+};
+window.pianoEnd=()=>{
+active=false;
+document.getElementById("pianoPrompt").textContent="Practice finished! Final score: "+count;
+};
+}
+
+/* GENERAL MINI-GAME ENGINE */
+function startGame(id){
+closeGame();
+if(id==="five")return fiveNights();
+if(id==="piano")return pianoGame();
+let g=library.find(x=>x.id===id);
+if(!g)return;
+if(id==="lib7")return game2048();
+if(id==="lib11")return snakeGame();
+if(id==="lib15")return lightsGame();
+if(id==="lib10")return slidingGame();
+if(id==="lib12")return moleGame();
+if(id==="lib13")return pongGame();
+if(id==="lib9")return mazeGame();
+if(id==="lib6")return colorGame();
+if(id==="lib5")return signalGame();
+if(id==="lib16")return sudokuGame();
+if(id==="lib17")return nonogramGame();
+if(id==="lib1")return parcelGame();
+if(id==="lib3"||id==="lib14")return hopperGame(g.name);
+if(id==="lib0"||id==="lib2"||id==="lib4"||id==="lib8")return reflexGame(g.name);
+return reflexGame(g.name);
+}
+
+function reflexGame(name){
+let score=0;
+display(name,`
+<div class="gamebox">
+<h3 id="refScore">Score: 0</h3>
+<p id="refText">Complete the challenge by tapping the target.</p>
+<button onclick="refTap()">TAP TARGET</button>
+<button onclick="refReset()">Restart</button>
+</div>`);
+window.refTap=()=>{
+score++;
+document.getElementById("refScore").textContent="Score: "+score;
+document.getElementById("refText").textContent="Great job! Keep going!";
+};
+window.refReset=()=>{score=0;document.getElementById("refScore").textContent="Score: 0";};
+}
+
+function parcelGame(){
+let score=0;
+display("Parcel Panic",`
+<div class="gamebox"><h3>Sort the Packages</h3><p>Choose the correct package destination.</p><h3 id="parcelScore">Score: 0</h3><div id="parcelQuestion"></div></div>`);
+let choices=["North","South","East","West"];
+function next(){
+let correct=choices[Math.floor(Math.random()*4)];
+document.getElementById("parcelQuestion").innerHTML=`<h3>Package destination: ${correct}</h3>`+choices.map(x=>`<button onclick="parcelAnswer('${x}','${correct}')">${x}</button>`).join("");
+}
+window.parcelAnswer=(a,c)=>{
+if(a===c)score++;
+document.getElementById("parcelScore").textContent="Score: "+score;
+next();
+};
+next();
+}
+
+function hopperGame(name){
+let score=0;
+display(name,`
+<div class="gamebox"><h3>Jump Challenge</h3><p>Tap to jump over obstacles.</p><h3 id="hopScore">Score: 0</h3><button onclick="hop()">JUMP</button></div>`);
+window.hop=()=>{score++;document.getElementById("hopScore").textContent="Score: "+score;};
+}
+
+function game2048(){
+let board=Array(16).fill(0);board[0]=2;board[5]=2;
+display("2048",`<h3>Combine equal numbers to reach 2048.</h3><div id="board2048" class="gamebox" style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px"></div><p>Use the arrow buttons.</p><div>${["↑","↓","←","→"].map(x=>`<button onclick="move2048('${x}')">${x}</button>`).join("")}</div>`);
+function render(){
+document.getElementById("board2048").innerHTML=board.map(x=>`<div style="background:#364b6a;padding:16px;border-radius:7px;font-size:20px">${x||""}</div>`).join("");
+}
+window.move2048=(dir)=>{
+let lines=[];
+if(dir==="←"||dir==="→"){
+for(let r=0;r<4;r++)lines.push(board.slice(r*4,r*4+4));
+}else{
+for(let c=0;c<4;c++)lines.push([board[c],board[c+4],board[c+8],board[c+12]]);
+}
+lines=lines.map(line=>{
+if(dir==="→"||dir==="↓")line.reverse();
+line=line.filter(Boolean);
+for(let i=0;i<line.length-1;i++)if(line[i]===line[i+1]){line[i]*=2;line.splice(i+1,1);}
+while(line.length<4)line.push(0);
+if(dir==="→"||dir==="↓")line.reverse();
+return line;
+});
+board=Array(16).fill(0);
+lines.forEach((line,i)=>line.forEach((v,j)=>{
+if(dir==="←"||dir==="→")board[i*4+j]=v;
+else board[j*4+i]=v;
+}));
+let empty=board.map((v,i)=>v===0?i:-1).filter(i=>i>=0);
+if(empty.length)board[empty[Math.floor(Math.random()*empty.length)]]=2;
+render();
+};
+render();
+}
+
+function snakeGame(){
+display("Snake",`<canvas id="snakeCanvas" width="320" height="320" style="background:#16283b"></canvas><p>Use arrow buttons to move.</p><div>${["↑","↓","←","→"].map(x=>`<button onclick="snakeMove('${x}')">${x}</button>`).join("")}</div><h3 id="snakeScore">Score: 0</h3>`);
+let c=document.getElementById("snakeCanvas"),ctx=c.getContext("2d");
+let snake=[{x:8,y:8}],food={x:4,y:4},dir={x:1,y:0},score=0;
+window.snakeMove=d=>{dir=d==="↑"?{x:0,y:-1}:d==="↓"?{x:0,y:1}:d==="←"?{x:-1,y:0}:{x:1,y:0};};
+window.gameTimer=setInterval(()=>{
+let head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
+if(head.x<0||head.x>15||head.y<0||head.y>15||snake.some(s=>s.x===head.x&&s.y===head.y)){
+clearInterval(window.gameTimer);return;
+}
+snake.unshift(head);
+if(head.x===food.x&&head.y===food.y){score++;food={x:Math.floor(Math.random()*16),y:Math.floor(Math.random()*16)};}
+else snake.pop();
+ctx.clearRect(0,0,320,320);
+ctx.fillStyle="#39d98a";snake.forEach(s=>ctx.fillRect(s.x*20,s.y*20,18,18));
+ctx.fillStyle="#ffcc44";ctx.fillRect(food.x*20,food.y*20,18,18);
+document.getElementById("snakeScore").textContent="Score: "+score;
+},170);
+}
+
+function lightsGame(){
+let cells=Array(25).fill(0).map(()=>Math.random()>.5?1:0);
+display("Lights Out",`<p>Turn off all the lights.</p><div id="lightBoard" class="gamebox" style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px"></div><h3 id="lightStatus"></h3>`);
+function render(){
+document.getElementById("lightBoard").innerHTML=cells.map((v,i)=>`<button style="height:48px;background:${v?"#e7d34a":"#263751"}" onclick="lightTap(${i})"></button>`).join("");
+if(cells.every(v=>v===0))document.getElementById("lightStatus").textContent="🏆 Puzzle solved!";
+}
+window.lightTap=i=>{
+[ i, i-5,i+5,i-1,i+1].forEach(j=>{
+if(j>=0&&j<25&&!(Math.abs(j-i)===1&&Math.floor(j/5)!==Math.floor(i/5)))cells[j]^=1;
+});
+render();
+};
+render();
+}
+
+function slidingGame(){
+let nums=[1,2,3,4,5,6,7,8,0];
+for(let i=0;i<40;i++){
+let a=Math.floor(Math.random()*9),b=Math.floor(Math.random()*9);
+[nums[a],nums[b]]=[nums[b],nums[a]];
+}
+display("Sliding Puzzle",`<p>Arrange numbers in order. Tap a tile beside the empty space.</p><div id="slideBoard" class="gamebox" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px"></div><p id="slideStatus"></p>`);
+window.slideTap=i=>{
+let z=nums.indexOf(0);
+if([z-3,z+3,z-1,z+1].includes(i)&&!(Math.abs(i-z)===1&&Math.floor(i/3)!==Math.floor(z/3))){
+[nums[i],nums[z]]=[nums[z],nums[i]];
+}
+render();
+};
+function render(){
+document.getElementById("slideBoard").innerHTML=nums.map((n,i)=>`<button style="height:65px;background:${n?"#4c65a1":"#111a30"}" onclick="slideTap(${i})">${n||""}</button>`).join("");
+document.getElementById("slideStatus").textContent=nums.every((v,i)=>v===((i+1)%9))?"Solved!":"";
+}
+render();
+}
+
+function moleGame(){
+let score=0;
+display("Whack-a-Mole",`<p>Tap the mole as it appears.</p><h3 id="moleScore">Score: 0</h3><button id="moleButton" style="font-size:40px" onclick="moleHit()">🐹</button>`);
+window.moleHit=()=>{score++;document.g
