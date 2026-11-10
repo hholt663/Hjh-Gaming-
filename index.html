@@ -153,4 +153,201 @@ function pianoRush(){
 }
 function sequenceGame(name){display(name,`<div class="panel"><p>Watch the sequence, then repeat it.</p><h3>Level <span id="seqLevel">1</span></h3><div class="gamegrid" id="seqGrid"></div><p id="seqMsg">Press Start.</p><button onclick="seqStart()">Start</button></div>`);let colors=["#e34c67","#269dd0","#35ad76","#e3ae38"],seq=[],pos=0,level=1,locked=true;el("seqGrid").innerHTML=colors.map((c,i)=>`<button style="background:${c}" onclick="seqPress(${i})">${i+1}</button>`).join("");window.seqStart=()=>{seq=[Math.floor(Math.random()*4)];pos=0;level=1;el("seqLevel").textContent=level;showSeq()};function showSeq(){locked=true;el("seqMsg").textContent="Watch: "+seq.map(x=>x+1).join(" ");setTimeout(()=>{locked=false;pos=0;el("seqMsg").textContent="Your turn!"},Math.min(3000,600+seq.length*250))}window.seqPress=i=>{if(locked||!seq.length)return;if(seq[pos]!==i){el("seqMsg").textContent="Not quite. Press Start to retry.";locked=true;return}pos++;if(pos===seq.length){level++;el("seqLevel").textContent=level;seq.push(Math.floor(Math.random()*4));showSeq()}}}
 function game2048(){let a=Array(16).fill(0);function add(){let e=a.map((v,i)=>v? -1:i).filter(i=>i>=0);if(e.length)a[e[Math.floor(Math.random()*e.length)]]=Math.random()<.9?2:4}add();add();display("2048",`<p>Use arrow keys or buttons to combine matching tiles.</p><div class="board" id="b2048"></div><div><button onclick="move2048('up')">↑</button><br><button onclick="move2048('left')">←</button><button onclick="move2048('down')">↓</button><button onclick="move2048('right')">→</button></div><button onclick="startGame('lib7')">Restart</button>`);function draw(){el("b2048").innerHTML=a.map(v=>`<div class="tile">${v||""}</div>`).join("")}function move(dir){let changed=false;for(let k=0;k<4;k++){let ids=Array.from({length:4},(_,j)=>dir==="left"?k*4+j:dir==="right"?k*4+3-j:dir==="up"?j*4+k:(3-j)*4+k),vals=ids.map(i=>a[i]).filter(Boolean),out=[];for(let j=0;j<vals.length;j++){if(vals[j]===vals[j+1]){out.push(vals[j]*2);j++}else out.push(vals[j])}while(out.length<4)out.push(0);ids.forEach((id,j)=>{if(a[id]!==out[j])changed=true;a[id]=out[j]})}if(changed)add();draw()}window.move2048=move;window.onkeydown=e=>{let m={ArrowUp:"up",ArrowDown:"down",ArrowLeft:"left",ArrowRight:"right"};if(m[e.key]){e.preventDefault();move(m[e.key])}};cleanup=()=>window.onkeydown=null;draw()}
-function mazeGame(){let p=0,walls=[1,3,6,8,11,13,16,18];display("Astray — Maze",`<p>Reach the green exit using the direction buttons.</p><div id="mazeBoard" class="gamegrid"></div><div><button onclick="mazeMove(-5)">↑</button><br><button onclick="mazeMove(-1)">←</button><button onclick="mazeMove(5)">↓</button><button onclick="mazeMove(1)">→</button></div><p id="mazeMsg"></p>`);function draw(){el("mazeBoard").innerHTML=Array
+function mazeGame(){let p=0,walls=[1,3,6,8,11,13,16,18];display("Astray — Maze",`<p>Reach the green exit using the direction buttons.</p><div id="mazeBoard" class="gamegrid"></div><div><button onclick="mazeMove(-5)">↑</button><br><button onclick="mazeMove(-1)">←</button><button onclick="mazeMove(5)">↓</button><button onclick="mazeMove(1)">→</button></div><p id="mazeMsg"></p>`);function draw(){el("mazeBoard").innerHTML=Arrayfrom({length:25},(_,i)=>{
+let cell=document.createElement("button");
+cell.textContent=i===p?"🙂":i===24?"🏁":walls.includes(i)?"🧱":"·";
+cell.style.background=i===p?"#247fba":i===24?"#278b58":walls.includes(i)?"#26364d":"#344b70";
+cell.disabled=walls.includes(i)||i===p;
+return cell.outerHTML
+}).join("");
+}
+window.mazeMove=d=>{
+let q=p+d;
+if(q<0||q>24||(d===1&&p%5===4)||(d===-1&&p%5===0)||walls.includes(q))return;
+p=q;
+draw();
+if(p===24)el("mazeMsg").textContent="You found the exit! 🎉";
+};
+draw();
+}
+
+function slidingGame(){
+let a=[1,2,3,4,5,6,7,8,0];
+for(let i=0;i<80;i++){
+let z=a.indexOf(0);
+let o=[z-3,z+3,...(z%3?[z-1]:[]),...(z%3<2?[z+1]:[])].filter(n=>n>=0&&n<9);
+let n=o[Math.floor(Math.random()*o.length)];
+[a[z],a[n]]=[a[n],a[z]];
+}
+display("Sliding Puzzle",'<p>Slide tiles into number order.</p><div class="board" id="slideBoard" style="grid-template-columns:repeat(3,1fr)"></div><p id="slideMsg">Good luck!</p><button onclick="startGame(\\'lib10\\')">Shuffle again</button>');
+function draw(){
+el("slideBoard").innerHTML=a.map((v,i)=>'<button class="tile" onclick="slideTap('+i+')">'+(v||"")+'</button>').join("");
+}
+window.slideTap=i=>{
+let z=a.indexOf(0);
+let o=[z-3,z+3,...(z%3?[z-1]:[]),...(z%3<2?[z+1]:[])];
+if(o.includes(i)){
+[a[z],a[i]]=[a[i],a[z]];
+draw();
+if(a.every((v,j)=>v===(j+1)%9))el("slideMsg").textContent="Solved! 🎉";
+}
+};
+draw();
+}
+
+function snakeGame(){
+display("Snake",'<p>Use arrow buttons to guide the snake to the food.</p><canvas id="snakeCanvas" width="300" height="300"></canvas><div><button onclick="snakeDir(0,-1)">↑</button><br><button onclick="snakeDir(-1,0)">←</button><button onclick="snakeDir(0,1)">↓</button><button onclick="snakeDir(1,0)">→</button></div><p id="snakeMsg">Score: 0</p>');
+let body=[{x:7,y:7},{x:6,y:7},{x:5,y:7}],dir={x:1,y:0},food={x:10,y:7},score=0,dead=false;
+let c=el("snakeCanvas").getContext("2d");
+window.snakeDir=(x,y)=>{if(x!==-dir.x||y!==-dir.y)dir={x,y}};
+function draw(){
+c.clearRect(0,0,300,300);
+c.fillStyle="#35bd78";
+c.fillRect(food.x*20,food.y*20,18,18);
+c.fillStyle="#70b9ff";
+body.forEach(p=>c.fillRect(p.x*20,p.y*20,18,18));
+}
+timer=setInterval(()=>{
+if(dead)return;
+let h={x:body[0].x+dir.x,y:body[0].y+dir.y};
+if(h.x<0||h.x>=15||h.y<0||h.y>=15||body.some(p=>p.x===h.x&&p.y===h.y)){
+dead=true;
+el("snakeMsg").textContent="Game over! Score: "+score;
+return;
+}
+body.unshift(h);
+if(h.x===food.x&&h.y===food.y){
+score++;
+food={x:Math.floor(Math.random()*15),y:Math.floor(Math.random()*15)};
+el("snakeMsg").textContent="Score: "+score;
+}else body.pop();
+draw();
+},180);
+draw();
+cleanup=()=>window.snakeDir=null;
+}
+
+function moleGame(){
+display("Whack-a-Mole",'<p>Tap the highlighted mole. Score as many as you can in 20 seconds!</p><h3>Score: <span id="moleScore">0</span> · Time: <span id="moleTime">20</span></h3><div class="gamegrid" id="moleGrid"></div>');
+let score=0,active=0,left=20,shift;
+function draw(){
+el("moleGrid").innerHTML=Array.from({length:9},(_,i)=>'<button style="font-size:25px;background:'+(i===active?"#278b58":"#344b70")+'" onclick="moleTap('+i+')">'+(i===active?"🐹":"🕳️")+'</button>').join("");
+}
+window.moleTap=i=>{
+if(left>0&&i===active){
+score++;
+el("moleScore").textContent=score;
+active=Math.floor(Math.random()*9);
+draw();
+}
+};
+draw();
+timer=setInterval(()=>{
+left--;
+el("moleTime").textContent=left;
+if(left<=0){
+clearInterval(timer);
+el("gameArea").insertAdjacentHTML("beforeend",'<h3>Time! Final score: '+score+'</h3>');
+clearInterval(shift);
+}
+},1000);
+shift=setInterval(()=>{
+if(left>0){
+active=Math.floor(Math.random()*9);
+draw();
+}
+},650);
+cleanup=()=>{clearInterval(shift);window.moleTap=null};
+}
+
+function pongGame(){
+display("Neon Pong",'<p>Tap the side the ball is heading toward to bounce it back.</p><canvas id="pongCanvas" width="320" height="220"></canvas><p id="pongScore">Score: 0</p><button onclick="pongHit(0)">Left</button><button onclick="pongHit(1)">Right</button>');
+let x=160,y=110,dx=3,dy=2,score=0,over=false,c=el("pongCanvas").getContext("2d");
+window.pongHit=s=>{
+if(!over&&((dx<0&&s===0)||(dx>0&&s===1))){
+score++;
+dx=-dx;
+el("pongScore").textContent="Score: "+score;
+}
+};
+function frame(){
+if(over)return;
+x+=dx;
+y+=dy;
+if(y<7||y>213)dy=-dy;
+if(x<7||x>313){
+over=true;
+el("pongScore").textContent="Game over · Score: "+score;
+}
+c.clearRect(0,0,320,220);
+c.fillStyle="#62d8ff";
+c.beginPath();
+c.arc(x,y,7,0,Math.PI*2);
+c.fill();
+raf=requestAnimationFrame(frame);
+}
+frame();
+cleanup=()=>window.pongHit=null;
+}
+
+function lightsGame(){
+let a=Array.from({length:25},()=>Math.random()<.5);
+display("Lights Out",'<p>Turn off all lights. Tapping a square toggles it and its neighbors.</p><div class="gamegrid" id="lightsGrid"></div><p id="lightsMsg"></p>');
+function draw(){
+el("lightsGrid").innerHTML=a.map((v,i)=>'<button style="background:'+(v?"#e4bb42":"#344b70")+'" onclick="lightTap('+i+')">'+(v?"💡":"·")+'</button>').join("");
+}
+window.lightTap=i=>{
+[i,i-5,i+5,...(i%5?[i-1]:[]),...(i%5<4?[i+1]:[])].filter(n=>n>=0&&n<25).forEach(n=>a[n]=!a[n]);
+draw();
+if(a.every(v=>!v))el("lightsMsg").textContent="You win! All lights are off.";
+};
+draw();
+cleanup=()=>window.lightTap=null;
+}
+
+function sudokuGame(){
+let puzzle=[1,0,0,4,0,4,1,0,2,0,4,0,0,3,0,1];
+let sol=[1,2,3,4,3,4,1,2,2,1,4,3,4,3,2,1];
+let v=puzzle.slice();
+display("Mini Sudoku",'<p>Complete each row and column with 1–4. Tap an empty cell to cycle its value.</p><div class="board" id="sudokuBoard"></div><p id="sudokuMsg"></p>');
+function draw(){
+el("sudokuBoard").innerHTML=v.map((n,i)=>'<button class="tile" style="background:'+(puzzle[i]?"#26364d":"#344b70")+'" onclick="sudokuTap('+i+')">'+(n||"·")+'</button>').join("");
+}
+window.sudokuTap=i=>{
+if(puzzle[i])return;
+v[i]=(v[i]+1)%5;
+draw();
+if(v.every((n,j)=>n===sol[j]))el("sudokuMsg").textContent="Puzzle solved! 🎉";
+};
+draw();
+cleanup=()=>window.sudokuTap=null;
+}
+
+function nonogramGame(){
+let goal=["01110","11011","11111","01110","00100"],a=Array(25).fill(false);
+display("Mini Nonogram",'<p>Tap squares to reveal the hidden pattern.</p><div class="gamegrid" id="nonoGrid"></div><p id="nonoMsg">Find the picture!</p>');
+function draw(){
+el("nonoGrid").innerHTML=a.map((v,i)=>'<button style="background:'+(v?"#69b8e8":"#344b70")+'" onclick="nonoTap('+i+')">'+(v?"■":"·")+'</button>').join("");
+}
+window.nonoTap=i=>{
+a[i]=!a[i];
+draw();
+if(a.every((v,i)=>v===(goal[Math.floor(i/5)][i%5]==="1")))el("nonoMsg").textContent="Pattern found! 🎉";
+};
+draw();
+cleanup=()=>window.nonoTap=null;
+}
+
+function quickChallenge(name,desc){
+display(name,'<div class="panel"><p>'+desc+'</p><h3 id="quickCount">0</h3><p>Tap 15 times to finish.</p><button onclick="quickTap()">TAP!</button><p id="quickMsg"></p></div>');
+let n=0;
+window.quickTap=()=>{
+n++;
+el("quickCount").textContent=n;
+if(n>=15)el("quickMsg").textContent="Challenge complete! 🎉";
+};
+cleanup=()=>window.quickTap=null;
+}
+</script>
+</body>
+</html>
