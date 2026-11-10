@@ -1,428 +1,183 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HJH Gaming</title>
-
 <style>
-* {box-sizing:border-box}
-
-body {
-  margin:0;
-  background:#080d19;
-  color:white;
-  font-family:Arial,sans-serif;
-}
-
-header {
-  background:linear-gradient(120deg,#101e42,#122d5b,#07101e);
-  padding:35px 15px;
-  text-align:center;
-  border-bottom:3px solid #168cff;
-}
-
-header h1 {
-  font-size:42px;
-  margin:0 0 12px;
-  color:#42a5ff;
-}
-
-header p {
-  max-width:750px;
-  margin:10px auto;
-  line-height:1.7;
-}
-
-.creator {
-  color:#b8d9ff;
-  font-weight:bold;
-}
-
-#search {
-  display:block;
-  width:90%;
-  max-width:550px;
-  padding:15px;
-  margin:25px auto;
-  border:2px solid #258cff;
-  border-radius:12px;
-  background:#111c31;
-  color:white;
-  font-size:16px;
-}
-
-.categories {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:10px;
-  padding:10px;
-}
-
-.categories button {
-  background:#172b4b;
-  color:white;
-  border:1px solid #278cff;
-  padding:11px 18px;
-  border-radius:20px;
-  cursor:pointer;
-}
-
-.categories button.active {
-  background:#168cff;
-}
-
-main {
-  max-width:1200px;
-  margin:auto;
-  padding:15px;
-}
-
-h2 {
-  color:#51aaff;
-  text-align:center;
-}
-
-.games {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:17px;
-}
-
-.game {
-  background:#121e32;
-  border:1px solid #263f61;
-  border-radius:14px;
-  padding:20px;
-  text-align:center;
-}
-
-.game h3 {
-  margin-top:5px;
-}
-
-.game p {
-  color:#b9c8dc;
-  min-height:38px;
-}
-
-.game button {
-  width:100%;
-  padding:13px;
-  background:#087cff;
-  color:white;
-  border:0;
-  border-radius:9px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.game button:hover {
-  background:#005ac4;
-}
-
-#playerSection {
-  display:none;
-  margin:30px auto;
-  padding:15px;
-  background:#111c30;
-  border:2px solid #168cff;
-  border-radius:15px;
-}
-
-#playerSection h2 {
-  margin-top:5px;
-}
-
-#gameFrame {
-  width:100%;
-  height:600px;
-  border:0;
-  border-radius:10px;
-  background:black;
-}
-
-.close {
-  background:#d62e42;
-  color:white;
-  padding:12px 20px;
-  border:0;
-  border-radius:8px;
-  cursor:pointer;
-  margin-bottom:15px;
-}
-
-footer {
-  text-align:center;
-  background:#101b2d;
-  padding:30px 15px;
-  margin-top:40px;
-  color:#bdcce0;
-}
-
-footer a {
-  color:#55adff;
-}
-
-.hidden {
-  display:none;
-}
-
-@media(max-width:600px) {
-  header h1 {font-size:32px}
-  #gameFrame {height:480px}
-}
+*{box-sizing:border-box}body{margin:0;background:#080d19;color:#fff;font-family:Arial,sans-serif}
+header{background:linear-gradient(120deg,#101e42,#122d5b,#07101e);padding:28px 15px;text-align:center;border-bottom:3px solid #168cff}
+header h1{font-size:40px;color:#42a5ff;margin:0 0 12px}header p{max-width:750px;margin:10px auto;line-height:1.6}
+a{color:#62b5ff}#search{display:block;width:90%;max-width:550px;padding:15px;margin:24px auto;border:2px solid #258cff;border-radius:12px;background:#111c31;color:white;font-size:16px}
+.categories,.toolbar{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:10px}
+.categories button,.toolbar button{background:#172b4b;color:white;border:1px solid #278cff;padding:11px 17px;border-radius:10px;cursor:pointer}
+.categories button.active{background:#168cff}main{max-width:1200px;margin:auto;padding:15px}h2{color:#51aaff;text-align:center}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:17px}
+.game{background:#121e32;border:1px solid #263f61;border-radius:14px;padding:20px;text-align:center}
+.game h3{margin-top:5px}.game p{color:#b9c8dc;min-height:38px}
+.game button,.primary{width:100%;padding:13px;background:#087cff;color:white;border:0;border-radius:9px;font-weight:bold;cursor:pointer}
+.game button:hover,.primary:hover{background:#005ac4}
+.own-heading{margin-top:45px;padding:16px;background:#10294c;border:1px solid #278cff;border-radius:12px}
+#ownGames .game{border-color:#168cff;background:linear-gradient(145deg,#142744,#101b2d)}
+#playerSection,#originalGame{display:none;margin:30px auto;padding:15px;background:#111c30;border:2px solid #168cff;border-radius:15px}
+#gameFrame{width:100%;height:600px;border:0;border-radius:10px;background:#000}
+.close{background:#d62e42;color:white;padding:12px 20px;border:0;border-radius:8px;cursor:pointer;margin-bottom:15px}
+footer{text-align:center;background:#101b2d;padding:30px 15px;margin-top:40px;color:#bdcce0}
+.hidden{display:none!important}.panel{background:#0b172b;border:1px solid #28517d;border-radius:12px;padding:15px;margin:12px 0}
+.toolbar button,.menu-button{background:#087cff;color:white;border:0;border-radius:8px;padding:12px 18px;font-weight:bold;cursor:pointer}
+.hud{display:flex;flex-wrap:wrap;justify-content:space-around;gap:12px;background:#07101e;padding:12px;border-radius:10px;margin:10px auto;max-width:850px}
+.healthOuter{height:18px;background:#48252a;border-radius:10px;overflow:hidden;width:150px}#healthFill{height:100%;width:100%;background:#35d66c}
+#finiteCanvas{display:block;width:100%;max-width:850px;height:auto;margin:auto;background:#152b25;border:2px solid #456b55;border-radius:10px;touch-action:none}
+#finiteControls{display:flex;justify-content:center;align-items:center;gap:12px;margin:12px auto;flex-wrap:wrap}
+#finiteControls button{width:58px;height:48px;background:#203e60;color:white;border:1px solid #5a91c5;border-radius:10px;font-size:20px;touch-action:none}
+.song-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.song{background:#172b4b;color:white;border:1px solid #37618e;border-radius:9px;padding:12px;text-align:left;cursor:pointer}
+.song.selected{border:2px solid #35a7ff;background:#17416d}.song small{display:block;color:#b8d9ff;margin-top:6px}
+#pianoBoard{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:650px;margin:15px auto}
+.pianoTile{height:180px;border:2px solid #4b78a8;border-radius:9px;background:linear-gradient(#18345a,#0b172b);color:white;font-size:25px;font-weight:bold;cursor:pointer;touch-action:manipulation}
+.pianoTile.active{background:#168cff}.small-note{color:#b9c8dc;text-align:center;font-size:13px;line-height:1.5}
+@media(max-width:600px){header h1{font-size:32px}#gameFrame{height:480px}.pianoTile{height:140px}}
 </style>
 </head>
-
 <body>
-
 <header>
-  <h1>🎮 HJH GAMING</h1>
-
-  <p class="creator">
-    Houston Jordan Holt is the creator of This website
-  </p>
-
-  <p>
-    Welcome to HJH Gaming! Play a collection of games
-    created by other developers, right here on our website.
-  </p>
-
-  <p>
-    If you want new games added talk to him at
-    <a href="mailto:houstonholt3@gmail.com" style="color:#62b5ff">
-      houstonholt3@gmail.com
-    </a>
-    and he will see what he can do
-  </p>
-
-  <p>#Houstonisthebest</p>
+<h1>🎮 HJH GAMING</h1>
+<p><b>Houston Jordan Holt is the creator of this website</b></p>
+<p>Welcome to HJH Gaming! Play a collection of games created by other developers, right here on our website.</p>
+<p>If you want new games added, talk to him at <a href="mailto:houstonholt3@gmail.com">houstonholt3@gmail.com</a> and he will see what he can do.</p>
+<p>#Houstonisthebest</p>
 </header>
-
-<input
-  id="search"
-  type="search"
-  placeholder="🔎 Search for games..."
-  oninput="filterGames()"
->
-
+<input id="search" type="search" placeholder="🔎 Search for games..." oninput="filterGames()">
 <div class="categories">
-  <button class="active" onclick="setCategory('all',this)">All Games</button>
-  <button onclick="setCategory('arcade',this)">Arcade</button>
-  <button onclick="setCategory('puzzle',this)">Puzzle</button>
-  <button onclick="setCategory('adventure',this)">Adventure</button>
-  <button onclick="setCategory('strategy',this)">Strategy</button>
-  <button onclick="setCategory('casual',this)">Casual</button>
+<button class="active" onclick="setCategory('all',this)">All Games</button>
+<button onclick="setCategory('arcade',this)">Arcade</button>
+<button onclick="setCategory('puzzle',this)">Puzzle</button>
+<button onclick="setCategory('adventure',this)">Adventure</button>
+<button onclick="setCategory('strategy',this)">Strategy</button>
+<button onclick="setCategory('casual',this)">Casual</button>
 </div>
-
 <main>
-
 <h2>🔥 GAME LIBRARY</h2>
-
 <div class="games" id="games">
-
-<!-- UPLOAD ARCADE GAMES -->
-
-<div class="game" data-category="arcade">
-<h3>Orbit Brake</h3>
-<p>One-button gravity arcade game.</p>
-<button onclick="playGame('Orbit Brake','https://www.uploadarcade.com/embed/orbit-brake')">PLAY NOW</button>
+<div class="game" data-category="arcade"><h3>Orbit Brake</h3><p>One-button gravity arcade game.</p><button onclick="playGame('Orbit Brake','https://www.uploadarcade.com/embed/orbit-brake')">PLAY NOW</button></div>
+<div class="game" data-category="puzzle"><h3>Parcel Panic</h3><p>Sort packages before the conveyor belt fills up.</p><button onclick="playGame('Parcel Panic','https://www.uploadarcade.com/embed/parcel-panic')">PLAY NOW</button></div>
+<div class="game" data-category="puzzle"><h3>Lantern Lines</h3><p>Connect matching points without crossing lines.</p><button onclick="playGame('Lantern Lines','https://www.uploadarcade.com/embed/lantern-lines')">PLAY NOW</button></div>
+<div class="game" data-category="arcade"><h3>Cloud Courier</h3><p>Keep your flying courier in the air.</p><button onclick="playGame('Cloud Courier','https://www.uploadarcade.com/embed/cloud-courier')">PLAY NOW</button></div>
+<div class="game" data-category="strategy"><h3>Pocket Reactor</h3><p>Balance an energy grid in this strategy game.</p><button onclick="playGame('Pocket Reactor','https://www.uploadarcade.com/embed/pocket-reactor')">PLAY NOW</button></div>
+<div class="game" data-category="casual"><h3>Signal Garden</h3><p>Remember and repeat the growing pattern.</p><button onclick="playGame('Signal Garden','https://www.uploadarcade.com/embed/signal-garden')">PLAY NOW</button></div>
+<div class="game" data-category="arcade"><h3>Color Relay</h3><p>Match colors and pass through the gates.</p><button onclick="playGame('Color Relay','https://www.uploadarcade.com/embed/color-relay')">PLAY NOW</button></div>
+<div class="game" data-category="puzzle"><h3>2048</h3><p>Combine matching numbers to reach 2048.</p><button onclick="playGame('2048','https://playbolt.app/play/2048/')">PLAY NOW</button></div>
+<div class="game" data-category="arcade"><h3>Hextris</h3><p>A fast-paced hexagon puzzle game.</p><button onclick="playGame('Hextris','https://playbolt.app/play/hextris/')">PLAY NOW</button></div>
+<div class="game" data-category="adventure"><h3>Astray</h3><p>Explore a maze and find your way through.</p><button onclick="playGame('Astray','https://playbolt.app/play/astray/')">PLAY NOW</button></div>
+<div class="game" data-category="puzzle"><h3>Sliding Puzzle</h3><p>Put the mixed-up tiles back in order.</p><button onclick="playGame('Sliding Puzzle','https://playbolt.app/play/sliding-puzzle/')">PLAY NOW</button></div>
+<div class="game" data-category="arcade"><h3>Snake</h3><p>Grow your snake and avoid running into yourself.</p><button onclick="playGame('Snake','https://playbolt.app/play/snake/')">PLAY NOW</button></div>
+<div class="game" data-category="casual"><h3>Whack-a-Mole</h3><p>Test your reflexes in this classic game.</p><button onclick="playGame('Whack-a-Mole','https://playbolt.app/play/whack-a-mole/')">PLAY NOW</button></div>
+<div class="game" data-category="arcade"><h3>Neon Pong</h3><p>A glowing arcade version of classic Pong.</p><button onclick="playGame('Neon Pong','https://playbolt.app/play/neon-pong/')">PLAY NOW</button></div>
+<div class="game" data-category="arcade"><h3>Sky Hopper</h3><p>Jump your way through the sky.</p><button onclick="playGame('Sky Hopper','https://playbolt.app/play/sky-hopper/')">PLAY NOW</button></div>
+<div class="game" data-category="puzzle"><h3>Lights Out</h3><p>Switch off every light to solve the puzzle.</p><button onclick="playGame('Lights Out','https://playbolt.app/play/lights-out/')">PLAY NOW</button></div>
+<div class="game" data-category="puzzle"><h3>Sudoku</h3><p>Complete the number puzzle.</p><button onclick="playGame('Sudoku','https://playbolt.app/play/sudoku/')">PLAY NOW</button></div>
+<div class="game" data-category="puzzle"><h3>Nonogram</h3><p>Reveal pictures by solving number clues.</p><button onclick="playGame('Nonogram','https://playbolt.app/play/nonogram/')">PLAY NOW</button></div>
 </div>
-
-<div class="game" data-category="puzzle">
-<h3>Parcel Panic</h3>
-<p>Sort packages before the conveyor belt fills up.</p>
-<button onclick="playGame('Parcel Panic','https://www.uploadarcade.com/embed/parcel-panic')">PLAY NOW</button>
+<h2 class="own-heading">⭐ GAMES CREATED BY HOUSTON HOLT</h2>
+<div class="games" id="ownGames">
+<div class="game"><h3>🧟 Finite</h3><p>Survive zombie waves, collect ammo, and earn points.</p><button onclick="openOriginal('finite')">PLAY FINITE</button></div>
+<div class="game"><h3>🎹 HJH Piano Rush</h3><p>Choose songs and tap piano tiles in four difficulty levels.</p><button onclick="openOriginal('piano')">PLAY PIANO RUSH</button></div>
 </div>
-
-<div class="game" data-category="puzzle">
-<h3>Lantern Lines</h3>
-<p>Connect matching points without crossing lines.</p>
-<button onclick="playGame('Lantern Lines','https://www.uploadarcade.com/embed/lantern-lines')">PLAY NOW</button>
+<div id="playerSection">
+<button class="close" onclick="closeGame()">✖ CLOSE GAME</button>
+<h2 id="gameTitle">Now Playing</h2>
+<iframe id="gameFrame" src="about:blank" title="HJH Gaming embedded game" allow="fullscreen; autoplay; gamepad" allowfullscreen loading="lazy"></iframe>
+<p class="small-note">This game is provided by its original developer. Some websites may block embedded play.</p>
 </div>
-
-<div class="game" data-category="arcade">
-<h3>Cloud Courier</h3>
-<p>Keep your flying courier in the air.</p>
-<button onclick="playGame('Cloud Courier','https://www.uploadarcade.com/embed/cloud-courier')">PLAY NOW</button>
+<section id="originalGame">
+<button class="close" onclick="closeOriginal()">✖ BACK TO GAME LIBRARY</button>
+<div id="finiteApp" class="hidden">
+<div id="finiteMenu" class="panel">
+<h2>🧟 FINITE</h2><p style="text-align:center">Survive zombie waves! Collect ammo, protect your health, and earn one point for every zombie defeated.</p>
+<div class="toolbar"><button onclick="startFinite()">START GAME</button></div>
+<p class="small-note">Computer: WASD or arrow keys to move; click the game to aim and fire. Phone: use the direction and FIRE buttons.</p>
 </div>
-
-<div class="game" data-category="strategy">
-<h3>Pocket Reactor</h3>
-<p>Balance an energy grid in this strategy game.</p>
-<button onclick="playGame('Pocket Reactor','https://www.uploadarcade.com/embed/pocket-reactor')">PLAY NOW</button>
+<div id="finitePlay" class="hidden">
+<div class="hud">
+<div>❤️ HEALTH<div class="healthOuter"><div id="healthFill"></div></div></div>
+<div>⭐ POINTS: <b id="score">0</b></div><div>🔋 AMMO: <b id="ammo">20</b></div><div>🧟 ZOMBIES: <b id="zombieCount">0</b></div>
 </div>
-
-<div class="game" data-category="casual">
-<h3>Signal Garden</h3>
-<p>Remember and repeat the growing pattern.</p>
-<button onclick="playGame('Signal Garden','https://www.uploadarcade.com/embed/signal-garden')">PLAY NOW</button>
+<canvas id="finiteCanvas" width="850" height="520"></canvas>
+<div id="finiteControls">
+<div>
+<button onpointerdown="holdMove('up',true)" onpointerup="holdMove('up',false)" onpointerleave="holdMove('up',false)">▲</button><br>
+<button onpointerdown="holdMove('left',true)" onpointerup="holdMove('left',false)" onpointerleave="holdMove('left',false)">◀</button>
+<button onpointerdown="holdMove('down',true)" onpointerup="holdMove('down',false)" onpointerleave="holdMove('down',false)">▼</button>
+<button onpointerdown="holdMove('right',true)" onpointerup="holdMove('right',false)" onpointerleave="holdMove('right',false)">▶</button>
 </div>
-
-<div class="game" data-category="arcade">
-<h3>Color Relay</h3>
-<p>Match colors and pass through the gates.</p>
-<button onclick="playGame('Color Relay','https://www.uploadarcade.com/embed/color-relay')">PLAY NOW</button>
+<button style="background:#b52e43;color:white;font-weight:bold;width:100px;height:65px;border:0;border-radius:12px" onclick="shootFinite()">FIRE</button>
 </div>
-
-<!-- PLAYBOLT GAMES -->
-
-<div class="game" data-category="puzzle">
-<h3>2048</h3>
-<p>Combine matching numbers to reach 2048.</p>
-<button onclick="playGame('2048','https://playbolt.app/play/2048/')">PLAY NOW</button>
+<p class="small-note">Ammo boxes appear every 60 seconds. Walk over one to collect it. Tap or click the playfield to aim and fire.</p>
+<div id="finiteOver" class="panel hidden" style="text-align:center"><h2>GAME OVER</h2><p>Your final score: <b id="finalScore">0</b></p><button class="menu-button" onclick="startFinite()">PLAY AGAIN</button></div>
 </div>
-
-<div class="game" data-category="arcade">
-<h3>Hextris</h3>
-<p>A fast-paced hexagon puzzle game.</p>
-<button onclick="playGame('Hextris','https://playbolt.app/play/hextris/')">PLAY NOW</button>
 </div>
-
-<div class="game" data-category="adventure">
-<h3>Astray</h3>
-<p>Explore a maze and find your way through.</p>
-<button onclick="playGame('Astray','https://playbolt.app/play/astray/')">PLAY NOW</button>
+<div id="pianoApp" class="hidden">
+<div id="pianoMenu" class="panel"><h2>🎹 HJH PIANO RUSH</h2><p style="text-align:center">Welcome to Piano Rush! Press PLAY to enter the music library.</p><button class="primary" onclick="showPianoLibrary()">PLAY</button></div>
+<div id="pianoLibrary" class="hidden">
+<div class="panel"><h2>🎵 HJH MUSIC LIBRARY</h2><p style="text-align:center">Choose a song and difficulty, then press START GAME.</p>
+<div class="song-grid" id="songGrid"></div>
+<div class="toolbar"><button onclick="startPiano()">START GAME</button><button onclick="showPianoMenu()">MAIN MENU</button></div>
+<p class="small-note">This game plays original generated piano-note patterns associated with each song title. It does not contain official recordings, vocals, or exact copyrighted melodies.</p>
+</div></div>
+<div id="pianoPlay" class="hidden"><div class="panel">
+<h2 id="pianoSongTitle">Piano Rush</h2><p style="text-align:center">Score: <b id="pianoScore">0</b> | Misses: <b id="pianoMisses">0</b></p>
+<p id="pianoMessage" style="text-align:center;color:#b8d9ff">Tap the highlighted lane!</p>
+<div id="pianoBoard"><button class="pianoTile" onclick="hitLane(0)">D</button><button class="pianoTile" onclick="hitLane(1)">F</button><button class="pianoTile" onclick="hitLane(2)">J</button><button class="pianoTile" onclick="hitLane(3)">K</button></div>
+<div class="toolbar"><button onclick="stopPiano()">STOP GAME</button></div>
+</div></div>
 </div>
-
-<div class="game" data-category="puzzle">
-<h3>Sliding Puzzle</h3>
-<p>Put the mixed-up tiles back in order.</p>
-<button onclick="playGame('Sliding Puzzle','https://playbolt.app/play/sliding-puzzle/')">PLAY NOW</button>
-</div>
-
-<div class="game" data-category="arcade">
-<h3>Snake</h3>
-<p>Grow your snake and avoid running into yourself.</p>
-<button onclick="playGame('Snake','https://playbolt.app/play/snake/')">PLAY NOW</button>
-</div>
-
-<div class="game" data-category="casual">
-<h3>Whack-a-Mole</h3>
-<p>Test your reflexes in this classic game.</p>
-<button onclick="playGame('Whack-a-Mole','https://playbolt.app/play/whack-a-mole/')">PLAY NOW</button>
-</div>
-
-<div class="game" data-category="arcade">
-<h3>Neon Pong</h3>
-<p>A glowing arcade version of classic Pong.</p>
-<button onclick="playGame('Neon Pong','https://playbolt.app/play/neon-pong/')">PLAY NOW</button>
-</div>
-
-<div class="game" data-category="arcade">
-<h3>Sky Hopper</h3>
-<p>Jump your way through the sky.</p>
-<button onclick="playGame('Sky Hopper','https://playbolt.app/play/sky-hopper/')">PLAY NOW</button>
-</div>
-
-<div class="game" data-category="puzzle">
-<h3>Lights Out</h3>
-<p>Switch off every light to solve the puzzle.</p>
-<button onclick="playGame('Lights Out','https://playbolt.app/play/lights-out/')">PLAY NOW</button>
-</div>
-
-<div class="game" data-category="puzzle">
-<h3>Sudoku</h3>
-<p>Complete the number puzzle.</p>
-<button onclick="playGame('Sudoku','https://playbolt.app/play/sudoku/')">PLAY NOW</button>
-</div>
-
-<div class="game" data-category="puzzle">
-<h3>Nonogram</h3>
-<p>Reveal pictures by solving number clues.</p>
-<button onclick="playGame('Nonogram','https://playbolt.app/play/nonogram/')">PLAY NOW</button>
-</div>
-
-</div>
-
-<div id="noResults" class="hidden" style="text-align:center;padding:30px">
-No games found. Try another search!
-</div>
-
-<section id="playerSection">
-  <button class="close" onclick="closeGame()">✖ CLOSE GAME</button>
-  <h2 id="gameTitle">Now Playing</h2>
-
-  <iframe
-    id="gameFrame"
-    src="about:blank"
-    title="HJH Gaming embedded game"
-    allow="fullscreen; autoplay; gamepad"
-    allowfullscreen
-    loading="lazy">
-  </iframe>
-
-  <p style="text-align:center;color:#b9c8dc">
-    This game is provided by its original developer.
-  </p>
 </section>
-
 </main>
-
-<footer>
-  <h2>HJH GAMING</h2>
-  <p>Created by Houston Jordan Holt</p>
-  <p>Game rights belong to their respective creators.</p>
-  <p>Contact: houstonholt3@gmail.com</p>
-  <p>#Houstonisthebest</p>
-</footer>
-
+<footer><h2>HJH GAMING</h2><p>Created by Houston Jordan Holt</p><p>Game rights belong to their respective creators.</p><p>Contact: houstonholt3@gmail.com</p><p>#Houstonisthebest</p></footer>
 <script>
-let selectedCategory = "all";
-
-function playGame(name,url) {
-  const player = document.getElementById("playerSection");
-  const frame = document.getElementById("gameFrame");
-
-  document.getElementById("gameTitle").textContent = name;
-
-  frame.src = url;
-  player.style.display = "block";
-
-  player.scrollIntoView({behavior:"smooth"});
-}
-
-function closeGame() {
-  document.getElementById("gameFrame").src = "about:blank";
-  document.getElementById("playerSection").style.display = "none";
-}
-
-function setCategory(category,button) {
-  selectedCategory = category;
-
-  document.querySelectorAll(".categories button").forEach(b=>{
-    b.classList.remove("active");
-  });
-
-  button.classList.add("active");
-  filterGames();
-}
-
-function filterGames() {
-  const search = document.getElementById("search").value.toLowerCase();
-  const games = document.querySelectorAll(".game");
-  let count = 0;
-
-  games.forEach(game=>{
-    const matchesSearch = game.innerText.toLowerCase().includes(search);
-    const matchesCategory =
-      selectedCategory === "all" ||
-      game.dataset.category === selectedCategory;
-
-    const visible = matchesSearch && matchesCategory;
-
-    game.style.display = visible ? "block" : "none";
-
-    if(visible) count++;
-  });
-
-  document.getElementById("noResults").style.display =
-    count === 0 ? "block" : "none";
+let selectedCategory='all';
+function playGame(name,url){closeOriginal();document.getElementById('gameTitle').textContent=name;document.getElementById('gameFrame').src=url;document.getElementById('playerSection').style.display='block';document.getElementById('playerSection').scrollIntoView({behavior:'smooth'});}
+function closeGame(){document.getElementById('gameFrame').src='about:blank';document.getElementById('playerSection').style.display='none';}
+function setCategory(category,button){selectedCategory=category;document.querySelectorAll('.categories button').forEach(b=>b.classList.remove('active'));button.classList.add('active');filterGames();}
+function filterGames(){let term=document.getElementById('search').value.toLowerCase();document.querySelectorAll('#games .game').forEach(g=>{g.style.display=g.innerText.toLowerCase().includes(term)&&(selectedCategory==='all'||g.dataset.category===selectedCategory)?'block':'none';});}
+function openOriginal(which){closeGame();stopFinite();stopPiano();document.getElementById('originalGame').style.display='block';document.getElementById('finiteApp').classList.toggle('hidden',which!=='finite');document.getElementById('pianoApp').classList.toggle('hidden',which!=='piano');document.getElementById('originalGame').scrollIntoView({behavior:'smooth'});if(which==='finite'){document.getElementById('finiteMenu').classList.remove('hidden');document.getElementById('finitePlay').classList.add('hidden');}else showPianoMenu();}
+function closeOriginal(){stopFinite();stopPiano();document.getElementById('originalGame').style.display='none';}
+</script>
+<script>
+const canvas=document.getElementById('finiteCanvas'),ctx=canvas.getContext('2d');
+let player={x:425,y:260,r:14},zombies=[],bullets=[],boxes=[],score=0,ammo=20,health=100,finiteRunning=false,finiteTimer=null,lastSpawn=0,lastAmmo=0,keys={},moving={},aim={x:600,y:260};
+function updateHud(){document.getElementById('healthFill').style.width=health+'%';document.getElementById('score').textContent=score;document.getElementById('ammo').textContent=ammo;document.getElementById('zombieCount').textContent=zombies.length;}
+function startFinite(){stopFinite();player={x:425,y:260,r:14};zombies=[];bullets=[];boxes=[];score=0;ammo=20;health=100;lastSpawn=0;lastAmmo=performance.now();document.getElementById('finiteMenu').classList.add('hidden');document.getElementById('finitePlay').classList.remove('hidden');document.getElementById('finiteOver').classList.add('hidden');finiteRunning=true;updateHud();finiteLoop();}
+function stopFinite(){finiteRunning=false;if(finiteTimer)cancelAnimationFrame(finiteTimer);finiteTimer=null;}
+function holdMove(direction,on){moving[direction]=on;}
+window.addEventListener('keydown',e=>{let k=e.key.toLowerCase();keys[k]=true;if(['arrowup','arrowdown','arrowleft','arrowright',' '].includes(k))e.preventDefault();if(k===' '&&finiteRunning)shootFinite();});
+window.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
+function shootFinite(){if(!finiteRunning||ammo<=0)return;ammo--;let dx=aim.x-player.x,dy=aim.y-player.y,d=Math.hypot(dx,dy)||1;bullets.push({x:player.x,y:player.y,vx:dx/d*8,vy:dy/d*8,life:65});updateHud();}
+canvas.addEventListener('pointerdown',e=>{let r=canvas.getBoundingClientRect();aim={x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height};shootFinite();});
+function spawnZombie(){let side=Math.floor(Math.random()*4),x=side===0?0:side===1?850:Math.random()*850,y=side===2?0:side===3?520:Math.random()*520;zombies.push({x,y,r:15,speed:.55+Math.random()*.45,hp:2,attack:0});}
+function finiteLoop(){
+if(!finiteRunning)return;let now=performance.now();
+if(now-lastSpawn>2200){spawnZombie();lastSpawn=now;}
+if(now-lastAmmo>=60000){boxes.push({x:40+Math.random()*770,y:40+Math.random()*440});lastAmmo=now;}
+let dx=0,dy=0;if(keys.w||keys.arrowup||moving.up)dy--;if(keys.s||keys.arrowdown||moving.down)dy++;if(keys.a||keys.arrowleft||moving.left)dx--;if(keys.d||keys.arrowright||moving.right)dx++;
+let len=Math.hypot(dx,dy)||1;player.x=Math.max(15,Math.min(835,player.x+dx/len*3.2));player.y=Math.max(15,Math.min(505,player.y+dy/len*3.2));
+bullets.forEach(b=>{b.x+=b.vx;b.y+=b.vy;b.life--;});bullets=bullets.filter(b=>b.life>0&&b.x>=0&&b.x<=850&&b.y>=0&&b.y<=520);
+zombies.forEach(z=>{let x=player.x-z.x,y=player.y-z.y,d=Math.hypot(x,y)||1;if(d>24){z.x+=x/d*z.speed;z.y+=y/d*z.speed;}else{z.attack++;if(z.attack>35){health=Math.max(0,health-8);z.attack=0;}}});
+bullets.forEach(b=>zombies.forEach(z=>{if(z.hp>0&&Math.hypot(b.x-z.x,b.y-z.y)<z.r+5){z.hp=0;b.life=0;score++;}}));zombies=zombies.filter(z=>z.hp>0);
+boxes=boxes.filter(box=>{if(Math.hypot(box.x-player.x,box.y-player.y)<25){ammo+=12;return false;}return true;});updateHud();
+ctx.clearRect(0,0,850,520);ctx.fillStyle='#18382b';ctx.fillRect(0,0,850,520);ctx.strokeStyle='#234b38';
+for(let x=0;x<850;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,520);ctx.stroke();}for(let y=0;y<520;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(850,y);ctx.stroke();}
+boxes.forEach(b=>{ctx.fillStyle='#e9bd38';ctx.fillRect(b.x-10,b.y-10,20,20);ctx.fillStyle='#252525';ctx.fillRect(b.x-2,b.y-8,4,16);});
+bullets.forEach(b=>{ctx.fillStyle='#ffe66a';ctx.beginPath();ctx.arc(b.x,b.y,4,0,Math.PI*2);ctx.fill();});
+zombies.forEach(z=>{ctx.fillStyle='#79bd68';ctx.beginPath();ctx.arc(z.x,z.y,z.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#182b20';ctx.fillRect(z.x-6,z.y-4,4,4);ctx.fillRect(z.x+3,z.y-4,4,4);});
+ctx.fillStyle='#56aaff';ctx.beginPath();ctx.arc(player.x,player.y,player.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='white';ctx.fillRect(player.x-4,player.y-3,8,6);
+if(health<=0){finiteRunning=false;document.getElementById('finalScore').textContent=score;document.getElementById('finiteOver').classList.remove('hidden');return;}
+finiteTimer=requestAnimationFrame(finiteLoop);
 }
 </script>
-
-</body>
-</html>
+<script>
+const songs=[
+['HUMBLE.','Kendrick Lamar','HARD'],['Not Like Us','Kendrick Lamar','HARD'],['luther','Kendrick Lamar & SZA','HARD'],['Like That','Future, Metro Boomin & Kendrick Lamar','HARD'],['Squabble Up','Kendrick Lamar','HARD'],
+['Love Yourself','Justin Bieber','EASY'],['Sorry','Justin Bieber','EASY'],
+['One Dance','Drake ft. Wizkid & Kyla','EXTREME'],['Work','Rihanna ft. Drake','EXTREME'],
+['Stressed Out','Twenty One Pilots','VERY EASY'],['Closer','The Chainsmokers ft. Halsey','VERY EASY'],['Cheap Thrills','Sia ft. Sean Paul','VERY EASY'],['Cake by the Ocean','DNCE','VERY EASY'],["Can't Stop the Feeling!",'Justin Timberlake','VERY EASY'],["Don't Let Me Down",'The Chainsmokers ft. Daya','VERY EASY'],['Panda','Desiigner','EXTREME'],['Heathens','Twenty One Pilots','VERY EASY'],['Into You','Ariana Grande','VERY EA
