@@ -4,22 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#090f20">
+<meta name="description" content="HJH Gaming — browser games created and collected by Houston Holt.">
 <title>HJH Gaming</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#090f20;color:#f4f6ff;font-family:Arial,Helvetica,sans-serif}
-header{text-align:center;padding:26px 14px;background:linear-gradient(120deg,#12295a,#632a9c,#087b88)}
-header h1{font-size:clamp(32px,7vw,48px);margin:5px}header p{margin:7px}
+:root{color-scheme:dark;--bg:#090f20;--panel:#17243e;--line:#354b70;--accent:#8057ee;--text:#f4f6ff;--muted:#bdc9df}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+header{text-align:center;padding:28px 14px;background:linear-gradient(120deg,#12295a,#632a9c,#087b88)}
+header h1{font-size:clamp(32px,7vw,50px);margin:5px}header p{margin:8px}
 nav{position:sticky;top:0;z-index:5;display:flex;justify-content:center;flex-wrap:wrap;gap:7px;padding:10px;background:#111b30}
-button{border:0;border-radius:8px;padding:10px 14px;background:#7048dc;color:white;font-weight:bold;cursor:pointer;margin:3px}
-button:hover{filter:brightness(1.15)}button:disabled{opacity:.45}
-main{max-width:1150px;margin:auto;padding:16px}section{margin-bottom:25px}h2{border-bottom:2px solid #7048dc;padding-bottom:9px}
+button{border:0;border-radius:8px;padding:10px 14px;background:var(--accent);color:white;font-weight:bold;cursor:pointer;margin:3px}
+button:hover{filter:brightness(1.15)}button:disabled{opacity:.45;cursor:not-allowed}
+main{max-width:1150px;margin:auto;padding:16px}section{margin-bottom:25px}h2{border-bottom:2px solid var(--accent);padding-bottom:9px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:14px}
-.card,.panel{background:#17243e;border:1px solid #354b70;border-radius:12px;padding:14px}
-.card p{color:#c5cfe2;min-height:38px;font-size:14px}.card button{width:100%}
+.card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.card p{color:var(--muted);min-height:38px;font-size:14px}.card button{width:100%}
 .art{height:92px;border-radius:9px;display:grid;place-items:center;font-size:42px;background:linear-gradient(135deg,#29447e,#803d9c)}
 input,select{max-width:100%;padding:11px;border-radius:8px;border:1px solid #536789;background:#0e1930;color:white;margin:6px}
-.hidden{display:none!important}#player{background:#111b30;border:2px solid #7048dc;border-radius:13px;padding:15px;margin:20px 0}
-#gameArea{text-align:center;min-height:230px;padding:12px}.muted{color:#b9c6dd}
+.hidden{display:none!important}#player{background:#111b30;border:2px solid var(--accent);border-radius:13px;padding:15px;margin:20px 0}
+#gameArea{text-align:center;min-height:230px;padding:12px}.muted{color:var(--muted)}
 .board{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;max-width:340px;margin:14px auto}
 .tile{min-height:55px;background:#344b70;border-radius:6px;display:grid;place-items:center;font-weight:bold;font-size:20px}
 .gamegrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:350px;margin:15px auto}
@@ -30,7 +32,7 @@ iframe{width:100%;height:min(70vh,650px);min-height:420px;border:0;border-radius
 footer{text-align:center;padding:25px;color:#aebbd3}
 a{color:#8fcaff}canvas{background:#081322;border:1px solid #536789;max-width:100%}
 .songlist{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
-.songlist button{background:#293b5d}
+@media(max-width:480px){main{padding:10px}.card{padding:11px}nav button{padding:9px 10px}iframe{min-height:360px}}
 </style>
 </head>
 <body>
@@ -41,313 +43,166 @@ a{color:#8fcaff}canvas{background:#081322;border:1px solid #536789;max-width:100
 <h3>#Houstonisthebest</h3>
 </header>
 <nav>
-<button onclick="showSection('home')">Home</button>
-<button onclick="showSection('mine')">Games by Houston Holt</button>
-<button onclick="showSection('library')">Game Library</button>
-<button onclick="showSection('other')">Other Creators — Embedded Games</button>
+<button type="button" data-section="home">Home</button>
+<button type="button" data-section="mine">Games by Houston Holt</button>
+<button type="button" data-section="library">Game Library</button>
+<button type="button" data-section="other">Other Creators — Embedded Games</button>
 </nav>
 <main>
 <section id="home">
-<div class="panel"><h2>Welcome to HJH Gaming</h2><p>Play original games created by Houston Holt, explore the game library, or try embedded games from other creators.</p><input id="search" placeholder="Search games..." oninput="filterGames()"></div>
+<div class="panel"><h2>Welcome to HJH Gaming</h2><p>Play original games created by Houston Holt, explore the game library, or try embedded games from other creators.</p><input id="search" type="search" placeholder="Search games..." aria-label="Search games"></div>
 <h2>⭐ Featured Games</h2><div class="grid" id="featured"></div>
 </section>
 <section id="mine" class="hidden"><h2>👑 Games Created by Houston Holt</h2><p class="muted">These are the original HJH games.</p><div class="grid" id="myGames"></div></section>
 <section id="library" class="hidden"><h2>🕹️ HJH Game Library</h2><div class="grid" id="libraryGames"></div></section>
 <section id="other" class="hidden">
 <h2>🌎 Other Creators — Play Embedded</h2>
-<p class="muted">These third-party browser games are displayed inside this page when their host permits embedding. Keep the game credit visible. If a host changes its settings, use its Open Game link.</p>
+<p class="muted">Third-party games appear here when their hosts allow embedding. Use the Open Game link if a host blocks the player.</p>
 <div class="grid" id="embedGames"></div>
-<div class="panel" style="margin-top:18px"><h3>Add another game URL</h3><p class="muted">Paste an HTTPS game URL only if its creator or host allows embedding.</p><input id="customURL" type="url" placeholder="https://example.com/game/"><input id="customName" placeholder="Game name"><button onclick="addCustomEmbed()">Add game</button><p id="customMsg"></p></div>
+<div class="panel" style="margin-top:18px"><h3>Add another game URL</h3><p class="muted">Paste an HTTPS game URL only if its creator or host allows embedding.</p><input id="customURL" type="url" placeholder="https://example.com/game/"><input id="customName" placeholder="Game name"><button id="addEmbed" type="button">Add game</button><p id="customMsg" aria-live="polite"></p></div>
 </section>
 <section id="player" class="hidden">
-<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h2 id="gameTitle">Game</h2><button onclick="closeGame()">✖ Close Game</button></div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h2 id="gameTitle">Game</h2><button id="closeGame" type="button">✖ Close Game</button></div>
 <div id="gameArea"></div>
 </section>
 </main>
 <footer>HJH Gaming © 2026 · Created by Houston Jordan Holt · #Houstonisthebest</footer>
 <script>
 "use strict";
-const originals=[
-{name:"Fine Nights",icon:"🌙",desc:"An original HJH night-survival adventure.",id:"fine"},
-{name:"HJH Piano Rush",icon:"🎹",desc:"Choose from your 20-song music list and play piano note challenges.",id:"piano"}
+const $ = id => document.getElementById(id);
+const originals = [
+ {name:"Fine Nights",icon:"🌙",desc:"An original HJH night-survival adventure.",id:"fine"},
+ {name:"HJH Piano Rush",icon:"🎹",desc:"Choose from 20 song challenges and play fast piano-note rounds.",id:"piano"}
 ];
-const library=[
-["Orbit Brake","🚀","Steer through space and avoid obstacles."],
-["Parcel Panic","📦","Sort packages before time runs out."],
-["Lantern Lines","🏮","Connect matching lanterns in a puzzle."],
-["Cloud Courier","☁️","Guide your courier through the clouds."],
-["Pocket Reactor","⚛️","Keep the reactor stable with quick decisions."],
-["Signal Garden","🌱","Remember and repeat the signal pattern."],
-["Color Relay","🎨","Repeat the growing color sequence."],
-["2048","🔢","Combine matching numbers to reach 2048."],
-["Hextris","⬡","Match colors in a quick reflex challenge."],
-["Astray","🌌","Find your way through a maze."],
-["Sliding Puzzle","🧩","Slide tiles into number order."],
-["Snake","🐍","Eat food, grow, and avoid the walls."],
-["Whack-a-Mole","🔨","Tap the target as it appears."],
-["Neon Pong","🏓","Bounce the ball past the opponent."],
-["Sky Hopper","🐦","Jump from platform to platform."],
-["Lights Out","💡","Turn off every light on the board."],
-["Sudoku","9️⃣","Complete the number puzzle."],
-["Nonogram","🖼️","Reveal the hidden pixel picture."]
-].map((x,i)=>({name:x[0],icon:x[1],desc:x[2],id:"lib"+i}));
-const embeds=[
-{name:"2048",icon:"🔢",desc:"Third-party 2048 puzzle.",url:"https://playbolt.app/play/2048/",credit:"PlayBolt"},
-{name:"Hextris",icon:"⬡",desc:"Third-party hexagon arcade puzzle.",url:"https://playbolt.app/play/hextris/",credit:"PlayBolt"},
-{name:"Astray",icon:"🌌",desc:"Third-party maze game.",url:"https://playbolt.app/play/astray/",credit:"PlayBolt"},
-{name:"Tetris",icon:"🧱",desc:"Third-party falling-block puzzle.",url:"https://playbolt.app/play/tetris/",credit:"PlayBolt"},
-{name:"Breakout",icon:"🧱",desc:"Third-party brick-breaking arcade game.",url:"https://playbolt.app/play/breakout/",credit:"PlayBolt"},
-{name:"Floppy Bird",icon:"🐤",desc:"Third-party tap-to-fly game.",url:"https://playbolt.app/play/floppy-bird/",credit:"PlayBolt"},
-{name:"T-Rex Runner",icon:"🦖",desc:"Third-party endless runner.",url:"https://playbolt.app/play/t-rex-runner/",credit:"PlayBolt"},
-{name:"Piano Tiles",icon:"🎹",desc:"Third-party rhythm game.",url:"https://playbolt.app/play/piano-tiles/",credit:"PlayBolt"}
+const library = [
+ ["Orbit Brake","🚀","Steer through space and avoid obstacles."],
+ ["Parcel Panic","📦","Sort packages before time runs out."],
+ ["Lantern Lines","🏮","Connect matching lanterns in a puzzle."],
+ ["Cloud Courier","☁️","Guide your courier through the clouds."],
+ ["Pocket Reactor","⚛️","Keep the reactor stable with quick decisions."],
+ ["Signal Garden","🌱","Remember and repeat the signal pattern."],
+ ["Color Relay","🎨","Repeat the growing color sequence."],
+ ["2048","🔢","Combine matching numbers to reach 2048."],
+ ["Hextris","⬡","Match colors in a quick reflex challenge."],
+ ["Astray","🌌","Find your way through a maze."],
+ ["Sliding Puzzle","🧩","Slide tiles into number order."],
+ ["Snake","🐍","Eat food, grow, and avoid the walls."],
+ ["Whack-a-Mole","🔨","Tap the target as it appears."],
+ ["Neon Pong","🏓","Bounce the ball past the opponent."],
+ ["Sky Hopper","🐦","Jump from platform to platform."],
+ ["Lights Out","💡","Turn off every light on the board."],
+ ["Sudoku","9️⃣","Complete the number puzzle."],
+ ["Nonogram","🖼️","Reveal the hidden pixel picture."]
+].map((g,i)=>({name:g[0],icon:g[1],desc:g[2],id:"lib"+i}));
+const embeds = [
+ {name:"2048",icon:"🔢",desc:"Third-party 2048 puzzle.",url:"https://playbolt.app/play/2048/",credit:"PlayBolt"},
+ {name:"Hextris",icon:"⬡",desc:"Third-party hexagon arcade puzzle.",url:"https://playbolt.app/play/hextris/",credit:"PlayBolt"},
+ {name:"Astray",icon:"🌌",desc:"Third-party maze game.",url:"https://playbolt.app/play/astray/",credit:"PlayBolt"},
+ {name:"Tetris",icon:"🧱",desc:"Third-party falling-block puzzle.",url:"https://playbolt.app/play/tetris/",credit:"PlayBolt"},
+ {name:"Breakout",icon:"🧱",desc:"Third-party brick-breaking arcade game.",url:"https://playbolt.app/play/breakout/",credit:"PlayBolt"},
+ {name:"Floppy Bird",icon:"🐤",desc:"Third-party tap-to-fly game.",url:"https://playbolt.app/play/floppy-bird/",credit:"PlayBolt"},
+ {name:"T-Rex Runner",icon:"🦖",desc:"Third-party endless runner.",url:"https://playbolt.app/play/t-rex-runner/",credit:"PlayBolt"},
+ {name:"Piano Tiles",icon:"🎹",desc:"Third-party rhythm game.",url:"https://playbolt.app/play/piano-tiles/",credit:"PlayBolt"}
 ];
-let timer=null,raf=null,cleanup=null;
-function el(id){return document.getElementById(id)}
-function card(g,kind="local"){return `<article class="card" data-name="${g.name.toLowerCase()}"><div class="art">${g.icon}</div><h3>${g.name}</h3><p>${g.desc}</p><button onclick="${kind==="embed"?`playEmbed('${encodeURIComponent(g.name)}','${encodeURIComponent(g.url)}','${encodeURIComponent(g.credit||"Game creator")}')`:`startGame('${g.id}')`}">▶ ${kind==="embed"?"Play Here":"Play Game"}</button></article>`}
-function render(){el("myGames").innerHTML=originals.map(g=>card(g)).join("");el("libraryGames").innerHTML=library.map(g=>card(g)).join("");el("featured").innerHTML=originals.concat(library.slice(0,4)).map(g=>card(g)).join("");el("embedGames").innerHTML=embeds.map(g=>card(g,"embed")).join("")}
+const songs = [
+ ["HUMBLE. — Kendrick Lamar","HARD","FAST",150],
+ ["Not Like Us — Kendrick Lamar","HARD","FAST",155],
+ ["luther — Kendrick Lamar with SZA","HARD","STEADY",90],
+ ["Like That — Kendrick Lamar with Future & Metro Boomin","HARD","FAST",142],
+ ["Squabble Up — Kendrick Lamar","HARD","FAST",145],
+ ["Love Yourself — Justin Bieber","EASY","STEADY",100],
+ ["Sorry — Justin Bieber","EASY","FAST",100],
+ ["One Dance — Drake ft. Wizkid & Kyla","EXTREME","STEADY",104],
+ ["Work — Rihanna ft. Drake","EXTREME","FAST",92],
+ ["Stressed Out — Twenty One Pilots","VERY EASY","STEADY",85],
+ ["Closer — The Chainsmokers ft. Halsey","VERY EASY","STEADY",95],
+ ["Cheap Thrills — Sia ft. Sean Paul","VERY EASY","FAST",90],
+ ["Cake by the Ocean — DNCE","VERY EASY","FAST",119],
+ ["Can't Stop the Feeling! — Justin Timberlake","VERY EASY","FAST",113],
+ ["Don't Let Me Down — The Chainsmokers ft. Daya","VERY EASY","STEADY",80],
+ ["Panda — Desiigner","EXTREME","FAST",145],
+ ["Heathens — Twenty One Pilots","VERY EASY","STEADY",90],
+ ["Into You — Ariana Grande","VERY EASY","FAST",108],
+ ["I Took a Pill in Ibiza — Mike Posner","VERY EASY","STEADY",102],
+ ["Let Me Love You — DJ Snake ft. Justin Bieber","EASY","STEADY",100]
+].map(s=>({name:s[0],difficulty:s[1],pace:s[2],tempo:s[3]}));
+
+let activeCleanup = null;
+function stopGame(){if(activeCleanup){activeCleanup();activeCleanup=null;} $("player").classList.add("hidden");$("gameArea").replaceChildren();}
+function showSection(id){stopGame();["home","mine","library","other"].forEach(s=>$(s).classList.toggle("hidden",s!==id));window.scrollTo({top:0,behavior:"smooth"});}
+document.querySelectorAll("[data-section]").forEach(b=>b.addEventListener("click",()=>showSection(b.dataset.section)));
+$("closeGame").addEventListener("click",stopGame);
+function showGame(name,html){$("player").classList.remove("hidden");$("gameTitle").textContent=name;$("gameArea").innerHTML=html;$("player").scrollIntoView({behavior:"smooth",block:"start"});}
+function makeCard(g,embedded=false){
+ const article=document.createElement("article");article.className="card";article.dataset.name=g.name.toLowerCase();
+ const art=document.createElement("div");art.className="art";art.textContent=g.icon;
+ const h=document.createElement("h3");h.textContent=g.name;
+ const p=document.createElement("p");p.textContent=g.desc;
+ const b=document.createElement("button");b.type="button";b.textContent=embedded?"▶ Play Here":"▶ Play Game";
+ b.addEventListener("click",()=>embedded?playEmbed(g):startGame(g.id));
+ article.append(art,h,p,b);return article;
+}
+function render(){
+ $("myGames").replaceChildren(...originals.map(g=>makeCard(g)));
+ $("libraryGames").replaceChildren(...library.map(g=>makeCard(g)));
+ $("featured").replaceChildren(...originals.concat(library.slice(0,4)).map(g=>makeCard(g)));
+ $("embedGames").replaceChildren(...embeds.map(g=>makeCard(g,true)));
+}
 render();
-function showSection(id){["home","mine","library","other"].forEach(x=>el(x).classList.toggle("hidden",x!==id));closeGame();window.scrollTo(0,0)}
-function filterGames(){let q=el("search").value.toLowerCase();document.querySelectorAll(".card").forEach(c=>c.style.display=c.dataset.name.includes(q)?"":"none")}
-function display(name,markup){el("player").classList.remove("hidden");el("gameTitle").textContent=name;el("gameArea").innerHTML=markup;el("player").scrollIntoView({behavior:"smooth",block:"start"})}
-function closeGame(){if(timer){clearInterval(timer);clearTimeout(timer)}if(raf)cancelAnimationFrame(raf);if(cleanup)cleanup();timer=null;raf=null;cleanup=null;el("player").classList.add("hidden");el("gameArea").innerHTML=""}
-function startGame(id){closeGame();if(id==="fine")return fineNights();if(id==="piano")return pianoRush();let n=Number(id.slice(3));switch(n){case 6:return sequenceGame("Color Relay");case 7:return game2048();case 9:return mazeGame();case 10:return slidingGame();case 11:return snakeGame();case 12:return moleGame();case 13:return pongGame();case 15:return lightsGame();case 16:return sudokuGame();case 17:return nonogramGame();default:return quickChallenge(library[n].name,library[n].desc)}}
-function playEmbed(name,url,credit){closeGame();let n=decodeURIComponent(name),u=decodeURIComponent(url),c=decodeURIComponent(credit);display(n,`<p class="muted">Third-party game by ${c}. If it does not appear, the host may have changed its embedding permissions.</p><iframe src="${u}" title="${n}" loading="lazy" allow="fullscreen; autoplay; gamepad" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe><p><a href="${u}" target="_blank" rel="noopener">Open ${n} on the game's host</a> · Credit: ${c}</p>`)}
-function addCustomEmbed(){let raw=el("customURL").value.trim(),name=el("customName").value.trim()||"Community Game";try{let u=new URL(raw);if(u.protocol!=="https:")throw Error();let g={name,icon:"🌐",desc:"Community-submitted game link. Embedding depends on the host.",url:u.href,credit:"Original host"};embeds.push(g);el("embedGames").insertAdjacentHTML("beforeend",card(g,"embed"));el("customMsg").textContent="Added. If the host blocks iframe embedding, use its Open Game link.";el("customURL").value="";el("customName").value=""}catch(e){el("customMsg").textContent="Please enter a valid HTTPS game URL."}}
-/* FINE NIGHTS — original lightweight survival game */
-function fineNights(){display("Fine Nights",`<div class="panel"><h3 id="fnHeading">Night 1</h3><p>Make it to 6 AM. Check the room and manage your power.</p><h3>Power: <span id="fnPower">100</span>%</h3><h3>Time: <span id="fnTime">12 AM</span></h3><button onclick="fnAction(4,'You checked the cameras. The hallway is quiet.')">Check Cameras</button><button onclick="fnAction(3,'You checked the door. Everything looks calm.')">Check Door</button><button onclick="fnAction(2,'You searched the desk and found a clue.')">Find a Clue</button><p id="fnStatus">The night has begun. Good luck!</p><button onclick="fineNights()">Restart Night</button></div>`);let power=100,t=0,ended=false;function finish(win){if(ended)return;ended=true;clearInterval(timer);el("fnHeading").textContent=win?"Night Completed!":"Power Depleted";el("fnStatus").textContent=win?"🏆 You survived until morning!":"The power ran out. Try again!"}window.fnAction=(cost,msg)=>{if(ended)return;power=Math.max(0,power-cost);el("fnPower").textContent=power;el("fnStatus").textContent=msg;if(!power)finish(false)};timer=setInterval(()=>{t++;power=Math.max(0,power-1);el("fnPower").textContent=power;el("fnTime").textContent=["12 AM","1 AM","2 AM","3 AM","4 AM","5 AM","6 AM"][Math.min(6,Math.floor(t/10))];if(t>=60)finish(true);else if(!power)finish(false)},1000)}
-/* HJH PIANO RUSH — requested song menu + original note practice, not recordings */
-const songs=[
-{name:"HUMBLE. — Kendrick Lamar",difficulty:"HARD",pace:"FAST",tempo:150},
-{name:"Not Like Us — Kendrick Lamar",difficulty:"HARD",pace:"FAST",tempo:155},
-{name:"luther — Kendrick Lamar with SZA",difficulty:"HARD",pace:"STEADY",tempo:90},
-{name:"Like That — Kendrick Lamar with Future & Metro Boomin",difficulty:"HARD",pace:"FAST",tempo:142},
-{name:"Squabble Up — Kendrick Lamar",difficulty:"HARD",pace:"FAST",tempo:145},
-{name:"Love Yourself — Justin Bieber",difficulty:"EASY",pace:"STEADY",tempo:100},
-{name:"Sorry — Justin Bieber",difficulty:"EASY",pace:"FAST",tempo:100},
-{name:"One Dance — Drake ft. Wizkid & Kyla",difficulty:"EXTREME",pace:"STEADY",tempo:104},
-{name:"Work — Rihanna ft. Drake",difficulty:"EXTREME",pace:"FAST",tempo:92},
-{name:"Stressed Out — Twenty One Pilots",difficulty:"VERY EASY",pace:"STEADY",tempo:85},
-{name:"Closer — The Chainsmokers ft. Halsey",difficulty:"VERY EASY",pace:"STEADY",tempo:95},
-{name:"Cheap Thrills — Sia ft. Sean Paul",difficulty:"VERY EASY",pace:"FAST",tempo:90},
-{name:"Cake by the Ocean — DNCE",difficulty:"VERY EASY",pace:"FAST",tempo:119},
-{name:"Can't Stop the Feeling! — Justin Timberlake",difficulty:"VERY EASY",pace:"FAST",tempo:113},
-{name:"Don't Let Me Down — The Chainsmokers ft. Daya",difficulty:"VERY EASY",pace:"STEADY",tempo:80},
-{name:"Panda — Desiigner",difficulty:"EXTREME",pace:"FAST",tempo:145},
-{name:"Heathens — Twenty One Pilots",difficulty:"VERY EASY",pace:"STEADY",tempo:90},
-{name:"Into You — Ariana Grande",difficulty:"VERY EASY",pace:"FAST",tempo:108},
-{name:"I Took a Pill in Ibiza — Mike Posner",difficulty:"VERY EASY",pace:"STEADY",tempo:102},
-{name:"Let Me Love You — DJ Snake ft. Justin Bieber",difficulty:"EASY",pace:"STEADY",tempo:100}
-];
+$("search").addEventListener("input",()=>{const q=$("search").value.trim().toLowerCase();document.querySelectorAll(".card").forEach(c=>c.hidden=!c.dataset.name.includes(q));});
+$("addEmbed").addEventListener("click",()=>{
+ const raw=$("customURL").value.trim(),name=$("customName").value.trim()||"Community Game";
+ try{const u=new URL(raw);if(u.protocol!=="https:")throw new Error("HTTPS required");
+ const g={name,icon:"🌐",desc:"Community-submitted game link. Embedding depends on the host.",url:u.href,credit:"Original host"};
+ embeds.push(g);$("embedGames").append(makeCard(g,true));$("customMsg").textContent="Added. If the host blocks iframe embedding, use its Open Game link.";
+ $("customURL").value="";$("customName").value="";
+ }catch(e){$("customMsg").textContent="Please enter a valid HTTPS game URL.";}
+});
+function playEmbed(g){stopGame();showGame(g.name,`<p class="muted">Third-party game by ${escapeHTML(g.credit)}. If it does not appear, the host may block embedding.</p><iframe src="${escapeHTML(g.url)}" title="${escapeHTML(g.name)}" loading="lazy" allow="fullscreen; autoplay; gamepad" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe><p><a href="${escapeHTML(g.url)}" target="_blank" rel="noopener noreferrer">Open ${escapeHTML(g.name)} on the game's host</a> · Credit: ${escapeHTML(g.credit)}</p>`);}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function startGame(id){stopGame();if(id==="fine")return fineNights();if(id==="piano")return pianoRush();const n=Number(id.slice(3));switch(n){case 6:return sequenceGame("Color Relay");case 7:return game2048();case 9:return mazeGame();case 10:return slidingGame();case 11:return snakeGame();case 12:return moleGame();case 13:return pongGame();case 15:return lightsGame();case 16:return sudokuGame();case 17:return nonogramGame();default:return quickChallenge(library[n].name,library[n].desc);}}
+function fineNights(){
+ showGame("Fine Nights",`<div class="panel"><h3 id="fnHeading">Night 1</h3><p>Make it to 6 AM. Check the room and manage your power.</p><h3>Power: <span id="fnPower">100</span>%</h3><h3>Time: <span id="fnTime">12 AM</span></h3><button id="fnCamera">Check Cameras</button><button id="fnDoor">Check Door</button><button id="fnClue">Find a Clue</button><p id="fnStatus" aria-live="polite">The night has begun. Good luck!</p><button id="fnRestart">Restart Night</button></div>`);
+ let power=100,t=0,ended=false,interval;
+ const status=$("fnStatus");
+ function finish(win){if(ended)return;ended=true;clearInterval(interval);$("fnHeading").textContent=win?"Night Completed!":"Power Depleted";status.textContent=win?"🏆 You survived until morning!":"The power ran out. Try again!";}
+ function action(cost,msg){if(ended)return;power=Math.max(0,power-cost);$("fnPower").textContent=power;status.textContent=msg;if(!power)finish(false);}
+ $("fnCamera").onclick=()=>action(4,"You checked the cameras. The hallway is quiet.");
+ $("fnDoor").onclick=()=>action(3,"You checked the door. Everything looks calm.");
+ $("fnClue").onclick=()=>action(2,"You searched the desk and found a clue.");
+ $("fnRestart").onclick=fineNights;
+ interval=setInterval(()=>{t++;power=Math.max(0,power-1);$("fnPower").textContent=power;$("fnTime").textContent=["12 AM","1 AM","2 AM","3 AM","4 AM","5 AM","6 AM"][Math.min(6,Math.floor(t/10))];if(t>=60)finish(true);else if(!power)finish(false);},1000);
+ activeCleanup=()=>clearInterval(interval);
+}
 function pianoRush(){
- display("HJH Piano Rush",`<div class="panel"><p>Choose a song challenge. Some rounds are fast-paced and others are harder. Every key plays a piano tone only — no vocals, drums, or extra instruments. The challenges use original note patterns, not the songs' recorded melodies.</p><select id="songChoice">${songs.map((s,i)=>`<option value="${i}">${s.name} · ${s.difficulty} · ${s.pace}</option>`).join("")}</select><h3 id="songTitle">${songs[0].name}</h3><p>Difficulty: <strong id="pDifficulty">${songs[0].difficulty}</strong> · Pace: <strong id="pPace">${songs[0].pace}</strong> · BPM setting: <strong id="pTempo">${songs[0].tempo}</strong></p><h3>Score: <span id="pScore">0</span> · Streak: <span id="pStreak">0</span></h3><h3>Target note: <span id="pTarget">C</span></h3><p id="pCountdown" class="muted">Choose a song and press Start Round.</p><button id="pStart" onclick="pianoStart()">Start Round</button><div class="piano" id="pKeys"></div><p id="pMessage" class="muted">Tap the target piano note. Fast rounds give you less time.</p></div>`);
- let notes=["C","D","E","F","G","A","B"],freq=[261.63,293.66,329.63,349.23,392,440,493.88],target=0,score=0,streak=0,active=false,roundTimer=null,roundEnds=0;
- const choice=()=>songs[Number(el("songChoice").value)||0];
- function updateSong(){let s=choice();el("songTitle").textContent=s.name;el("pDifficulty").textContent=s.difficulty;el("pPace").textContent=s.pace;el("pTempo").textContent=s.tempo;}
- function nextTarget(){target=Math.floor(Math.random()*notes.length);el("pTarget").textContent=notes[target];}
- function finishRound(){active=false;if(roundTimer)clearInterval(roundTimer);roundTimer=null;el("pMessage").textContent=`Round complete! Score: ${score}. Best streak: ${streak}. Press Start Round to play again.`;el("pCountdown").textContent="Round finished.";el("pStart").disabled=false;}
- el("pKeys").innerHTML=notes.map((n,i)=>`<button onclick="pianoTap(${i})">${n}</button>`).join("");
- el("songChoice").onchange=()=>{if(roundTimer)clearInterval(roundTimer);active=false;score=0;streak=0;el("pScore").textContent="0";el("pStreak").textContent="0";el("pStart").disabled=false;updateSong();el("pMessage").textContent="Press Start Round when ready.";el("pCountdown").textContent="Song challenge selected."};
- window.pianoStart=()=>{if(roundTimer)clearInterval(roundTimer);let s=choice();score=0;streak=0;active=true;el("pScore").textContent="0";el("pStreak").textContent="0";el("pStart").disabled=true;roundEnds=Date.now()+30000;nextTarget();el("pMessage").textContent="Go! Match the piano notes before time runs out.";roundTimer=setInterval(()=>{let left=Math.max(0,Math.ceil((roundEnds-Date.now())/1000));el("pCountdown").textContent=`${left}s left · ${s.pace} challenge`;if(left<=0)finishRound()},200)};
- window.pianoTap=i=>{if(!active)return;try{let ctx=window.hjhAudio||(window.hjhAudio=new(window.AudioContext||window.webkitAudioContext)());if(ctx.state==="suspended")ctx.resume();let o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.value=freq[i];g.gain.setValueAtTime(.12,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.28);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.28)}catch(e){}if(i===target){score++;streak++;el("pScore").textContent=score;el("pStreak").textContent=streak;el("pMessage").textContent="Correct note! Keep going.";nextTarget()}else{streak=0;el("pStreak").textContent="0";el("pMessage").textContent="Not that note — listen to the piano target and try again."}};
- updateSong();cleanup=()=>{if(roundTimer)clearInterval(roundTimer);active=false;window.pianoTap=null;window.pianoStart=null};
+ showGame("HJH Piano Rush",`<div class="panel"><p>Choose a song challenge. These rounds use original note patterns, not the songs' recorded melodies. Every key plays a piano tone.</p><select id="songChoice" aria-label="Choose song">${songs.map((s,i)=>`<option value="${i}">${escapeHTML(s.name)} · ${s.difficulty} · ${s.pace}</option>`).join("")}</select><h3 id="songTitle"></h3><p>Difficulty: <strong id="pDifficulty"></strong> · Pace: <strong id="pPace"></strong> · BPM setting: <strong id="pTempo"></strong></p><h3>Score: <span id="pScore">0</span> · Streak: <span id="pStreak">0</span></h3><h3>Target note: <span id="pTarget">C</span></h3><p id="pCountdown" class="muted">Choose a song and press Start Round.</p><button id="pStart">Start Round</button><div class="piano" id="pKeys"></div><p id="pMessage" class="muted">Tap the target piano note. Faster rounds give you less time.</p></div>`);
+ const notes=["C","D","E","F","G","A","B"],freq=[261.63,293.66,329.63,349.23,392,440,493.88];
+ let target=0,score=0,streak=0,active=false,roundTimer=null,roundEnds=0,audio=null;
+ const choice=()=>songs[Number($("songChoice").value)||0];
+ function updateSong(){const s=choice();$("songTitle").textContent=s.name;$("pDifficulty").textContent=s.difficulty;$("pPace").textContent=s.pace;$("pTempo").textContent=s.tempo;}
+ function nextTarget(){target=Math.floor(Math.random()*notes.length);$("pTarget").textContent=notes[target];}
+ function finish(){active=false;clearInterval(roundTimer);roundTimer=null;$("pMessage").textContent=`Round complete! Score: ${score}. Best streak: ${streak}. Press Start Round to play again.`;$("pCountdown").textContent="Round finished.";$("pStart").disabled=false;}
+ $("pKeys").innerHTML=notes.map((n,i)=>`<button type="button" data-note="${i}">${n}</button>`).join("");
+ $("pKeys").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>tap(Number(b.dataset.note))));
+ $("songChoice").addEventListener("change",()=>{clearInterval(roundTimer);active=false;score=0;streak=0;$("pScore").textContent="0";$("pStreak").textContent="0";$("pStart").disabled=false;updateSong();$("pMessage").textContent="Press Start Round when ready.";$("pCountdown").textContent="Song challenge selected.";});
+ $("pStart").addEventListener("click",()=>{clearInterval(roundTimer);const s=choice();score=0;streak=0;active=true;$("pScore").textContent="0";$("pStreak").textContent="0";$("pStart").disabled=true;roundEnds=Date.now()+30000;nextTarget();$("pMessage").textContent="Go! Match the piano notes before time runs out.";roundTimer=setInterval(()=>{const left=Math.max(0,Math.ceil((roundEnds-Date.now())/1000));$("pCountdown").textContent=`${left}s left · ${s.pace} challenge`;if(left<=0)finish();},200);});
+ function tap(i){if(!active)return;try{const AudioContextClass=window.AudioContext||window.webkitAudioContext;if(AudioContextClass){audio=audio||new AudioContextClass();if(audio.state==="suspended")audio.resume();const osc=audio.createOscillator(),gain=audio.createGain();osc.type="sine";osc.frequency.value=freq[i];gain.gain.setValueAtTime(.12,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.28);osc.connect(gain);gain.connect(audio.destination);osc.start();osc.stop(audio.currentTime+.28);}}catch(e){}
+ if(i===target){score++;streak++;$("pScore").textContent=score;$("pStreak").textContent=streak;$("pMessage").textContent="Correct note! Keep going.";nextTarget();}else{streak=0;$("pStreak").textContent="0";$("pMessage").textContent="Not that note — try again.";}
+ }
+ updateSong();activeCleanup=()=>{clearInterval(roundTimer);active=false;if(audio)audio.close().catch(()=>{});};
 }
-function sequenceGame(name){display(name,`<div class="panel"><p>Watch the sequence, then repeat it.</p><h3>Level <span id="seqLevel">1</span></h3><div class="gamegrid" id="seqGrid"></div><p id="seqMsg">Press Start.</p><button onclick="seqStart()">Start</button></div>`);let colors=["#e34c67","#269dd0","#35ad76","#e3ae38"],seq=[],pos=0,level=1,locked=true;el("seqGrid").innerHTML=colors.map((c,i)=>`<button style="background:${c}" onclick="seqPress(${i})">${i+1}</button>`).join("");window.seqStart=()=>{seq=[Math.floor(Math.random()*4)];pos=0;level=1;el("seqLevel").textContent=level;showSeq()};function showSeq(){locked=true;el("seqMsg").textContent="Watch: "+seq.map(x=>x+1).join(" ");setTimeout(()=>{locked=false;pos=0;el("seqMsg").textContent="Your turn!"},Math.min(3000,600+seq.length*250))}window.seqPress=i=>{if(locked||!seq.length)return;if(seq[pos]!==i){el("seqMsg").textContent="Not quite. Press Start to retry.";locked=true;return}pos++;if(pos===seq.length){level++;el("seqLevel").textContent=level;seq.push(Math.floor(Math.random()*4));showSeq()}}}
-function game2048(){let a=Array(16).fill(0);function add(){let e=a.map((v,i)=>v? -1:i).filter(i=>i>=0);if(e.length)a[e[Math.floor(Math.random()*e.length)]]=Math.random()<.9?2:4}add();add();display("2048",`<p>Use arrow keys or buttons to combine matching tiles.</p><div class="board" id="b2048"></div><div><button onclick="move2048('up')">↑</button><br><button onclick="move2048('left')">←</button><button onclick="move2048('down')">↓</button><button onclick="move2048('right')">→</button></div><button onclick="startGame('lib7')">Restart</button>`);function draw(){el("b2048").innerHTML=a.map(v=>`<div class="tile">${v||""}</div>`).join("")}function move(dir){let changed=false;for(let k=0;k<4;k++){let ids=Array.from({length:4},(_,j)=>dir==="left"?k*4+j:dir==="right"?k*4+3-j:dir==="up"?j*4+k:(3-j)*4+k),vals=ids.map(i=>a[i]).filter(Boolean),out=[];for(let j=0;j<vals.length;j++){if(vals[j]===vals[j+1]){out.push(vals[j]*2);j++}else out.push(vals[j])}while(out.length<4)out.push(0);ids.forEach((id,j)=>{if(a[id]!==out[j])changed=true;a[id]=out[j]})}if(changed)add();draw()}window.move2048=move;window.onkeydown=e=>{let m={ArrowUp:"up",ArrowDown:"down",ArrowLeft:"left",ArrowRight:"right"};if(m[e.key]){e.preventDefault();move(m[e.key])}};cleanup=()=>window.onkeydown=null;draw()}
-function mazeGame(){let p=0,walls=[1,3,6,8,11,13,16,18];display("Astray — Maze",`<p>Reach the green exit using the direction buttons.</p><div id="mazeBoard" class="gamegrid"></div><div><button onclick="mazeMove(-5)">↑</button><br><button onclick="mazeMove(-1)">←</button><button onclick="mazeMove(5)">↓</button><button onclick="mazeMove(1)">→</button></div><p id="mazeMsg"></p>`);function draw(){el("mazeBoard").innerHTML=Arrayfrom({length:25},(_,i)=>{
-let cell=document.createElement("button");
-cell.textContent=i===p?"🙂":i===24?"🏁":walls.includes(i)?"🧱":"·";
-cell.style.background=i===p?"#247fba":i===24?"#278b58":walls.includes(i)?"#26364d":"#344b70";
-cell.disabled=walls.includes(i)||i===p;
-return cell.outerHTML
-}).join("");
+function sequenceGame(name){
+ showGame(name,`<div class="panel"><p>Watch the sequence, then repeat it.</p><h3>Level <span id="seqLevel">1</span></h3><div class="gamegrid" id="seqGrid"></div><p id="seqMsg">Press Start.</p><button id="seqStart">Start</button></div>`);
+ const colors=["#e34c67","#269dd0","#35ad76","#e3ae38"];let seq=[],pos=0,level=1,locked=true,timeout;
+ $("seqGrid").innerHTML=colors.map((c,i)=>`<button style="background:${c}" data-i="${i}">${i+1}</button>`).join("");
+ function show(){locked=true;$("seqMsg").textContent="Watch: "+seq.map(x=>x+1).join(" ");timeout=setTimeout(()=>{locked=false;pos=0;$("seqMsg").textContent="Your turn!";},Math.min(3000,600+seq.length*250));}
+ $("seqStart").onclick=()=>{seq=[Math.floor(Math.random()*4)];pos=0;level=1;$("seqLevel").textContent=level;show();};
+ $("seqGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>{if(locked||!seq.length)return;const i=Number(b.dataset.i);if(seq[pos]!==i){$("seqMsg").textContent="Not quite. Press Start to retry.";locked=true;return;}pos++;if(pos===seq.length){level++;$("seqLevel").textContent=level;seq.push(Math.floor(Math.random()*4));show();}});
+ activeCleanup=()=>clearTimeout(timeout);
 }
-window.mazeMove=d=>{
-let q=p+d;
-if(q<0||q>24||(d===1&&p%5===4)||(d===-1&&p%5===0)||walls.includes(q))return;
-p=q;
-draw();
-if(p===24)el("mazeMsg").textContent="You found the exit! 🎉";
-};
-draw();
-}
-
-function slidingGame(){
-let a=[1,2,3,4,5,6,7,8,0];
-for(let i=0;i<80;i++){
-let z=a.indexOf(0);
-let o=[z-3,z+3,...(z%3?[z-1]:[]),...(z%3<2?[z+1]:[])].filter(n=>n>=0&&n<9);
-let n=o[Math.floor(Math.random()*o.length)];
-[a[z],a[n]]=[a[n],a[z]];
-}
-display("Sliding Puzzle",'<p>Slide tiles into number order.</p><div class="board" id="slideBoard" style="grid-template-columns:repeat(3,1fr)"></div><p id="slideMsg">Good luck!</p><button onclick="startGame(\\'lib10\\')">Shuffle again</button>');
-function draw(){
-el("slideBoard").innerHTML=a.map((v,i)=>'<button class="tile" onclick="slideTap('+i+')">'+(v||"")+'</button>').join("");
-}
-window.slideTap=i=>{
-let z=a.indexOf(0);
-let o=[z-3,z+3,...(z%3?[z-1]:[]),...(z%3<2?[z+1]:[])];
-if(o.includes(i)){
-[a[z],a[i]]=[a[i],a[z]];
-draw();
-if(a.every((v,j)=>v===(j+1)%9))el("slideMsg").textContent="Solved! 🎉";
-}
-};
-draw();
-}
-
-function snakeGame(){
-display("Snake",'<p>Use arrow buttons to guide the snake to the food.</p><canvas id="snakeCanvas" width="300" height="300"></canvas><div><button onclick="snakeDir(0,-1)">↑</button><br><button onclick="snakeDir(-1,0)">←</button><button onclick="snakeDir(0,1)">↓</button><button onclick="snakeDir(1,0)">→</button></div><p id="snakeMsg">Score: 0</p>');
-let body=[{x:7,y:7},{x:6,y:7},{x:5,y:7}],dir={x:1,y:0},food={x:10,y:7},score=0,dead=false;
-let c=el("snakeCanvas").getContext("2d");
-window.snakeDir=(x,y)=>{if(x!==-dir.x||y!==-dir.y)dir={x,y}};
-function draw(){
-c.clearRect(0,0,300,300);
-c.fillStyle="#35bd78";
-c.fillRect(food.x*20,food.y*20,18,18);
-c.fillStyle="#70b9ff";
-body.forEach(p=>c.fillRect(p.x*20,p.y*20,18,18));
-}
-timer=setInterval(()=>{
-if(dead)return;
-let h={x:body[0].x+dir.x,y:body[0].y+dir.y};
-if(h.x<0||h.x>=15||h.y<0||h.y>=15||body.some(p=>p.x===h.x&&p.y===h.y)){
-dead=true;
-el("snakeMsg").textContent="Game over! Score: "+score;
-return;
-}
-body.unshift(h);
-if(h.x===food.x&&h.y===food.y){
-score++;
-food={x:Math.floor(Math.random()*15),y:Math.floor(Math.random()*15)};
-el("snakeMsg").textContent="Score: "+score;
-}else body.pop();
-draw();
-},180);
-draw();
-cleanup=()=>window.snakeDir=null;
-}
-
-function moleGame(){
-display("Whack-a-Mole",'<p>Tap the highlighted mole. Score as many as you can in 20 seconds!</p><h3>Score: <span id="moleScore">0</span> · Time: <span id="moleTime">20</span></h3><div class="gamegrid" id="moleGrid"></div>');
-let score=0,active=0,left=20,shift;
-function draw(){
-el("moleGrid").innerHTML=Array.from({length:9},(_,i)=>'<button style="font-size:25px;background:'+(i===active?"#278b58":"#344b70")+'" onclick="moleTap('+i+')">'+(i===active?"🐹":"🕳️")+'</button>').join("");
-}
-window.moleTap=i=>{
-if(left>0&&i===active){
-score++;
-el("moleScore").textContent=score;
-active=Math.floor(Math.random()*9);
-draw();
-}
-};
-draw();
-timer=setInterval(()=>{
-left--;
-el("moleTime").textContent=left;
-if(left<=0){
-clearInterval(timer);
-el("gameArea").insertAdjacentHTML("beforeend",'<h3>Time! Final score: '+score+'</h3>');
-clearInterval(shift);
-}
-},1000);
-shift=setInterval(()=>{
-if(left>0){
-active=Math.floor(Math.random()*9);
-draw();
-}
-},650);
-cleanup=()=>{clearInterval(shift);window.moleTap=null};
-}
-
-function pongGame(){
-display("Neon Pong",'<p>Tap the side the ball is heading toward to bounce it back.</p><canvas id="pongCanvas" width="320" height="220"></canvas><p id="pongScore">Score: 0</p><button onclick="pongHit(0)">Left</button><button onclick="pongHit(1)">Right</button>');
-let x=160,y=110,dx=3,dy=2,score=0,over=false,c=el("pongCanvas").getContext("2d");
-window.pongHit=s=>{
-if(!over&&((dx<0&&s===0)||(dx>0&&s===1))){
-score++;
-dx=-dx;
-el("pongScore").textContent="Score: "+score;
-}
-};
-function frame(){
-if(over)return;
-x+=dx;
-y+=dy;
-if(y<7||y>213)dy=-dy;
-if(x<7||x>313){
-over=true;
-el("pongScore").textContent="Game over · Score: "+score;
-}
-c.clearRect(0,0,320,220);
-c.fillStyle="#62d8ff";
-c.beginPath();
-c.arc(x,y,7,0,Math.PI*2);
-c.fill();
-raf=requestAnimationFrame(frame);
-}
-frame();
-cleanup=()=>window.pongHit=null;
-}
-
-function lightsGame(){
-let a=Array.from({length:25},()=>Math.random()<.5);
-display("Lights Out",'<p>Turn off all lights. Tapping a square toggles it and its neighbors.</p><div class="gamegrid" id="lightsGrid"></div><p id="lightsMsg"></p>');
-function draw(){
-el("lightsGrid").innerHTML=a.map((v,i)=>'<button style="background:'+(v?"#e4bb42":"#344b70")+'" onclick="lightTap('+i+')">'+(v?"💡":"·")+'</button>').join("");
-}
-window.lightTap=i=>{
-[i,i-5,i+5,...(i%5?[i-1]:[]),...(i%5<4?[i+1]:[])].filter(n=>n>=0&&n<25).forEach(n=>a[n]=!a[n]);
-draw();
-if(a.every(v=>!v))el("lightsMsg").textContent="You win! All lights are off.";
-};
-draw();
-cleanup=()=>window.lightTap=null;
-}
-
-function sudokuGame(){
-let puzzle=[1,0,0,4,0,4,1,0,2,0,4,0,0,3,0,1];
-let sol=[1,2,3,4,3,4,1,2,2,1,4,3,4,3,2,1];
-let v=puzzle.slice();
-display("Mini Sudoku",'<p>Complete each row and column with 1–4. Tap an empty cell to cycle its value.</p><div class="board" id="sudokuBoard"></div><p id="sudokuMsg"></p>');
-function draw(){
-el("sudokuBoard").innerHTML=v.map((n,i)=>'<button class="tile" style="background:'+(puzzle[i]?"#26364d":"#344b70")+'" onclick="sudokuTap('+i+')">'+(n||"·")+'</button>').join("");
-}
-window.sudokuTap=i=>{
-if(puzzle[i])return;
-v[i]=(v[i]+1)%5;
-draw();
-if(v.every((n,j)=>n===sol[j]))el("sudokuMsg").textContent="Puzzle solved! 🎉";
-};
-draw();
-cleanup=()=>window.sudokuTap=null;
-}
-
-function nonogramGame(){
-let goal=["01110","11011","11111","01110","00100"],a=Array(25).fill(false);
-display("Mini Nonogram",'<p>Tap squares to reveal the hidden pattern.</p><div class="gamegrid" id="nonoGrid"></div><p id="nonoMsg">Find the picture!</p>');
-function draw(){
-el("nonoGrid").innerHTML=a.map((v,i)=>'<button style="background:'+(v?"#69b8e8":"#344b70")+'" onclick="nonoTap('+i+')">'+(v?"■":"·")+'</button>').join("");
-}
-window.nonoTap=i=>{
-a[i]=!a[i];
-draw();
-if(a.every((v,i)=>v===(goal[Math.floor(i/5)][i%5]==="1")))el("nonoMsg").textContent="Pattern found! 🎉";
-};
-draw();
-cleanup=()=>window.nonoTap=null;
-}
-
-function quickChallenge(name,desc){
-display(name,'<div class="panel"><p>'+desc+'</p><h3 id="quickCount">0</h3><p>Tap 15 times to finish.</p><button onclick="quickTap()">TAP!</button><p id="quickMsg"></p></div>');
-let n=0;
-window.quickTap=()=>{
-n++;
-el("quickCount").textContent=n;
-if(n>=15)el("quickMsg").textContent="Challenge complete! 🎉";
-};
-cleanup=()=>window.quickTap=null;
-}
-</script>
-</body>
-</html>
+function game2048(){
+ let a=Array(16).fill(0);function add(){const e=a.map((v,i)=>v? -1:i).filter(i=>i>=0);if(e.length)a[e[Math.floor(Math.random()*e.length)]]=Math.random()<.9?2:4;}add();add();
+ showGame("2048",`<p>Use arrow keys or buttons to combine matching tiles.</p><div class="board" id="b2048"></div><div><button data-dir="up">↑</button><br><button data-dir="left">←</button><button data-dir="down">↓</button><button data-dir="right">→</button></div><button id="restart2048">Restart</button><p id="score2048"></p>`);
+ let score=0;
+ function draw(){$("b2048").innerHTML=a.map(v=>`<div class="tile">${v||""}</div>`).join("");$("score2048").textContent="Score: "+score;}
+ function move(dir){let changed=false;for(let k=0;k<4;k++){const ids=Array.from({length:4},(_,j)=>dir==="left"?k*4+j:dir==="right"?k*4+3-j:dir==="up"?j*4+k:(3-j)*4+k);const vals=ids.map(i=>a[i]).filter(Boolean),out=[];for(let j=0;j<vals.length;j++){if(vals[j]===vals[j+1]){out.push(vals[j]*2);score+=vals[j]*2;j++;}else out.push(vals[j]);}while(out.length<4)out.push(0);ids.forEach((id,j)=>{if(a[id]!==out[j])changed=true;a[id]=out[j];});}if(changed)add();dra
