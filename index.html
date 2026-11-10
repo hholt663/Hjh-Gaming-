@@ -2,134 +2,134 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10162b">
 <title>HJH Gaming</title>
 <style>
-:root{font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;color:#f5f8ff;background:#07111b}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}#game{position:fixed;inset:0;background:#111}
-canvas{display:block}
-#menu{position:fixed;inset:0;z-index:5;display:grid;place-items:center;padding:22px;background:radial-gradient(ellipse at 50% 15%,#24506a99,transparent 55%),linear-gradient(135deg,#06101df2,#102b40f2)}
-.panel{width:min(900px,100%);padding:clamp(20px,4vw,36px);border:1px solid #ffffff2b;border-radius:26px;background:#091522ed;box-shadow:0 28px 90px #000b}
-.brand{font-size:clamp(38px,7vw,68px);font-weight:950;letter-spacing:-.065em;line-height:1}.brand span{color:#66e4d1}
-.kicker{font-size:11px;letter-spacing:.22em;color:#8ca9bb;font-weight:800;margin-bottom:10px}
-.intro{max-width:680px;color:#b9cbd7;line-height:1.6;margin:12px 0 24px}
-.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.mode{border:1px solid #ffffff25;border-radius:18px;padding:18px;background:linear-gradient(145deg,#193047,#101e2e);color:white;text-align:left;cursor:pointer;min-height:158px;transition:.18s}
-.mode:hover,.mode.active{transform:translateY(-3px);border-color:#66e4d1;box-shadow:0 12px 30px #0005}
-.mode .emoji{font-size:28px}.mode b{display:block;font-size:19px;margin:8px 0 5px}.mode small{color:#b6c8d5;line-height:1.5}
-#start{margin-top:20px;border:0;border-radius:12px;background:#66e4d1;color:#05202a;font-weight:900;padding:14px 24px;font-size:15px;cursor:pointer}
-.note{color:#8ea6b8;font-size:12px;line-height:1.5;margin:14px 0 0}
-#hud{position:fixed;inset:0;z-index:2;display:none;pointer-events:none}
-#brandHud,#stats,#hint,#cross,#toast,#pause{position:absolute;background:#081522c9;border:1px solid #ffffff26;backdrop-filter:blur(10px)}
-#brandHud{top:15px;left:15px;padding:11px 15px;border-radius:13px;font-size:13px;line-height:1.5}
-#brandHud strong{font-size:15px;letter-spacing:.04em}
-#stats{top:15px;right:15px;padding:11px 15px;border-radius:13px;font-size:13px}
-#hint{bottom:15px;left:50%;transform:translateX(-50%);padding:10px 14px;border-radius:12px;font-size:12px;white-space:nowrap;color:#d6e5ef}
-#cross{left:50%;top:50%;transform:translate(-50%,-50%);border:0;background:none;font-size:22px;text-shadow:0 1px 5px #000}
-#toast{top:80px;left:50%;transform:translateX(-50%);padding:9px 14px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .2s}
-#toast.show{opacity:1}
-#pause{pointer-events:auto;right:15px;top:66px;border-radius:10px;padding:9px 12px;color:white;cursor:pointer}
-@media(max-width:680px){.modes{grid-template-columns:1fr}.mode{min-height:0;padding:14px}.panel{max-height:95vh;overflow:auto}.intro{margin-bottom:14px}#hint{white-space:normal;width:calc(100% - 30px);text-align:center}}
+:root{color-scheme:dark;--bg:#0b1020;--panel:#151e35;--line:#2b3b60;--text:#f4f7ff;--muted:#b8c5df;--accent:#7c9cff}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top,#1b2c50 0,#0b1020 48%);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;min-height:100vh}
+header{padding:28px 16px 20px;text-align:center}
+h1{font-size:clamp(2rem,7vw,3.6rem);margin:0 0 10px;letter-spacing:.04em}
+.creator{max-width:900px;margin:0 auto;background:#172541;border:1px solid #405887;border-radius:18px;padding:16px 18px;line-height:1.65;color:#eaf0ff}
+.creator strong{color:#fff}
+.creator a{color:#a9c2ff;overflow-wrap:anywhere}
+.tag{color:#9db5ff;font-weight:800}
+main{width:min(1100px,100%);margin:auto;padding:0 14px 40px}
+.intro{text-align:center;color:var(--muted);margin:18px auto 22px;max-width:760px}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
+.card{background:linear-gradient(160deg,#1b2948,#121a2d);border:1px solid var(--line);border-radius:18px;padding:17px;box-shadow:0 12px 30px #0004}
+.card h2{margin:0 0 8px;font-size:1.25rem}
+.card p{color:var(--muted);min-height:52px;line-height:1.5;margin:0 0 14px}
+button{border:0;border-radius:12px;background:linear-gradient(135deg,#7897ff,#9b7bff);color:#081127;font-weight:800;font-size:1rem;padding:12px 16px;cursor:pointer;min-height:46px}
+button:focus-visible{outline:3px solid white;outline-offset:3px}
+button.secondary{background:#273758;color:#f4f7ff;border:1px solid #52688f}
+#playPanel{display:none;margin-top:20px;background:#111a2d;border:1px solid var(--line);border-radius:18px;padding:12px}
+.playTop{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:4px 2px 12px}
+#gameTitle{font-size:1.15rem;font-weight:800}
+#gameHelp{color:var(--muted);font-size:.92rem;line-height:1.4;margin:0 0 10px}
+#stage{position:relative;width:100%;height:min(66vh,620px);min-height:330px;background:#090d17;border-radius:12px;overflow:hidden;touch-action:none}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+.controls{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px;color:var(--muted);font-size:.9rem}
+.pad{display:grid;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(2,42px);gap:5px}
+.pad button{padding:4px;min-height:40px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+footer{text-align:center;color:#93a4c5;padding:12px 16px 28px;font-size:.88rem}
+@media(max-width:600px){header{padding-top:20px}.creator{text-align:left}.card p{min-height:0}#stage{height:58vh;min-height:300px}.controls{align-items:flex-start}}
 </style>
 </head>
 <body>
-<div id="game"></div>
-<div id="menu"><main class="panel">
-<div class="kicker">WELCOME TO YOUR NEXT ADVENTURE</div>
-<div class="brand">HJH <span>GAMING</span></div>
-<p class="intro">Three original first-person 3D worlds in one place. Explore a lively block-built valley, or enter futuristic training arenas with roaming computer-controlled bots.</p>
-<div class="modes">
-<button class="mode active" data-mode="vine"><span class="emoji">🌲</span><b>Vinecraft</b><small>Discover forests, a village, wandering sheep, pigs and cows. Walk up to a villager and press E to say hello.</small></button>
-<button class="mode" data-mode="fine"><span class="emoji">🏝️</span><b>Fine Night</b><small>Explore a colorful island arena. Tag training bots with harmless glowing energy pulses and build your score.</small></button>
-<button class="mode" data-mode="razor"><span class="emoji">⚡</span><b>Razor Whip</b><small>Enter a high-tech practice arena with moving training bots, bright effects and a score challenge.</small></button>
-</div>
-<button id="start">PLAY VINECRAFT</button>
-<p class="note">Desktop: WASD move · Mouse look · Space jump · E interact in Vinecraft · Click to tag bots in arena worlds · Esc releases mouse. Requires an internet connection to load the Three.js 3D engine.</p>
-</main></div>
-<div id="hud">
-<div id="brandHud"><strong>HJH GAMING</strong><br><span id="worldLabel">Vinecraft</span></div>
-<div id="stats">Explore the valley</div>
-<button id="pause">World Select</button>
-<div id="cross">+</div><div id="toast"></div>
-<div id="hint">WASD move · Mouse look · Space jump · E interact · Esc unlock mouse</div>
-</div>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
-<script type="module">
-import * as THREE from 'three';
-
-const $=s=>document.querySelector(s), game=$('#game'), menu=$('#menu'), hud=$('#hud');
-const start=$('#start'), pause=$('#pause'), toast=$('#toast');
-let mode='vine',scene,camera,renderer,clock,locked=false,yaw=0,pitch=0,keys={},velocityY=0,onGround=true,score=0;
-let bots=[],animals=[],villagers=[],shots=[],decor=[],toastTimer;
-const V=(x,y,z)=>new THREE.Vector3(x,y,z);
-function say(text){toast.textContent=text;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2300)}
-function mat(color,roughness=.9,metalness=0){return new THREE.MeshStandardMaterial({color,roughness,metalness})}
-function mesh(geo,material,x,y,z,parent=scene){const o=new THREE.Mesh(geo,material);o.position.set(x,y,z);o.castShadow=true;o.receiveShadow=true;parent.add(o);return o}
-function cube(w,h,d,color,x,y,z,parent=scene){return mesh(new THREE.BoxGeometry(w,h,d),mat(color),x,y,z,parent)}
-function orb(r,color,x,y,z,parent=scene){return mesh(new THREE.SphereGeometry(r,18,14),mat(color),x,y,z,parent)}
-function groupAt(x,z){let g=new THREE.Group();g.position.set(x,0,z);scene.add(g);return g}
-function addTree(x,z,s=1){const g=groupAt(x,z);cube(.55*s,2.4*s,.55*s,0x725039,0,1.2*s,0,g);for(let i=0;i<3;i++){let crown=orb((1.05-i*.13)*s,0x276a42,0,(2.2+i*.48)*s,0,g);crown.scale.set(1.15,.86,1.05)}decor.push(g)}
-function addRock(x,z,s=1){let r=mesh(new THREE.DodecahedronGeometry(s,0),mat(0x777b73),x,s*.35,z);r.scale.set(1.2,.75,.9);decor.push(r)}
-function addHouse(x,z){let g=groupAt(x,z);cube(5,3.2,4,0xb98a58,0,1.6,0,g);let roof=mesh(new THREE.ConeGeometry(3.8,2.2,4),mat(0x704638),0,4.25,0,g);roof.rotation.y=Math.PI/4;cube(1.05,1.8,.12,0x49301f,0,.9,2.06,g);cube(.85,.8,.14,0x8ed1d0,-1.45,1.9,2.06,g);cube(.85,.8,.14,0x8ed1d0,1.45,1.9,2.06,g);decor.push(g)}
-function addPerson(x,z,shirt,kind='villager'){let g=groupAt(x,z);cube(.72,1.05,.42,shirt,0,1.02,0,g);orb(.32,0xe8bd96,0,1.78,0,g);cube(.14,.62,.15,0x283747,-.22,.32,0,g);cube(.14,.62,.15,0x283747,.22,.32,0,g);orb(.04,0x17212a,-.11,1.82,.28,g);orb(.04,0x17212a,.11,1.82,.28,g);if(kind==='villager'){cube(.86,.13,.5,0x513624,0,2.12,0,g);villagers.push(g)}else{orb(.13,0x6ef1ff,0,1.12,.25,g);bots.push(g)}g.userData={kind,home:V(x,0,z),phase:Math.random()*7,tagged:false};return g}
-function addAnimal(x,z,type){let g=groupAt(x,z),color=type==='sheep'?0xe8e7df:type==='pig'?0xe78e9b:0x9a6940;let body=orb(.55,color,0,.72,0,g);body.scale.set(1.2,.8,.82);orb(.29,color,0,.92,.55,g);for(let i=0;i<4;i++)cube(.12,.48,.12,color,(i%2?-.34:.34),.25,i<2?-.3:.3,g);if(type==='sheep'){for(let i=0;i<5;i++)orb(.2,0xf4f1e9,(Math.random()-.5)*.65,1.05,(Math.random()-.5)*.5,g)}if(type==='cow'){cube(.16,.12,.12,0x34302c,-.25,.9,.24,g);cube(.16,.12,.12,0x34302c,.2,.65,.24,g)}g.userData={type,home:V(x,0,z),phase:Math.random()*9};animals.push(g)}
-function terrain(color,size=130,segments=100,amplitude=0){let geo=new THREE.PlaneGeometry(size,size,segments,segments);let p=geo.attributes.position;for(let i=0;i<p.count;i++){let x=p.getX(i),y=p.getY(i);let h=amplitude*(Math.sin(x*.12)*Math.cos(y*.1)+Math.sin(y*.21)*.35);p.setZ(i,h)}geo.computeVertexNormals();let m=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color,roughness:1}));m.rotation.x=-Math.PI/2;m.position.y=-.5;m.receiveShadow=true;scene.add(m);return m}
-function clear(){if(renderer){renderer.dispose();game.innerHTML=''}scene=null;bots=[];animals=[];villagers=[];shots=[];decor=[];keys={};score=0;velocityY=0;yaw=0;pitch=0}
-function setup(modeName){
- clear();mode=modeName;scene=new THREE.Scene();
- const sky=mode==='razor'?0x101b36:mode==='fine'?0x83c6e9:0x9bcde9;
- scene.background=new THREE.Color(sky);scene.fog=new THREE.Fog(sky,48,145);
- camera=new THREE.PerspectiveCamera(76,innerWidth/innerHeight,.1,220);camera.position.set(0,1.72,9);
- renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;game.appendChild(renderer.domElement);
- scene.add(new THREE.HemisphereLight(0xd8efff,0x56604b,2.1));
- const sun=new THREE.DirectionalLight(0xffedce,3);sun.position.set(-22,34,18);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-70;sun.shadow.camera.right=70;sun.shadow.camera.top=70;sun.shadow.camera.bottom=-70;scene.add(sun);
- if(mode==='vine'){
-  terrain(0x557f43,140,110,.55);
-  for(let i=0;i<62;i++){let x=(Math.random()-.5)*112,z=(Math.random()-.5)*112;if(Math.abs(x)<12&&Math.abs(z)<12)continue;addTree(x,z,.65+Math.random()*.6)}
-  for(let i=0;i<18;i++)addRock((Math.random()-.5)*90,(Math.random()-.5)*90,.5+Math.random()*.8);
-  addHouse(-8,-8);addHouse(1,-10);addHouse(-2,-17);
-  for(let i=0;i<9;i++)addAnimal((Math.random()-.5)*25,(Math.random()-.5)*24,['sheep','pig','cow'][i%3]);
-  for(let i=0;i<6;i++)addPerson(-7+Math.random()*13,-6+Math.random()*13,[0x4c91b7,0x8a6bb3,0x6b9b65][i%3]);
-  $('#worldLabel').textContent='Vinecraft';$('#stats').textContent='Village life · 6 villagers · 9 animals';$('#hint').textContent='WASD move · Mouse look · Space jump · E talk · Esc unlock mouse';
- }else{
-  terrain(mode==='fine'?0xc5b77d:0x333f5b,140,90,mode==='fine'?.22:.08);
-  if(mode==='fine'){
-   for(let i=0;i<32;i++)addTree((Math.random()-.5)*115,(Math.random()-.5)*115,.5+Math.random()*.5);
-   for(let i=0;i<14;i++)addRock((Math.random()-.5)*100,(Math.random()-.5)*100,.5+Math.random());
-   for(let i=0;i<5;i++){let x=(i-2)*11;cube(7,1,7,0x9b9b8a,x,.1,-20-(i%2)*8);cube(7,.7,7,0x9b9b8a,x,.9,-20-(i%2)*8)}
-  }else{
-   for(let i=0;i<30;i++){let x=(Math.random()-.5)*100,z=(Math.random()-.5)*100;let h=2+Math.random()*5;cube(2+Math.random()*3,h,2+Math.random()*3,i%2?0x394d70:0x52617e,x,h/2-.5,z)}
-   for(let i=0;i<10;i++){let ring=mesh(new THREE.TorusGeometry(1.2,.08,8,28),new THREE.MeshStandardMaterial({color:0x54dff2,emissive:0x087b9a,metalness:.4,roughness:.3}), (Math.random()-.5)*65,1.1,(Math.random()-.5)*65);ring.rotation.x=Math.PI/2}
-  }
-  for(let i=0;i<9;i++)addPerson((Math.random()-.5)*48,(Math.random()-.5)*48,i%2?0xc65366:0x4b78c7,'bot');
-  $('#worldLabel').textContent=mode==='fine'?'Fine Night':'Razor Whip';$('#stats').textContent='Score: 0 · Practice bots: 9';$('#hint').textContent='WASD move · Mouse look · Space jump · Click to tag bots · Esc unlock mouse';
- }
- clock=new THREE.Clock();hud.style.display='block';menu.style.display='none';say('Welcome to HJH Gaming! Click the world to begin.');animate();
+<header>
+  <h1>🎮 HJH GAMING</h1>
+  <div class="creator">
+    <strong>Houston Jordan Holt is the creator of This website</strong><br>
+    If you want new games added talk to him at
+    <a href="mailto:houstonholt3@gmail.com">houstonholt3@gmail.com</a>
+    and he will see what he can do<br>
+    <span class="tag">#Houstonisthebest</span>
+  </div>
+</header>
+<main>
+  <p class="intro">Choose a world and play right here on HJH Gaming. These games are built into this page, so they do not depend on another game site allowing an embed. They support keyboard controls and on-screen mobile controls.</p>
+  <section class="games" aria-label="Game library">
+    <article class="card">
+      <h2>🧱 Vinecraft: Block Builder</h2>
+      <p>Explore a blocky world, collect materials, and build your own little landscape.</p>
+      <button onclick="launch('blocks')">Play Vinecraft</button>
+    </article>
+    <article class="card">
+      <h2>🟨 Vackrooms: Maze Explorer</h2>
+      <p>Find your way through a strange maze, discover glowing markers, and reach the exit.</p>
+      <button onclick="launch('maze')">Play Vackrooms</button>
+    </article>
+    <article class="card">
+      <h2>💎 Crystal Quest</h2>
+      <p>Explore a peaceful island, collect crystals, and discover hidden corners.</p>
+      <button onclick="launch('crystal')">Play Crystal Quest</button>
+    </article>
+  </section>
+  <section id="playPanel" aria-live="polite">
+    <div class="playTop">
+      <div id="gameTitle">Game</div>
+      <div class="actions">
+        <button class="secondary" onclick="restartGame()">Restart</button>
+        <button class="secondary" onclick="toggleFullscreen()">Fullscreen</button>
+        <button onclick="closeGame()">Back to games</button>
+      </div>
+    </div>
+    <p id="gameHelp"></p>
+    <div id="stage"><canvas id="gameCanvas"></canvas></div>
+    <div class="controls">
+      <div>Computer: use WASD or arrow keys. On mobile: use the touch pad.</div>
+      <div class="pad" aria-label="Touch movement controls">
+        <span></span><button data-dir="up">▲</button><span></span>
+        <button data-dir="left">◀</button><button data-dir="down">▼</button><button data-dir="right">▶</button>
+      </div>
+      <div id="status">Ready to play</div>
+    </div>
+  </section>
+</main>
+<footer>HJH Gaming · Games run inside this page · Have fun exploring!</footer>
+<script>
+const canvas=document.getElementById('gameCanvas'),ctx=canvas.getContext('2d');
+const panel=document.getElementById('playPanel'),stage=document.getElementById('stage');
+const titleEl=document.getElementById('gameTitle'),helpEl=document.getElementById('gameHelp'),statusEl=document.getElementById('status');
+let game='blocks',player={x:4,y:4},keys={},held={},world=[],items=[],frame=0,raf=0,won=false;
+const tile=34;
+function resize(){const r=stage.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(r.width*d));canvas.height=Math.max(1,Math.floor(r.height*d));ctx.setTransform(d,0,0,d,0,0);draw()}
+window.addEventListener('resize',resize);
+function launch(which){game=which;panel.style.display='block';panel.scrollIntoView({behavior:'smooth',block:'start'});restartGame()}
+function closeGame(){cancelAnimationFrame(raf);panel.style.display='none';}
+function restartGame(){
+ cancelAnimationFrame(raf);keys={};held={};won=false;frame=0;player={x:4,y:4};items=[];
+ if(game==='blocks'){titleEl.textContent='Vinecraft: Block Builder';helpEl.textContent='Move around the block world. Tap/click an empty tile to place a block; tap/click a block to remove it. Collect the bright blocks.';makeBlocks()}
+ if(game==='maze'){titleEl.textContent='Vackrooms: Maze Explorer';helpEl.textContent='Explore the maze and find the glowing exit. This is a top-down maze adventure designed for both touch and keyboard.';makeMaze()}
+ if(game==='crystal'){titleEl.textContent='Crystal Quest';helpEl.textContent='Explore the island and collect all 8 crystals. There are no enemies or weapons—just exploration.';makeCrystal()}
+ resize();loop()
 }
-function firePulse(){if(mode==='vine'||!locked)return;let dir=V(0,0,0);camera.getWorldDirection(dir);let p=mesh(new THREE.SphereGeometry(.14,14,12),new THREE.MeshBasicMaterial({color:0x7df8ff}),camera.position.x,camera.position.y,camera.position.z);p.position.add(dir.clone().multiplyScalar(.8));p.userData={v:dir.multiplyScalar(48),life:1.7};shots.push(p)}
-function talk(){if(mode!=='vine')return;let nearest=null,d=4;for(const v of villagers){let n=v.position.distanceTo(camera.position);if(n<d){d=n;nearest=v}}if(nearest)say('Villager: Welcome to our valley! Enjoy exploring.');else say('Walk closer to a villager to talk.')}
-function animate(){if(!renderer)return;requestAnimationFrame(animate);let dt=Math.min(clock.getDelta(),.04),t=clock.elapsedTime;
- let f=V(-Math.sin(yaw),0,-Math.cos(yaw)),r=V(Math.cos(yaw),0,-Math.sin(yaw)),move=V(0,0,0);
- if(keys.KeyW)move.add(f);if(keys.KeyS)move.sub(f);if(keys.KeyD)move.add(r);if(keys.KeyA)move.sub(r);if(move.lengthSq())move.normalize().multiplyScalar(10*dt);
- camera.position.add(move);camera.position.x=THREE.MathUtils.clamp(camera.position.x,-63,63);camera.position.z=THREE.MathUtils.clamp(camera.position.z,-63,63);
- if(!onGround){velocityY-=23*dt;camera.position.y+=velocityY*dt;if(camera.position.y<=1.72){camera.position.y=1.72;velocityY=0;onGround=true}}
- camera.rotation.order='YXZ';camera.rotation.y=yaw;camera.rotation.x=pitch;
- for(const a of animals){let u=a.userData;a.position.x=u.home.x+Math.sin(t*.45+u.phase)*1.9;a.position.z=u.home.z+Math.cos(t*.38+u.phase)*1.7;a.rotation.y=Math.sin(t*.5+u.phase)*.25}
- for(const v of villagers){let u=v.userData;v.position.x=u.home.x+Math.sin(t*.22+u.phase)*.55;v.position.z=u.home.z+Math.cos(t*.2+u.phase)*.55;v.rotation.y=Math.sin(t*.3+u.phase)*.2}
- for(const b of bots){let u=b.userData;b.position.x=u.home.x+Math.sin(t*.58+u.phase)*3.3;b.position.z=u.home.z+Math.cos(t*.48+u.phase)*3.3;b.rotation.y=Math.sin(t+u.phase)*.4}
- for(let i=shots.length-1;i>=0;i--){let p=shots[i];p.position.addScaledVector(p.userData.v,dt);p.userData.life-=dt;let hit=-1;for(let j=0;j<bots.length;j++){if(p.position.distanceTo(bots[j].position.clone().add(V(0,1,0)))<1){hit=j;break}}if(hit>=0){scene.remove(bots[hit]);bots.splice(hit,1);score++;say('Nice tag! +1 point');}if(hit>=0||p.userData.life<=0){scene.remove(p);shots.splice(i,1)}}
- if(mode!=='vine')$('#stats').textContent='Score: '+score+' · Practice bots: '+bots.length;
- renderer.render(scene,camera);
+function makeBlocks(){world=Array.from({length:24},(_,y)=>Array.from({length:30},(_,x)=>((x*7+y*11)%17===0||x===0||y===0||x===29||y===23)?1:0));items=[];for(let i=0;i<10;i++)items.push({x:2+(i*7)%25,y:2+(i*5)%19,got:false});player={x:4,y:4};}
+function makeMaze(){const w=23,h=17;world=Array.from({length:h},()=>Array(w).fill(1));let stack=[[1,1]];world[1][1]=0;while(stack.length){let [x,y]=stack[stack.length-1],opts=[[0,-2],[2,0],[0,2],[-2,0]].map(([dx,dy])=>[x+dx,y+dy]).filter(([nx,ny])=>nx>0&&ny>0&&nx<w-1&&ny<h-1&&world[ny][nx]===1);if(!opts.length){stack.pop();continue}let [nx,ny]=opts[Math.floor(Math.random()*opts.length)];world[(y+ny)/2][(x+nx)/2]=0;world[ny][nx]=0;stack.push([nx,ny])}world[h-2][w-2]=0;player={x:1,y:1};items=[{x:w-2,y:h-2,got:false}];}
+function makeCrystal(){const w=26,h=20;world=Array.from({length:h},(_,y)=>Array.from({length:w},(_,x)=>(x===0||y===0||x===w-1||y===h-1||((x*13+y*9)%31===0))?1:0));player={x:2,y:2};items=[];for(let i=0;i<8;i++){let x=3+(i*7)%20,y=3+(i*5)%14;if(world[y][x])world[y][x]=0;items.push({x,y,got:false})}}
+function move(dx,dy){let nx=player.x+dx,ny=player.y+dy;if(!world[ny]||world[ny][nx]===undefined)return;if(game==='blocks'||world[ny][nx]===0){player.x=nx;player.y=ny;checkItems()}}
+function checkItems(){let got=items.filter(a=>a.got).length;for(const a of items){if(!a.got&&a.x===player.x&&a.y===player.y){a.got=true;got++;statusEl.textContent=game==='maze'?'Exit found! Great exploring!':`Collected ${got}/${items.length}`}}if(items.length&&got===items.length){won=true;statusEl.textContent=game==='maze'?'You found the exit!':'You collected everything!'}}
+function tick(){let dx=0,dy=0;if(keys.ArrowUp||keys.w||held.up)dy=-1;else if(keys.ArrowDown||keys.s||held.down)dy=1;else if(keys.ArrowLeft||keys.a||held.left)dx=-1;else if(keys.ArrowRight||keys.d||held.right)dx=1;if(dx||dy){if(frame%8===0)move(dx,dy)}frame++}
+function draw(){
+ const r=stage.getBoundingClientRect(),W=r.width||600,H=r.height||400;ctx.clearRect(0,0,W,H);
+ if(!world.length)return;
+ if(game==='maze'){drawMaze(W,H);return}
+ const cols=Math.ceil(W/tile)+2,rows=Math.ceil(H/tile)+2,ox=Math.max(0,Math.min(world[0].length-cols,player.x-Math.floor(cols/2))),oy=Math.max(0,Math.min(world.length-rows,player.y-Math.floor(rows/2)));
+ for(let sy=0;sy<rows;sy++)for(let sx=0;sx<cols;sx++){let x=ox+sx,y=oy+sy;if(!world[y])continue;let px=sx*tile,py=sy*tile;ctx.fillStyle=world[y][x]?'#47734e':'#9acb78';ctx.fillRect(px,py,tile-1,tile-1);if(world[y][x]){ctx.fillStyle='#6d9b68';ctx.fillRect(px,py, tile-1,8)}else{ctx.fillStyle='#a8d889';ctx.fillRect(px+4,py+5,4,4)}}
+ for(const a of items)if(!a.got&&a.x>=ox&&a.x<ox+cols&&a.y>=oy&&a.y<oy+rows){ctx.fillStyle='#62f6ff';ctx.beginPath();ctx.arc((a.x-ox)*tile+17,(a.y-oy)*tile+17,8,0,Math.PI*2);ctx.fill()}
+ const px=(player.x-ox)*tile+17,py=(player.y-oy)*tile+17;ctx.fillStyle='#3154c9';ctx.fillRect(px-10,py-12,20,24);ctx.fillStyle='#ffd7b0';ctx.fillRect(px-7,py-18,14,10);
+ if(game==='blocks'){ctx.fillStyle='#142238';ctx.fillRect(8,8,160,28);ctx.fillStyle='white';ctx.font='14px system-ui';ctx.fillText('Blocks: tap tiles to build',16,27)}
 }
-document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;start.textContent='PLAY '+({vine:'VINECRAFT',fine:'FINE NIGHT',razor:'RAZOR WHIP'}[mode])}));
-start.addEventListener('click',()=>setup(mode));
-pause.addEventListener('click',()=>{if(renderer){renderer.dispose();game.innerHTML=''}hud.style.display='none';menu.style.display='grid';document.exitPointerLock?.()});
-game.addEventListener('click',()=>{if(renderer?.domElement)renderer.domElement.requestPointerLock()});
-document.addEventListener('pointerlockchange',()=>{locked=document.pointerLockElement===renderer?.domElement});
-document.addEventListener('mousemove',e=>{if(!locked)return;yaw-=e.movementX*.0022;pitch=THREE.MathUtils.clamp(pitch-e.movementY*.0022,-1.35,1.35)});
-document.addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='Space'&&onGround&&hud.style.display==='block'){velocityY=8;onGround=false}if(e.code==='KeyE')talk()});
-document.addEventListener('keyup',e=>keys[e.code]=false);
-document.addEventListener('mousedown',e=>{if(e.button===0)firePulse()});
-window.addEventListener('resize',()=>{if(camera&&renderer){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)}});
+function drawMaze(W,H){const cell=Math.min(W/13,H/10),ox=(W-cell*world[0].length)/2,oy=(H-cell*world.length)/2;for(let y=0;y<world.length;y++)for(let x=0;x<world[y].length;x++){ctx.fillStyle=world[y][x]?'#c6b77b':'#5b5239';ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);if(!world[y][x]){ctx.fillStyle='#706345';ctx.fillRect(ox+x*cell+3,oy+y*cell+3,3,3)}}ctx.fillStyle='#75f6ff';ctx.beginPath();ctx.arc(ox+(world[0].length-1.5)*cell,oy+(world.length-1.5)*cell,cell*.28,0,Math.PI*2);ctx.fill();ctx.fillStyle='#527cff';ctx.beginPath();ctx.arc(ox+(player.x+.5)*cell,oy+(player.y+.5)*cell,cell*.32,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.font='14px system-ui';ctx.fillText('Find the cyan exit',12,22)}
+function loop(){tick();draw();raf=requestAnimationFrame(loop)}
+window.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();keys[e.key]=true});
+window.addEventListener('keyup',e=>keys[e.key]=false);
+document.querySelectorAll('[data-dir]').forEach(b=>{let d=b.dataset.dir;b.addEventListener('pointerdown',e=>{e.preventDefault();held[d]=true;b.setPointerCapture(e.pointerId)});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>b.addEventListener(ev,()=>held[d]=false))});
+canvas.addEventListener('pointerdown',e=>{if(game!=='blocks')return;const r=canvas.getBoundingClientRect(),cols=Math.ceil(r.width/tile)+2,rows=Math.ceil(r.height/tile)+2,ox=Math.max(0,Math.min(world[0].length-cols,player.x-Math.floor(cols/2))),oy=Math.max(0,Math.min(world.length-rows,player.y-Math.floor(rows/2)));let x=ox+Math.floor(e.offsetX/tile),y=oy+Math.floor(e.offsetY/tile);if(world[y]&&world[y][x]!==undefined){if(world[y][x]===1)world[y][x]=0;else if(Math.abs(x-player.x)+Math.abs(y-player.y)<5)world[y][x]=1;draw()}});
+function toggleFullscreen(){if(!document.fullscreenElement){stage.requestFullscreen?.()}else{document.exitFullscreen?.()}}
 </script>
-</body></html>
+</body>
+</html>
