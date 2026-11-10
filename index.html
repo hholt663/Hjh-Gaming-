@@ -1,135 +1,428 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#10162b">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HJH Gaming</title>
+
 <style>
-:root{color-scheme:dark;--bg:#0b1020;--panel:#151e35;--line:#2b3b60;--text:#f4f7ff;--muted:#b8c5df;--accent:#7c9cff}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at top,#1b2c50 0,#0b1020 48%);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;min-height:100vh}
-header{padding:28px 16px 20px;text-align:center}
-h1{font-size:clamp(2rem,7vw,3.6rem);margin:0 0 10px;letter-spacing:.04em}
-.creator{max-width:900px;margin:0 auto;background:#172541;border:1px solid #405887;border-radius:18px;padding:16px 18px;line-height:1.65;color:#eaf0ff}
-.creator strong{color:#fff}
-.creator a{color:#a9c2ff;overflow-wrap:anywhere}
-.tag{color:#9db5ff;font-weight:800}
-main{width:min(1100px,100%);margin:auto;padding:0 14px 40px}
-.intro{text-align:center;color:var(--muted);margin:18px auto 22px;max-width:760px}
-.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
-.card{background:linear-gradient(160deg,#1b2948,#121a2d);border:1px solid var(--line);border-radius:18px;padding:17px;box-shadow:0 12px 30px #0004}
-.card h2{margin:0 0 8px;font-size:1.25rem}
-.card p{color:var(--muted);min-height:52px;line-height:1.5;margin:0 0 14px}
-button{border:0;border-radius:12px;background:linear-gradient(135deg,#7897ff,#9b7bff);color:#081127;font-weight:800;font-size:1rem;padding:12px 16px;cursor:pointer;min-height:46px}
-button:focus-visible{outline:3px solid white;outline-offset:3px}
-button.secondary{background:#273758;color:#f4f7ff;border:1px solid #52688f}
-#playPanel{display:none;margin-top:20px;background:#111a2d;border:1px solid var(--line);border-radius:18px;padding:12px}
-.playTop{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:4px 2px 12px}
-#gameTitle{font-size:1.15rem;font-weight:800}
-#gameHelp{color:var(--muted);font-size:.92rem;line-height:1.4;margin:0 0 10px}
-#stage{position:relative;width:100%;height:min(66vh,620px);min-height:330px;background:#090d17;border-radius:12px;overflow:hidden;touch-action:none}
-canvas{display:block;width:100%;height:100%;touch-action:none}
-.controls{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px;color:var(--muted);font-size:.9rem}
-.pad{display:grid;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(2,42px);gap:5px}
-.pad button{padding:4px;min-height:40px}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-footer{text-align:center;color:#93a4c5;padding:12px 16px 28px;font-size:.88rem}
-@media(max-width:600px){header{padding-top:20px}.creator{text-align:left}.card p{min-height:0}#stage{height:58vh;min-height:300px}.controls{align-items:flex-start}}
+* {box-sizing:border-box}
+
+body {
+  margin:0;
+  background:#080d19;
+  color:white;
+  font-family:Arial,sans-serif;
+}
+
+header {
+  background:linear-gradient(120deg,#101e42,#122d5b,#07101e);
+  padding:35px 15px;
+  text-align:center;
+  border-bottom:3px solid #168cff;
+}
+
+header h1 {
+  font-size:42px;
+  margin:0 0 12px;
+  color:#42a5ff;
+}
+
+header p {
+  max-width:750px;
+  margin:10px auto;
+  line-height:1.7;
+}
+
+.creator {
+  color:#b8d9ff;
+  font-weight:bold;
+}
+
+#search {
+  display:block;
+  width:90%;
+  max-width:550px;
+  padding:15px;
+  margin:25px auto;
+  border:2px solid #258cff;
+  border-radius:12px;
+  background:#111c31;
+  color:white;
+  font-size:16px;
+}
+
+.categories {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  padding:10px;
+}
+
+.categories button {
+  background:#172b4b;
+  color:white;
+  border:1px solid #278cff;
+  padding:11px 18px;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+.categories button.active {
+  background:#168cff;
+}
+
+main {
+  max-width:1200px;
+  margin:auto;
+  padding:15px;
+}
+
+h2 {
+  color:#51aaff;
+  text-align:center;
+}
+
+.games {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:17px;
+}
+
+.game {
+  background:#121e32;
+  border:1px solid #263f61;
+  border-radius:14px;
+  padding:20px;
+  text-align:center;
+}
+
+.game h3 {
+  margin-top:5px;
+}
+
+.game p {
+  color:#b9c8dc;
+  min-height:38px;
+}
+
+.game button {
+  width:100%;
+  padding:13px;
+  background:#087cff;
+  color:white;
+  border:0;
+  border-radius:9px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.game button:hover {
+  background:#005ac4;
+}
+
+#playerSection {
+  display:none;
+  margin:30px auto;
+  padding:15px;
+  background:#111c30;
+  border:2px solid #168cff;
+  border-radius:15px;
+}
+
+#playerSection h2 {
+  margin-top:5px;
+}
+
+#gameFrame {
+  width:100%;
+  height:600px;
+  border:0;
+  border-radius:10px;
+  background:black;
+}
+
+.close {
+  background:#d62e42;
+  color:white;
+  padding:12px 20px;
+  border:0;
+  border-radius:8px;
+  cursor:pointer;
+  margin-bottom:15px;
+}
+
+footer {
+  text-align:center;
+  background:#101b2d;
+  padding:30px 15px;
+  margin-top:40px;
+  color:#bdcce0;
+}
+
+footer a {
+  color:#55adff;
+}
+
+.hidden {
+  display:none;
+}
+
+@media(max-width:600px) {
+  header h1 {font-size:32px}
+  #gameFrame {height:480px}
+}
 </style>
 </head>
+
 <body>
+
 <header>
   <h1>🎮 HJH GAMING</h1>
-  <div class="creator">
-    <strong>Houston Jordan Holt is the creator of This website</strong><br>
+
+  <p class="creator">
+    Houston Jordan Holt is the creator of This website
+  </p>
+
+  <p>
+    Welcome to HJH Gaming! Play a collection of games
+    created by other developers, right here on our website.
+  </p>
+
+  <p>
     If you want new games added talk to him at
-    <a href="mailto:houstonholt3@gmail.com">houstonholt3@gmail.com</a>
-    and he will see what he can do<br>
-    <span class="tag">#Houstonisthebest</span>
-  </div>
+    <a href="mailto:houstonholt3@gmail.com" style="color:#62b5ff">
+      houstonholt3@gmail.com
+    </a>
+    and he will see what he can do
+  </p>
+
+  <p>#Houstonisthebest</p>
 </header>
+
+<input
+  id="search"
+  type="search"
+  placeholder="🔎 Search for games..."
+  oninput="filterGames()"
+>
+
+<div class="categories">
+  <button class="active" onclick="setCategory('all',this)">All Games</button>
+  <button onclick="setCategory('arcade',this)">Arcade</button>
+  <button onclick="setCategory('puzzle',this)">Puzzle</button>
+  <button onclick="setCategory('adventure',this)">Adventure</button>
+  <button onclick="setCategory('strategy',this)">Strategy</button>
+  <button onclick="setCategory('casual',this)">Casual</button>
+</div>
+
 <main>
-  <p class="intro">Choose a world and play right here on HJH Gaming. These games are built into this page, so they do not depend on another game site allowing an embed. They support keyboard controls and on-screen mobile controls.</p>
-  <section class="games" aria-label="Game library">
-    <article class="card">
-      <h2>🧱 Vinecraft: Block Builder</h2>
-      <p>Explore a blocky world, collect materials, and build your own little landscape.</p>
-      <button onclick="launch('blocks')">Play Vinecraft</button>
-    </article>
-    <article class="card">
-      <h2>🟨 Vackrooms: Maze Explorer</h2>
-      <p>Find your way through a strange maze, discover glowing markers, and reach the exit.</p>
-      <button onclick="launch('maze')">Play Vackrooms</button>
-    </article>
-    <article class="card">
-      <h2>💎 Crystal Quest</h2>
-      <p>Explore a peaceful island, collect crystals, and discover hidden corners.</p>
-      <button onclick="launch('crystal')">Play Crystal Quest</button>
-    </article>
-  </section>
-  <section id="playPanel" aria-live="polite">
-    <div class="playTop">
-      <div id="gameTitle">Game</div>
-      <div class="actions">
-        <button class="secondary" onclick="restartGame()">Restart</button>
-        <button class="secondary" onclick="toggleFullscreen()">Fullscreen</button>
-        <button onclick="closeGame()">Back to games</button>
-      </div>
-    </div>
-    <p id="gameHelp"></p>
-    <div id="stage"><canvas id="gameCanvas"></canvas></div>
-    <div class="controls">
-      <div>Computer: use WASD or arrow keys. On mobile: use the touch pad.</div>
-      <div class="pad" aria-label="Touch movement controls">
-        <span></span><button data-dir="up">▲</button><span></span>
-        <button data-dir="left">◀</button><button data-dir="down">▼</button><button data-dir="right">▶</button>
-      </div>
-      <div id="status">Ready to play</div>
-    </div>
-  </section>
+
+<h2>🔥 GAME LIBRARY</h2>
+
+<div class="games" id="games">
+
+<!-- UPLOAD ARCADE GAMES -->
+
+<div class="game" data-category="arcade">
+<h3>Orbit Brake</h3>
+<p>One-button gravity arcade game.</p>
+<button onclick="playGame('Orbit Brake','https://www.uploadarcade.com/embed/orbit-brake')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="puzzle">
+<h3>Parcel Panic</h3>
+<p>Sort packages before the conveyor belt fills up.</p>
+<button onclick="playGame('Parcel Panic','https://www.uploadarcade.com/embed/parcel-panic')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="puzzle">
+<h3>Lantern Lines</h3>
+<p>Connect matching points without crossing lines.</p>
+<button onclick="playGame('Lantern Lines','https://www.uploadarcade.com/embed/lantern-lines')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="arcade">
+<h3>Cloud Courier</h3>
+<p>Keep your flying courier in the air.</p>
+<button onclick="playGame('Cloud Courier','https://www.uploadarcade.com/embed/cloud-courier')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="strategy">
+<h3>Pocket Reactor</h3>
+<p>Balance an energy grid in this strategy game.</p>
+<button onclick="playGame('Pocket Reactor','https://www.uploadarcade.com/embed/pocket-reactor')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="casual">
+<h3>Signal Garden</h3>
+<p>Remember and repeat the growing pattern.</p>
+<button onclick="playGame('Signal Garden','https://www.uploadarcade.com/embed/signal-garden')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="arcade">
+<h3>Color Relay</h3>
+<p>Match colors and pass through the gates.</p>
+<button onclick="playGame('Color Relay','https://www.uploadarcade.com/embed/color-relay')">PLAY NOW</button>
+</div>
+
+<!-- PLAYBOLT GAMES -->
+
+<div class="game" data-category="puzzle">
+<h3>2048</h3>
+<p>Combine matching numbers to reach 2048.</p>
+<button onclick="playGame('2048','https://playbolt.app/play/2048/')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="arcade">
+<h3>Hextris</h3>
+<p>A fast-paced hexagon puzzle game.</p>
+<button onclick="playGame('Hextris','https://playbolt.app/play/hextris/')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="adventure">
+<h3>Astray</h3>
+<p>Explore a maze and find your way through.</p>
+<button onclick="playGame('Astray','https://playbolt.app/play/astray/')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="puzzle">
+<h3>Sliding Puzzle</h3>
+<p>Put the mixed-up tiles back in order.</p>
+<button onclick="playGame('Sliding Puzzle','https://playbolt.app/play/sliding-puzzle/')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="arcade">
+<h3>Snake</h3>
+<p>Grow your snake and avoid running into yourself.</p>
+<button onclick="playGame('Snake','https://playbolt.app/play/snake/')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="casual">
+<h3>Whack-a-Mole</h3>
+<p>Test your reflexes in this classic game.</p>
+<button onclick="playGame('Whack-a-Mole','https://playbolt.app/play/whack-a-mole/')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="arcade">
+<h3>Neon Pong</h3>
+<p>A glowing arcade version of classic Pong.</p>
+<button onclick="playGame('Neon Pong','https://playbolt.app/play/neon-pong/')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="arcade">
+<h3>Sky Hopper</h3>
+<p>Jump your way through the sky.</p>
+<button onclick="playGame('Sky Hopper','https://playbolt.app/play/sky-hopper/')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="puzzle">
+<h3>Lights Out</h3>
+<p>Switch off every light to solve the puzzle.</p>
+<button onclick="playGame('Lights Out','https://playbolt.app/play/lights-out/')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="puzzle">
+<h3>Sudoku</h3>
+<p>Complete the number puzzle.</p>
+<button onclick="playGame('Sudoku','https://playbolt.app/play/sudoku/')">PLAY NOW</button>
+</div>
+
+<div class="game" data-category="puzzle">
+<h3>Nonogram</h3>
+<p>Reveal pictures by solving number clues.</p>
+<button onclick="playGame('Nonogram','https://playbolt.app/play/nonogram/')">PLAY NOW</button>
+</div>
+
+</div>
+
+<div id="noResults" class="hidden" style="text-align:center;padding:30px">
+No games found. Try another search!
+</div>
+
+<section id="playerSection">
+  <button class="close" onclick="closeGame()">✖ CLOSE GAME</button>
+  <h2 id="gameTitle">Now Playing</h2>
+
+  <iframe
+    id="gameFrame"
+    src="about:blank"
+    title="HJH Gaming embedded game"
+    allow="fullscreen; autoplay; gamepad"
+    allowfullscreen
+    loading="lazy">
+  </iframe>
+
+  <p style="text-align:center;color:#b9c8dc">
+    This game is provided by its original developer.
+  </p>
+</section>
+
 </main>
-<footer>HJH Gaming · Games run inside this page · Have fun exploring!</footer>
+
+<footer>
+  <h2>HJH GAMING</h2>
+  <p>Created by Houston Jordan Holt</p>
+  <p>Game rights belong to their respective creators.</p>
+  <p>Contact: houstonholt3@gmail.com</p>
+  <p>#Houstonisthebest</p>
+</footer>
+
 <script>
-const canvas=document.getElementById('gameCanvas'),ctx=canvas.getContext('2d');
-const panel=document.getElementById('playPanel'),stage=document.getElementById('stage');
-const titleEl=document.getElementById('gameTitle'),helpEl=document.getElementById('gameHelp'),statusEl=document.getElementById('status');
-let game='blocks',player={x:4,y:4},keys={},held={},world=[],items=[],frame=0,raf=0,won=false;
-const tile=34;
-function resize(){const r=stage.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(r.width*d));canvas.height=Math.max(1,Math.floor(r.height*d));ctx.setTransform(d,0,0,d,0,0);draw()}
-window.addEventListener('resize',resize);
-function launch(which){game=which;panel.style.display='block';panel.scrollIntoView({behavior:'smooth',block:'start'});restartGame()}
-function closeGame(){cancelAnimationFrame(raf);panel.style.display='none';}
-function restartGame(){
- cancelAnimationFrame(raf);keys={};held={};won=false;frame=0;player={x:4,y:4};items=[];
- if(game==='blocks'){titleEl.textContent='Vinecraft: Block Builder';helpEl.textContent='Move around the block world. Tap/click an empty tile to place a block; tap/click a block to remove it. Collect the bright blocks.';makeBlocks()}
- if(game==='maze'){titleEl.textContent='Vackrooms: Maze Explorer';helpEl.textContent='Explore the maze and find the glowing exit. This is a top-down maze adventure designed for both touch and keyboard.';makeMaze()}
- if(game==='crystal'){titleEl.textContent='Crystal Quest';helpEl.textContent='Explore the island and collect all 8 crystals. There are no enemies or weapons—just exploration.';makeCrystal()}
- resize();loop()
+let selectedCategory = "all";
+
+function playGame(name,url) {
+  const player = document.getElementById("playerSection");
+  const frame = document.getElementById("gameFrame");
+
+  document.getElementById("gameTitle").textContent = name;
+
+  frame.src = url;
+  player.style.display = "block";
+
+  player.scrollIntoView({behavior:"smooth"});
 }
-function makeBlocks(){world=Array.from({length:24},(_,y)=>Array.from({length:30},(_,x)=>((x*7+y*11)%17===0||x===0||y===0||x===29||y===23)?1:0));items=[];for(let i=0;i<10;i++)items.push({x:2+(i*7)%25,y:2+(i*5)%19,got:false});player={x:4,y:4};}
-function makeMaze(){const w=23,h=17;world=Array.from({length:h},()=>Array(w).fill(1));let stack=[[1,1]];world[1][1]=0;while(stack.length){let [x,y]=stack[stack.length-1],opts=[[0,-2],[2,0],[0,2],[-2,0]].map(([dx,dy])=>[x+dx,y+dy]).filter(([nx,ny])=>nx>0&&ny>0&&nx<w-1&&ny<h-1&&world[ny][nx]===1);if(!opts.length){stack.pop();continue}let [nx,ny]=opts[Math.floor(Math.random()*opts.length)];world[(y+ny)/2][(x+nx)/2]=0;world[ny][nx]=0;stack.push([nx,ny])}world[h-2][w-2]=0;player={x:1,y:1};items=[{x:w-2,y:h-2,got:false}];}
-function makeCrystal(){const w=26,h=20;world=Array.from({length:h},(_,y)=>Array.from({length:w},(_,x)=>(x===0||y===0||x===w-1||y===h-1||((x*13+y*9)%31===0))?1:0));player={x:2,y:2};items=[];for(let i=0;i<8;i++){let x=3+(i*7)%20,y=3+(i*5)%14;if(world[y][x])world[y][x]=0;items.push({x,y,got:false})}}
-function move(dx,dy){let nx=player.x+dx,ny=player.y+dy;if(!world[ny]||world[ny][nx]===undefined)return;if(game==='blocks'||world[ny][nx]===0){player.x=nx;player.y=ny;checkItems()}}
-function checkItems(){let got=items.filter(a=>a.got).length;for(const a of items){if(!a.got&&a.x===player.x&&a.y===player.y){a.got=true;got++;statusEl.textContent=game==='maze'?'Exit found! Great exploring!':`Collected ${got}/${items.length}`}}if(items.length&&got===items.length){won=true;statusEl.textContent=game==='maze'?'You found the exit!':'You collected everything!'}}
-function tick(){let dx=0,dy=0;if(keys.ArrowUp||keys.w||held.up)dy=-1;else if(keys.ArrowDown||keys.s||held.down)dy=1;else if(keys.ArrowLeft||keys.a||held.left)dx=-1;else if(keys.ArrowRight||keys.d||held.right)dx=1;if(dx||dy){if(frame%8===0)move(dx,dy)}frame++}
-function draw(){
- const r=stage.getBoundingClientRect(),W=r.width||600,H=r.height||400;ctx.clearRect(0,0,W,H);
- if(!world.length)return;
- if(game==='maze'){drawMaze(W,H);return}
- const cols=Math.ceil(W/tile)+2,rows=Math.ceil(H/tile)+2,ox=Math.max(0,Math.min(world[0].length-cols,player.x-Math.floor(cols/2))),oy=Math.max(0,Math.min(world.length-rows,player.y-Math.floor(rows/2)));
- for(let sy=0;sy<rows;sy++)for(let sx=0;sx<cols;sx++){let x=ox+sx,y=oy+sy;if(!world[y])continue;let px=sx*tile,py=sy*tile;ctx.fillStyle=world[y][x]?'#47734e':'#9acb78';ctx.fillRect(px,py,tile-1,tile-1);if(world[y][x]){ctx.fillStyle='#6d9b68';ctx.fillRect(px,py, tile-1,8)}else{ctx.fillStyle='#a8d889';ctx.fillRect(px+4,py+5,4,4)}}
- for(const a of items)if(!a.got&&a.x>=ox&&a.x<ox+cols&&a.y>=oy&&a.y<oy+rows){ctx.fillStyle='#62f6ff';ctx.beginPath();ctx.arc((a.x-ox)*tile+17,(a.y-oy)*tile+17,8,0,Math.PI*2);ctx.fill()}
- const px=(player.x-ox)*tile+17,py=(player.y-oy)*tile+17;ctx.fillStyle='#3154c9';ctx.fillRect(px-10,py-12,20,24);ctx.fillStyle='#ffd7b0';ctx.fillRect(px-7,py-18,14,10);
- if(game==='blocks'){ctx.fillStyle='#142238';ctx.fillRect(8,8,160,28);ctx.fillStyle='white';ctx.font='14px system-ui';ctx.fillText('Blocks: tap tiles to build',16,27)}
+
+function closeGame() {
+  document.getElementById("gameFrame").src = "about:blank";
+  document.getElementById("playerSection").style.display = "none";
 }
-function drawMaze(W,H){const cell=Math.min(W/13,H/10),ox=(W-cell*world[0].length)/2,oy=(H-cell*world.length)/2;for(let y=0;y<world.length;y++)for(let x=0;x<world[y].length;x++){ctx.fillStyle=world[y][x]?'#c6b77b':'#5b5239';ctx.fillRect(ox+x*cell,oy+y*cell,cell-1,cell-1);if(!world[y][x]){ctx.fillStyle='#706345';ctx.fillRect(ox+x*cell+3,oy+y*cell+3,3,3)}}ctx.fillStyle='#75f6ff';ctx.beginPath();ctx.arc(ox+(world[0].length-1.5)*cell,oy+(world.length-1.5)*cell,cell*.28,0,Math.PI*2);ctx.fill();ctx.fillStyle='#527cff';ctx.beginPath();ctx.arc(ox+(player.x+.5)*cell,oy+(player.y+.5)*cell,cell*.32,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.font='14px system-ui';ctx.fillText('Find the cyan exit',12,22)}
-function loop(){tick();draw();raf=requestAnimationFrame(loop)}
-window.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();keys[e.key]=true});
-window.addEventListener('keyup',e=>keys[e.key]=false);
-document.querySelectorAll('[data-dir]').forEach(b=>{let d=b.dataset.dir;b.addEventListener('pointerdown',e=>{e.preventDefault();held[d]=true;b.setPointerCapture(e.pointerId)});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>b.addEventListener(ev,()=>held[d]=false))});
-canvas.addEventListener('pointerdown',e=>{if(game!=='blocks')return;const r=canvas.getBoundingClientRect(),cols=Math.ceil(r.width/tile)+2,rows=Math.ceil(r.height/tile)+2,ox=Math.max(0,Math.min(world[0].length-cols,player.x-Math.floor(cols/2))),oy=Math.max(0,Math.min(world.length-rows,player.y-Math.floor(rows/2)));let x=ox+Math.floor(e.offsetX/tile),y=oy+Math.floor(e.offsetY/tile);if(world[y]&&world[y][x]!==undefined){if(world[y][x]===1)world[y][x]=0;else if(Math.abs(x-player.x)+Math.abs(y-player.y)<5)world[y][x]=1;draw()}});
-function toggleFullscreen(){if(!document.fullscreenElement){stage.requestFullscreen?.()}else{document.exitFullscreen?.()}}
+
+function setCategory(category,button) {
+  selectedCategory = category;
+
+  document.querySelectorAll(".categories button").forEach(b=>{
+    b.classList.remove("active");
+  });
+
+  button.classList.add("active");
+  filterGames();
+}
+
+function filterGames() {
+  const search = document.getElementById("search").value.toLowerCase();
+  const games = document.querySelectorAll(".game");
+  let count = 0;
+
+  games.forEach(game=>{
+    const matchesSearch = game.innerText.toLowerCase().includes(search);
+    const matchesCategory =
+      selectedCategory === "all" ||
+      game.dataset.category === selectedCategory;
+
+    const visible = matchesSearch && matchesCategory;
+
+    game.style.display = visible ? "block" : "none";
+
+    if(visible) count++;
+  });
+
+  document.getElementById("noResults").style.display =
+    count === 0 ? "block" : "none";
+}
 </script>
+
 </body>
 </html>
