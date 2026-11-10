@@ -1,89 +1,135 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080d18"><meta name="description" content="Play Vinecraft, Free Night, and Razor Whip on HJH GAMIN.">
-<title>HJH GAMIN — 3D Edition</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HJH Gaming</title>
 <style>
-:root{--bg:#080d18;--panel:#111b2d;--line:#2a3a55;--cyan:#55f0df;--text:#f5f8ff;--muted:#a8b7ce}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#245c70 0%,transparent 55%),radial-gradient(ellipse at 90% 35%,#20234c 0%,transparent 42%),var(--bg);color:var(--text);font:15px/1.5 system-ui,Arial,sans-serif;overflow-x:hidden}button{font:inherit;cursor:pointer}.wrap{max-width:1120px;margin:auto;padding:0 18px}header{position:sticky;top:0;z-index:5;background:#080d18eF;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.nav{height:64px;display:flex;align-items:center;gap:16px}.brand{font-size:22px;font-weight:1000}.brand span{color:var(--cyan)}.nav button{margin-left:auto}.btn{border:1px solid #3a5270;background:#17243a;color:white;border-radius:11px;padding:10px 14px;font-weight:800}.btn.primary{background:linear-gradient(100deg,#0da99e,#526cff);border:0}.hero{padding:58px 0 32px;display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;min-height:330px}.eyebrow{font-size:11px;letter-spacing:2px;color:var(--cyan);font-weight:900}.hero h1{font-size:clamp(40px,7vw,68px);line-height:.98;letter-spacing:-3px;margin:10px 0}.hero p,.sub{color:var(--muted)}.heroart{height:250px;border:1px solid #527b94;border-radius:22px;background:radial-gradient(circle at 50% 28%,#fff7c7 0 3%,transparent 4%),linear-gradient(180deg,#315e83 0%,#7c9c9c 44%,#234e53 45%,#142d37 100%);display:grid;place-items:center;font-size:85px;box-shadow:0 24px 85px #0009;position:relative;overflow:hidden}.heroart:before{content:"";position:absolute;inset:45% -10% -20%;background:linear-gradient(145deg,#3d725b,#173b38);clip-path:polygon(0 65%,25% 5%,43% 48%,64% 0,100% 65%,100% 100%,0 100%);opacity:.95}.heroart:after{content:"HJH GAMIN";position:absolute;bottom:17px;right:20px;font-size:13px;letter-spacing:5px;font-weight:900;color:#e5ffff;text-shadow:0 2px 12px #000}.section{padding:24px 0 35px}.section h2{margin:5px 0;font-size:28px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{background:linear-gradient(150deg,#1b2d43,#101829);border:1px solid #38516d;border-radius:17px;overflow:hidden;box-shadow:0 12px 35px #0005;transition:transform .2s,border-color .2s}.card:hover{transform:translateY(-4px);border-color:#65d9dc}.art{height:130px;display:grid;place-items:center;font-size:55px}.a1{background:radial-gradient(circle at 70% 20%,#fff3b0,transparent 17%),linear-gradient(180deg,#83b7c7 0%,#416e66 50%,#274b39 100%)}.a2{background:radial-gradient(circle at 70% 20%,#fff0b0,transparent 16%),linear-gradient(180deg,#66a8d5 0%,#2789a4 50%,#d6c18a 51%,#397b60 100%)}.a3{background:radial-gradient(circle at 50% 50%,#3ef5f2,transparent 8%),repeating-linear-gradient(135deg,#1b344b,#1b344b 12px,#263f5b 12px,#263f5b 24px)}.cardbody{padding:15px}.card h3{margin:0 0 5px}.card p{min-height:44px;color:var(--muted);font-size:13px}.tag{color:var(--cyan);font-size:11px;font-weight:900;letter-spacing:1px}.note{background:#111b2d;border:1px solid var(--line);padding:15px;border-radius:13px;color:var(--muted);font-size:13px}footer{padding:25px 0;color:var(--muted);border-top:1px solid var(--line)}.modal{display:none;position:fixed;inset:0;z-index:10;background:#020611f5;padding:10px;overflow:auto}.modal.show{display:block}.gamewindow{max-width:1050px;margin:auto;border:1px solid #334968;border-radius:16px;background:#0d1728;overflow:hidden}.gamehead{display:flex;align-items:center;padding:11px 14px;gap:12px;border-bottom:1px solid var(--line)}.gamehead h2{font-size:18px;margin:0;flex:1}.hud{display:flex;justify-content:space-between;gap:10px;padding:8px 14px;color:var(--cyan);font-weight:800;font-size:13px}.instructions{padding:7px 14px;color:var(--muted);font-size:12px}.viewport{position:relative;margin:0 12px 10px;border:1px solid #38516e;border-radius:12px;overflow:hidden;background:#08111d}.viewport canvas{display:block;width:100%;height:min(62vh,600px);touch-action:none;outline:none}.controls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:10px}.dpad{display:grid;grid-template-columns:repeat(3,48px);gap:5px}.dpad button{min-height:42px}.hidden{display:none!important}.crosshair{position:absolute;left:50%;top:50%;width:18px;height:18px;transform:translate(-50%,-50%);pointer-events:none;border:1px solid #a9fff4;border-radius:50%;box-shadow:0 0 10px #39e7dc}.help{font-size:12px;color:var(--muted);padding:0 14px 13px}.mobiletip{display:none}
-@media(max-width:720px){.hero{grid-template-columns:1fr;padding-top:30px}.heroart{height:145px;font-size:60px}.grid{grid-template-columns:1fr}.art{height:105px}.viewport canvas{height:48vh}.mobiletip{display:block}}
+:root{font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;color:#f5f8ff;background:#07111b}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}#game{position:fixed;inset:0;background:#111}
+canvas{display:block}
+#menu{position:fixed;inset:0;z-index:5;display:grid;place-items:center;padding:22px;background:radial-gradient(ellipse at 50% 15%,#24506a99,transparent 55%),linear-gradient(135deg,#06101df2,#102b40f2)}
+.panel{width:min(900px,100%);padding:clamp(20px,4vw,36px);border:1px solid #ffffff2b;border-radius:26px;background:#091522ed;box-shadow:0 28px 90px #000b}
+.brand{font-size:clamp(38px,7vw,68px);font-weight:950;letter-spacing:-.065em;line-height:1}.brand span{color:#66e4d1}
+.kicker{font-size:11px;letter-spacing:.22em;color:#8ca9bb;font-weight:800;margin-bottom:10px}
+.intro{max-width:680px;color:#b9cbd7;line-height:1.6;margin:12px 0 24px}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.mode{border:1px solid #ffffff25;border-radius:18px;padding:18px;background:linear-gradient(145deg,#193047,#101e2e);color:white;text-align:left;cursor:pointer;min-height:158px;transition:.18s}
+.mode:hover,.mode.active{transform:translateY(-3px);border-color:#66e4d1;box-shadow:0 12px 30px #0005}
+.mode .emoji{font-size:28px}.mode b{display:block;font-size:19px;margin:8px 0 5px}.mode small{color:#b6c8d5;line-height:1.5}
+#start{margin-top:20px;border:0;border-radius:12px;background:#66e4d1;color:#05202a;font-weight:900;padding:14px 24px;font-size:15px;cursor:pointer}
+.note{color:#8ea6b8;font-size:12px;line-height:1.5;margin:14px 0 0}
+#hud{position:fixed;inset:0;z-index:2;display:none;pointer-events:none}
+#brandHud,#stats,#hint,#cross,#toast,#pause{position:absolute;background:#081522c9;border:1px solid #ffffff26;backdrop-filter:blur(10px)}
+#brandHud{top:15px;left:15px;padding:11px 15px;border-radius:13px;font-size:13px;line-height:1.5}
+#brandHud strong{font-size:15px;letter-spacing:.04em}
+#stats{top:15px;right:15px;padding:11px 15px;border-radius:13px;font-size:13px}
+#hint{bottom:15px;left:50%;transform:translateX(-50%);padding:10px 14px;border-radius:12px;font-size:12px;white-space:nowrap;color:#d6e5ef}
+#cross{left:50%;top:50%;transform:translate(-50%,-50%);border:0;background:none;font-size:22px;text-shadow:0 1px 5px #000}
+#toast{top:80px;left:50%;transform:translateX(-50%);padding:9px 14px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .2s}
+#toast.show{opacity:1}
+#pause{pointer-events:auto;right:15px;top:66px;border-radius:10px;padding:9px 12px;color:white;cursor:pointer}
+@media(max-width:680px){.modes{grid-template-columns:1fr}.mode{min-height:0;padding:14px}.panel{max-height:95vh;overflow:auto}.intro{margin-bottom:14px}#hint{white-space:normal;width:calc(100% - 30px);text-align:center}}
 </style>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 </head>
 <body>
-<header><div class="wrap nav"><div class="brand">HJH <span>GAMIN</span></div><button class="btn primary" onclick="document.querySelector('#games').scrollIntoView({behavior:'smooth'})">Play 3D games</button></div></header>
-<main class="wrap">
-<section class="hero"><div><div class="eyebrow">THE NEXT LEVEL · 3D EDITION</div><h1>PLAY MORE.<br><span style="color:var(--cyan)">PAY NEVER.</span></h1><p>Explore three original browser games with enhanced 3D scenes, detailed characters, atmospheric lighting, shadows, animated environments and responsive controls. Built as one website file.</p><button class="btn primary" onclick="document.querySelector('#games').scrollIntoView({behavior:'smooth'})">Explore games ↓</button></div><div class="heroart">🌌🎮⚡</div></section>
-<section class="section" id="games"><div class="eyebrow">3D ARCADE</div><h2>Choose your world</h2><p class="sub">Each game runs in the browser. Best on a modern device with an internet connection.</p><div class="grid">
-<article class="card"><div class="art a1">🌲🧱⛏️</div><div class="cardbody"><div class="tag">3D BUILD & EXPLORE</div><h3>Vinecraft</h3><p>Explore a detailed voxel island, collect blocks, and build your own little world.</p><button class="btn primary" onclick="launch('vine')">Play Vinecraft</button></div></article>
-<article class="card"><div class="art a2">🏝️🪂✨</div><div class="cardbody"><div class="tag">3D SURVIVAL ARENA</div><h3>Free Night</h3><p>Explore a tropical 3D island with trees, clouds, water, roaming drones and energy orbs.</p><button class="btn primary" onclick="launch('free')">Play Free Night</button></div></article>
-<article class="card"><div class="art a3">🎯🤖💫</div><div class="cardbody"><div class="tag">3D SCI-FI TARGET RANGE</div><h3>Razor Whip</h3><p>Enter a glowing sci-fi arena and tag floating hologram targets in a timed challenge.</p><button class="btn primary" onclick="launch('razor')">Play Razor Whip</button></div></article>
-</div></section>
-<section class="section"><div class="note"><b>About this edition:</b> These are original browser-based 3D arcade games, not full-scale commercial games. They use Three.js from a free public CDN, so the first load needs internet access. No paid assets or purchases are required. This edition is a single-player visual upgrade. Online multiplayer requires a separate server setup and secure database rules before it can be enabled.</div></section>
-</main><footer><div class="wrap">HJH GAMIN · 3D EDITION · Play beyond limits.</div></footer>
-<div class="modal" id="modal"><div class="gamewindow"><div class="gamehead"><h2 id="gameTitle">Game</h2><button class="btn" onclick="closeGame()">Close ✕</button></div><div class="instructions" id="instructions"></div><div class="hud"><span id="leftHud"></span><span id="rightHud"></span></div><div class="viewport" id="viewport"><div class="crosshair hidden" id="crosshair"></div></div><div id="vineControls" class="controls hidden"><button class="btn" onclick="setVineMode('mine')">⛏ Mine</button><button class="btn" onclick="setVineMode('build')">🧱 Build</button><button class="btn" onclick="selectVine('grass')">Grass</button><button class="btn" onclick="selectVine('stone')">Stone</button><button class="btn" onclick="selectVine('wood')">Wood</button></div><div id="vineOnline" class="controls hidden" style="display:block;text-align:center;border-top:1px solid #2a3a55;margin:0 12px;padding:12px">
-  <b style="color:#55f0df">VINECRAFT ONLINE MULTIPLAYER</b>
-  <div style="display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:8px">
-    <input id="vineName" maxlength="16" placeholder="Your player name" value="Player" style="min-width:130px;padding:10px;border-radius:9px;border:1px solid #3a5270;background:#101829;color:white">
-    <input id="vineRoom" maxlength="6" placeholder="Room code" style="width:115px;text-transform:uppercase;padding:10px;border-radius:9px;border:1px solid #3a5270;background:#101829;color:white">
-    <button class="btn primary" id="createRoomBtn">Create room</button>
-    <button class="btn" id="joinRoomBtn">Join room</button>
-    <button class="btn" id="leaveRoomBtn">Leave</button>
-  </div>
-  <div class="dpad" style="margin:10px auto 0"><span></span><button class="btn" data-move="up">▲</button><span></span><button class="btn" data-move="left">◀</button><button class="btn" data-move="down">▼</button><button class="btn" data-move="right">▶</button></div>
-  <div id="vineOnlineStatus" class="help" style="padding:8px 0 0">Online setup needed. Create a free Firebase project and add its config to this file.</div>
+<div id="game"></div>
+<div id="menu"><main class="panel">
+<div class="kicker">WELCOME TO YOUR NEXT ADVENTURE</div>
+<div class="brand">HJH <span>GAMING</span></div>
+<p class="intro">Three original first-person 3D worlds in one place. Explore a lively block-built valley, or enter futuristic training arenas with roaming computer-controlled bots.</p>
+<div class="modes">
+<button class="mode active" data-mode="vine"><span class="emoji">🌲</span><b>Vinecraft</b><small>Discover forests, a village, wandering sheep, pigs and cows. Walk up to a villager and press E to say hello.</small></button>
+<button class="mode" data-mode="fine"><span class="emoji">🏝️</span><b>Fine Night</b><small>Explore a colorful island arena. Tag training bots with harmless glowing energy pulses and build your score.</small></button>
+<button class="mode" data-mode="razor"><span class="emoji">⚡</span><b>Razor Whip</b><small>Enter a high-tech practice arena with moving training bots, bright effects and a score challenge.</small></button>
 </div>
-<div id="moveControls" class="controls hidden"><div class="dpad"><span></span><button class="btn" data-move="up">▲</button><span></span><button class="btn" data-move="left">◀</button><button class="btn" data-move="down">▼</button><button class="btn" data-move="right">▶</button></div><button class="btn primary" id="pulseBtn">ENERGY PULSE</button><button class="btn" onclick="restartGame()">Restart</button></div><div id="razorControls" class="controls hidden"><button class="btn primary" onclick="restartGame()">Start / Restart</button><button class="btn" onclick="toggleAim()">Toggle aim mode</button></div><div class="help"><span class="mobiletip">Phone: use the on-screen arrows and tap the 3D scene.</span><span>Computer: WASD / arrow keys to move. Click or tap objects to interact. Razor Whip uses a fictional energy pulse, not real weapons.</span></div></div></div>
+<button id="start">PLAY VINECRAFT</button>
+<p class="note">Desktop: WASD move · Mouse look · Space jump · E interact in Vinecraft · Click to tag bots in arena worlds · Esc releases mouse. Requires an internet connection to load the Three.js 3D engine.</p>
+</main></div>
+<div id="hud">
+<div id="brandHud"><strong>HJH GAMING</strong><br><span id="worldLabel">Vinecraft</span></div>
+<div id="stats">Explore the valley</div>
+<button id="pause">World Select</button>
+<div id="cross">+</div><div id="toast"></div>
+<div id="hint">WASD move · Mouse look · Space jump · E interact · Esc unlock mouse</div>
+</div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 <script type="module">
 import * as THREE from 'three';
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getDatabase, ref, set, onValue, onDisconnect, remove, off } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
-const $=id=>document.getElementById(id);
-// Paste your Firebase web app settings here after creating a free Firebase project.
-const firebaseConfig = { apiKey: 'PASTE_API_KEY', authDomain: 'PASTE_PROJECT_ID.firebaseapp.com', databaseURL: 'PASTE_DATABASE_URL', projectId: 'PASTE_PROJECT_ID', appId: 'PASTE_APP_ID' };
-let firebaseApp=null, firebaseAuth=null, firebaseDb=null, onlineUid=null, onlineRoom='', onlineListener=null, remotePlayers={}, syncClock=0;
-let renderer,scene,camera,clock,frame=0,active='',objects=[],keys={},touch={},raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2(),vineMode='mine',vineType='grass',blocks=0,score=0,health=100,targets=[],drones=[],player,aimMode=false,gameStart=0;
-const mat=(color,roughness=.85)=>new THREE.MeshStandardMaterial({color,roughness});
-function setupScene(){scene=new THREE.Scene();scene.background=new THREE.Color(0x9bcce5);scene.fog=new THREE.Fog(0x9bcce5,38,115);camera=new THREE.PerspectiveCamera(62,1,.1,220);renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.08;renderer.setClearColor(0x9bcce5);$('viewport').appendChild(renderer.domElement);clock=new THREE.Clock();scene.add(new THREE.HemisphereLight(0xeaf7ff,0x53634c,2.0));let sun=new THREE.DirectionalLight(0xffe7c1,3.4);sun.position.set(-22,34,18);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-42;sun.shadow.camera.right=42;sun.shadow.camera.top=42;sun.shadow.camera.bottom=-42;sun.shadow.bias=-.00018;sun.shadow.normalBias=.025;scene.add(sun);let fill=new THREE.DirectionalLight(0xa9d5ff,.8);fill.position.set(15,10,-18);scene.add(fill);let rim=new THREE.DirectionalLight(0x8fffea,.35);rim.position.set(0,6,20);scene.add(rim);resize();}
-function resize(){if(!renderer)return;let w=$('viewport').clientWidth,h=$('viewport').clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
-window.addEventListener('resize',resize);
-function clearWorld(){for(let o of objects)scene.remove(o);objects=[];targets=[];drones=[];remotePlayers={};}
-function add(mesh){mesh.castShadow=true;mesh.receiveShadow=true;scene.add(mesh);objects.push(mesh);return mesh;}
-function cube(x,y,z,sx,sy,sz,material,interactive=false,type=''){let m=add(new THREE.Mesh(new THREE.BoxGeometry(sx,sy,sz),material));m.position.set(x,y,z);m.userData={interactive,type};return m;}
-function sphere(x,y,z,r,material,type=''){let m=add(new THREE.Mesh(new THREE.SphereGeometry(r,20,14),material));m.position.set(x,y,z);m.userData={interactive:true,type};return m;}
-function ground(color=0x4f9b55,size=70){let g=cube(0,-.35,0,size,.6,size,mat(color));g.receiveShadow=true;return g;}
-function tree(x,z,scale=1){const bark=new THREE.MeshStandardMaterial({color:0x62432d,roughness:1});const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.16*scale,.27*scale,2.1*scale,7),bark);trunk.position.set(x,1.05*scale,z);add(trunk);const greens=[0x285b3d,0x36764a,0x4b8951];for(let i=0;i<5;i++){const crown=new THREE.Mesh(new THREE.IcosahedronGeometry((.72+Math.random()*.22)*scale,1),new THREE.MeshStandardMaterial({color:greens[i%3],roughness:1}));crown.position.set(x+(Math.random()-.5)*.75*scale,2.0*scale+i*.18*scale,z+(Math.random()-.5)*.75*scale);crown.castShadow=true;scene.add(crown);objects.push(crown);}return trunk;}
-function addCloud(x,y,z,scale=1){for(let i=0;i<4;i++){let c=new THREE.Mesh(new THREE.SphereGeometry(.8*scale,14,10),new THREE.MeshStandardMaterial({color:0xffffff,roughness:1}));c.position.set(x+(i-1.5)*.8*scale,y+(i%2)*.25*scale,z);scene.add(c);objects.push(c);}}
-function addRock(x,y,z,scale=1){const rock=new THREE.Mesh(new THREE.DodecahedronGeometry(scale,0),new THREE.MeshStandardMaterial({color:0x68756f,roughness:.96}));rock.position.set(x,y,z);rock.scale.set(1,.62,.85);rock.rotation.set(Math.random()*.3,Math.random()*3,Math.random()*.25);add(rock);return rock;}
-function addGrassPatch(x,z){for(let i=0;i<5;i++){const blade=new THREE.Mesh(new THREE.ConeGeometry(.045,.42+Math.random()*.25,4),new THREE.MeshStandardMaterial({color:i%2?0x4b9147:0x78a94f,roughness:1}));blade.position.set(x+(Math.random()-.5)*.65,.2,z+(Math.random()-.5)*.65);blade.rotation.z=(Math.random()-.5)*.45;add(blade);}}
 
-function playerAvatar(color=0x26d7c5){let group=new THREE.Group();const cloth=mat(color,.72),skin=mat(0xc9926d,.9),dark=mat(0x172333,.7);let torso=new THREE.Mesh(new THREE.CapsuleGeometry(.34,.62,5,12),cloth);torso.position.y=1.05;torso.castShadow=true;group.add(torso);let head=new THREE.Mesh(new THREE.SphereGeometry(.235,24,18),skin);head.position.y=1.68;head.castShadow=true;group.add(head);let hair=new THREE.Mesh(new THREE.SphereGeometry(.24,18,10,0,Math.PI*2,0,Math.PI*.48),dark);hair.position.y=1.77;group.add(hair);let visor=new THREE.Mesh(new THREE.BoxGeometry(.29,.075,.045),mat(0x13283a,.25));visor.position.set(0,1.68,.21);group.add(visor);for(let side of [-1,1]){let arm=new THREE.Mesh(new THREE.CapsuleGeometry(.105,.48,4,8),cloth);arm.position.set(side*.43,1.05,0);arm.rotation.z=side*.16;arm.castShadow=true;group.add(arm);let leg=new THREE.Mesh(new THREE.CapsuleGeometry(.13,.48,4,8),dark);leg.position.set(side*.17,.38,0);leg.castShadow=true;group.add(leg);let boot=new THREE.Mesh(new THREE.BoxGeometry(.24,.13,.38),dark);boot.position.set(side*.17,.12,.08);group.add(boot);}scene.add(group);objects.push(group);return group;}
-function launch(which){if(frame)cancelAnimationFrame(frame);closeGame(false);active=which;$('vineOnline').classList.toggle('hidden',which!=='vine');$('modal').classList.add('show');$('vineControls').classList.toggle('hidden',which!=='vine');$('moveControls').classList.toggle('hidden',which!=='free');$('razorControls').classList.toggle('hidden',which!=='razor');$('crosshair').classList.toggle('hidden',which!=='razor');if(!renderer)setupScene();clearWorld();clock.getDelta();score=0;health=100;blocks=0;gameStart=performance.now();if(which==='vine')startVine();if(which==='free')startFree();if(which==='razor')startRazor();resize();animate();}
-function closeGame(hide=true){if(active==='vine')leaveVineRoom();active='';if(hide)$('modal').classList.remove('show');}
-function say(t,i){$('gameTitle').textContent=t;$('instructions').textContent=i;}
-function hud(a,b){$('leftHud').textContent=a;$('rightHud').textContent=b;}
-function setOnlineStatus(message){$('vineOnlineStatus').textContent=message;}
-function firebaseReady(){return firebaseConfig.apiKey!=='PASTE_API_KEY' && firebaseConfig.projectId!=='PASTE_PROJECT_ID' && firebaseConfig.databaseURL.startsWith('https://');}
-async function connectVine(room){
-  if(!firebaseReady()){setOnlineStatus('Not connected yet: add your Firebase web config in the firebaseConfig section of this HTML file first.');return;}
-  if(!room || !/^[A-Z0-9]{4,6}$/.test(room)){setOnlineStatus('Enter a room code with 4–6 letters or numbers.');return;}
-  try{
-    if(!firebaseApp){firebaseApp=initializeApp(firebaseConfig);firebaseAuth=getAuth(firebaseApp);firebaseDb=getDatabase(firebaseApp);}
-    if(!firebaseAuth.currentUser) await signInAnonymously(firebaseAuth);
-    onlineUid=firebaseAuth.currentUser.uid;onlineRoom=room;
-    const me=ref(firebaseDb,`rooms/${room}/players/${onlineUid}`);
-    await set(me,{name:($('vineName').value.trim()||'Player').slice(0,16),x:player.position.x,y:player.position.y,z:player.position.z,color:0x55d6c2,updatedAt:Date.now()});
-    onDisconnect(me).remove();
-    const others=ref(firebaseDb,`rooms/${room}/players`);
-    onlineListener=snapshot=>{
-      const data=snapshot.val()||{};
-      for(const [uid,info] of Object.entries(data)){
-        if(uid===onlineUid)continue;
-        if(!remotePlayers[uid]){const avatar=playerAvatar(info.color||0xffbd59);avatar.scale.setScalar(.9);const canvas=document.createElement('canvas');canvas.width=256;canvas.height=64;const ctx=canvas.getContext('2d');ctx.fillStyle='rgba(5,12,24,.78)';ctx.fillRect(0,0,256,64);ctx.fillStyle='#ffffff';ctx.font='bold 28px Arial';ctx.textAlign='center';ctx.fillText(String(info.name||'Player').slice(0,16),128,42);const tex=new THREE.CanvasTexture(canvas);const label=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true}));label.scale.set(2.4,.6,1);label.position.y=2.35;avatar.add(label);remotePlayers[uid]=avatar;}
-        const a=remotePlayers[uid];a.position.set(Number(info.x)||0,Number(info.y)||1,Number(info.z)||0);
-      }
-      for(const uid of Object.keys(remotePlayers)){if(!data[uid]){scene.remove(remotePlayers[uid]);objects=objects.filter(o=>o!==remotePlayers[uid]);delete remotePlayers[uid];}}
-      setOnlineStatus(`Connected to room ${room}. Other players here: ${Object.keys(data).filter(id=>id!==onlineUid).length}. Share this code with a friend.`);
-    };
-    onValue(others,onlineListener);
- 
+const $=s=>document.querySelector(s), game=$('#game'), menu=$('#menu'), hud=$('#hud');
+const start=$('#start'), pause=$('#pause'), toast=$('#toast');
+let mode='vine',scene,camera,renderer,clock,locked=false,yaw=0,pitch=0,keys={},velocityY=0,onGround=true,score=0;
+let bots=[],animals=[],villagers=[],shots=[],decor=[],toastTimer;
+const V=(x,y,z)=>new THREE.Vector3(x,y,z);
+function say(text){toast.textContent=text;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2300)}
+function mat(color,roughness=.9,metalness=0){return new THREE.MeshStandardMaterial({color,roughness,metalness})}
+function mesh(geo,material,x,y,z,parent=scene){const o=new THREE.Mesh(geo,material);o.position.set(x,y,z);o.castShadow=true;o.receiveShadow=true;parent.add(o);return o}
+function cube(w,h,d,color,x,y,z,parent=scene){return mesh(new THREE.BoxGeometry(w,h,d),mat(color),x,y,z,parent)}
+function orb(r,color,x,y,z,parent=scene){return mesh(new THREE.SphereGeometry(r,18,14),mat(color),x,y,z,parent)}
+function groupAt(x,z){let g=new THREE.Group();g.position.set(x,0,z);scene.add(g);return g}
+function addTree(x,z,s=1){const g=groupAt(x,z);cube(.55*s,2.4*s,.55*s,0x725039,0,1.2*s,0,g);for(let i=0;i<3;i++){let crown=orb((1.05-i*.13)*s,0x276a42,0,(2.2+i*.48)*s,0,g);crown.scale.set(1.15,.86,1.05)}decor.push(g)}
+function addRock(x,z,s=1){let r=mesh(new THREE.DodecahedronGeometry(s,0),mat(0x777b73),x,s*.35,z);r.scale.set(1.2,.75,.9);decor.push(r)}
+function addHouse(x,z){let g=groupAt(x,z);cube(5,3.2,4,0xb98a58,0,1.6,0,g);let roof=mesh(new THREE.ConeGeometry(3.8,2.2,4),mat(0x704638),0,4.25,0,g);roof.rotation.y=Math.PI/4;cube(1.05,1.8,.12,0x49301f,0,.9,2.06,g);cube(.85,.8,.14,0x8ed1d0,-1.45,1.9,2.06,g);cube(.85,.8,.14,0x8ed1d0,1.45,1.9,2.06,g);decor.push(g)}
+function addPerson(x,z,shirt,kind='villager'){let g=groupAt(x,z);cube(.72,1.05,.42,shirt,0,1.02,0,g);orb(.32,0xe8bd96,0,1.78,0,g);cube(.14,.62,.15,0x283747,-.22,.32,0,g);cube(.14,.62,.15,0x283747,.22,.32,0,g);orb(.04,0x17212a,-.11,1.82,.28,g);orb(.04,0x17212a,.11,1.82,.28,g);if(kind==='villager'){cube(.86,.13,.5,0x513624,0,2.12,0,g);villagers.push(g)}else{orb(.13,0x6ef1ff,0,1.12,.25,g);bots.push(g)}g.userData={kind,home:V(x,0,z),phase:Math.random()*7,tagged:false};return g}
+function addAnimal(x,z,type){let g=groupAt(x,z),color=type==='sheep'?0xe8e7df:type==='pig'?0xe78e9b:0x9a6940;let body=orb(.55,color,0,.72,0,g);body.scale.set(1.2,.8,.82);orb(.29,color,0,.92,.55,g);for(let i=0;i<4;i++)cube(.12,.48,.12,color,(i%2?-.34:.34),.25,i<2?-.3:.3,g);if(type==='sheep'){for(let i=0;i<5;i++)orb(.2,0xf4f1e9,(Math.random()-.5)*.65,1.05,(Math.random()-.5)*.5,g)}if(type==='cow'){cube(.16,.12,.12,0x34302c,-.25,.9,.24,g);cube(.16,.12,.12,0x34302c,.2,.65,.24,g)}g.userData={type,home:V(x,0,z),phase:Math.random()*9};animals.push(g)}
+function terrain(color,size=130,segments=100,amplitude=0){let geo=new THREE.PlaneGeometry(size,size,segments,segments);let p=geo.attributes.position;for(let i=0;i<p.count;i++){let x=p.getX(i),y=p.getY(i);let h=amplitude*(Math.sin(x*.12)*Math.cos(y*.1)+Math.sin(y*.21)*.35);p.setZ(i,h)}geo.computeVertexNormals();let m=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color,roughness:1}));m.rotation.x=-Math.PI/2;m.position.y=-.5;m.receiveShadow=true;scene.add(m);return m}
+function clear(){if(renderer){renderer.dispose();game.innerHTML=''}scene=null;bots=[];animals=[];villagers=[];shots=[];decor=[];keys={};score=0;velocityY=0;yaw=0;pitch=0}
+function setup(modeName){
+ clear();mode=modeName;scene=new THREE.Scene();
+ const sky=mode==='razor'?0x101b36:mode==='fine'?0x83c6e9:0x9bcde9;
+ scene.background=new THREE.Color(sky);scene.fog=new THREE.Fog(sky,48,145);
+ camera=new THREE.PerspectiveCamera(76,innerWidth/innerHeight,.1,220);camera.position.set(0,1.72,9);
+ renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;game.appendChild(renderer.domElement);
+ scene.add(new THREE.HemisphereLight(0xd8efff,0x56604b,2.1));
+ const sun=new THREE.DirectionalLight(0xffedce,3);sun.position.set(-22,34,18);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-70;sun.shadow.camera.right=70;sun.shadow.camera.top=70;sun.shadow.camera.bottom=-70;scene.add(sun);
+ if(mode==='vine'){
+  terrain(0x557f43,140,110,.55);
+  for(let i=0;i<62;i++){let x=(Math.random()-.5)*112,z=(Math.random()-.5)*112;if(Math.abs(x)<12&&Math.abs(z)<12)continue;addTree(x,z,.65+Math.random()*.6)}
+  for(let i=0;i<18;i++)addRock((Math.random()-.5)*90,(Math.random()-.5)*90,.5+Math.random()*.8);
+  addHouse(-8,-8);addHouse(1,-10);addHouse(-2,-17);
+  for(let i=0;i<9;i++)addAnimal((Math.random()-.5)*25,(Math.random()-.5)*24,['sheep','pig','cow'][i%3]);
+  for(let i=0;i<6;i++)addPerson(-7+Math.random()*13,-6+Math.random()*13,[0x4c91b7,0x8a6bb3,0x6b9b65][i%3]);
+  $('#worldLabel').textContent='Vinecraft';$('#stats').textContent='Village life · 6 villagers · 9 animals';$('#hint').textContent='WASD move · Mouse look · Space jump · E talk · Esc unlock mouse';
+ }else{
+  terrain(mode==='fine'?0xc5b77d:0x333f5b,140,90,mode==='fine'?.22:.08);
+  if(mode==='fine'){
+   for(let i=0;i<32;i++)addTree((Math.random()-.5)*115,(Math.random()-.5)*115,.5+Math.random()*.5);
+   for(let i=0;i<14;i++)addRock((Math.random()-.5)*100,(Math.random()-.5)*100,.5+Math.random());
+   for(let i=0;i<5;i++){let x=(i-2)*11;cube(7,1,7,0x9b9b8a,x,.1,-20-(i%2)*8);cube(7,.7,7,0x9b9b8a,x,.9,-20-(i%2)*8)}
+  }else{
+   for(let i=0;i<30;i++){let x=(Math.random()-.5)*100,z=(Math.random()-.5)*100;let h=2+Math.random()*5;cube(2+Math.random()*3,h,2+Math.random()*3,i%2?0x394d70:0x52617e,x,h/2-.5,z)}
+   for(let i=0;i<10;i++){let ring=mesh(new THREE.TorusGeometry(1.2,.08,8,28),new THREE.MeshStandardMaterial({color:0x54dff2,emissive:0x087b9a,metalness:.4,roughness:.3}), (Math.random()-.5)*65,1.1,(Math.random()-.5)*65);ring.rotation.x=Math.PI/2}
+  }
+  for(let i=0;i<9;i++)addPerson((Math.random()-.5)*48,(Math.random()-.5)*48,i%2?0xc65366:0x4b78c7,'bot');
+  $('#worldLabel').textContent=mode==='fine'?'Fine Night':'Razor Whip';$('#stats').textContent='Score: 0 · Practice bots: 9';$('#hint').textContent='WASD move · Mouse look · Space jump · Click to tag bots · Esc unlock mouse';
+ }
+ clock=new THREE.Clock();hud.style.display='block';menu.style.display='none';say('Welcome to HJH Gaming! Click the world to begin.');animate();
+}
+function firePulse(){if(mode==='vine'||!locked)return;let dir=V(0,0,0);camera.getWorldDirection(dir);let p=mesh(new THREE.SphereGeometry(.14,14,12),new THREE.MeshBasicMaterial({color:0x7df8ff}),camera.position.x,camera.position.y,camera.position.z);p.position.add(dir.clone().multiplyScalar(.8));p.userData={v:dir.multiplyScalar(48),life:1.7};shots.push(p)}
+function talk(){if(mode!=='vine')return;let nearest=null,d=4;for(const v of villagers){let n=v.position.distanceTo(camera.position);if(n<d){d=n;nearest=v}}if(nearest)say('Villager: Welcome to our valley! Enjoy exploring.');else say('Walk closer to a villager to talk.')}
+function animate(){if(!renderer)return;requestAnimationFrame(animate);let dt=Math.min(clock.getDelta(),.04),t=clock.elapsedTime;
+ let f=V(-Math.sin(yaw),0,-Math.cos(yaw)),r=V(Math.cos(yaw),0,-Math.sin(yaw)),move=V(0,0,0);
+ if(keys.KeyW)move.add(f);if(keys.KeyS)move.sub(f);if(keys.KeyD)move.add(r);if(keys.KeyA)move.sub(r);if(move.lengthSq())move.normalize().multiplyScalar(10*dt);
+ camera.position.add(move);camera.position.x=THREE.MathUtils.clamp(camera.position.x,-63,63);camera.position.z=THREE.MathUtils.clamp(camera.position.z,-63,63);
+ if(!onGround){velocityY-=23*dt;camera.position.y+=velocityY*dt;if(camera.position.y<=1.72){camera.position.y=1.72;velocityY=0;onGround=true}}
+ camera.rotation.order='YXZ';camera.rotation.y=yaw;camera.rotation.x=pitch;
+ for(const a of animals){let u=a.userData;a.position.x=u.home.x+Math.sin(t*.45+u.phase)*1.9;a.position.z=u.home.z+Math.cos(t*.38+u.phase)*1.7;a.rotation.y=Math.sin(t*.5+u.phase)*.25}
+ for(const v of villagers){let u=v.userData;v.position.x=u.home.x+Math.sin(t*.22+u.phase)*.55;v.position.z=u.home.z+Math.cos(t*.2+u.phase)*.55;v.rotation.y=Math.sin(t*.3+u.phase)*.2}
+ for(const b of bots){let u=b.userData;b.position.x=u.home.x+Math.sin(t*.58+u.phase)*3.3;b.position.z=u.home.z+Math.cos(t*.48+u.phase)*3.3;b.rotation.y=Math.sin(t+u.phase)*.4}
+ for(let i=shots.length-1;i>=0;i--){let p=shots[i];p.position.addScaledVector(p.userData.v,dt);p.userData.life-=dt;let hit=-1;for(let j=0;j<bots.length;j++){if(p.position.distanceTo(bots[j].position.clone().add(V(0,1,0)))<1){hit=j;break}}if(hit>=0){scene.remove(bots[hit]);bots.splice(hit,1);score++;say('Nice tag! +1 point');}if(hit>=0||p.userData.life<=0){scene.remove(p);shots.splice(i,1)}}
+ if(mode!=='vine')$('#stats').textContent='Score: '+score+' · Practice bots: '+bots.length;
+ renderer.render(scene,camera);
+}
+document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;start.textContent='PLAY '+({vine:'VINECRAFT',fine:'FINE NIGHT',razor:'RAZOR WHIP'}[mode])}));
+start.addEventListener('click',()=>setup(mode));
+pause.addEventListener('click',()=>{if(renderer){renderer.dispose();game.innerHTML=''}hud.style.display='none';menu.style.display='grid';document.exitPointerLock?.()});
+game.addEventListener('click',()=>{if(renderer?.domElement)renderer.domElement.requestPointerLock()});
+document.addEventListener('pointerlockchange',()=>{locked=document.pointerLockElement===renderer?.domElement});
+document.addEventListener('mousemove',e=>{if(!locked)return;yaw-=e.movementX*.0022;pitch=THREE.MathUtils.clamp(pitch-e.movementY*.0022,-1.35,1.35)});
+document.addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='Space'&&onGround&&hud.style.display==='block'){velocityY=8;onGround=false}if(e.code==='KeyE')talk()});
+document.addEventListener('keyup',e=>keys[e.code]=false);
+document.addEventListener('mousedown',e=>{if(e.button===0)firePulse()});
+window.addEventListener('resize',()=>{if(camera&&renderer){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)}});
+</script>
+</body></html>
