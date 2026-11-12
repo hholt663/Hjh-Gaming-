@@ -3,33 +3,33 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HJH Gaming Arcade</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>HJH Gaming</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#090b18;color:white;font-family:Arial,sans-serif}
-header{text-align:center;padding:25px;background:linear-gradient(120deg,#17134b,#092d48)}
-h1{color:#36d9ff;margin:0;font-size:36px}
+body{margin:0;background:#090d1b;color:#fff;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px 12px;background:linear-gradient(120deg,#17134b,#063c57)}
+h1{margin:0;color:#39d9ff;font-size:36px}
 main{max-width:1100px;margin:auto;padding:15px}
-input{max-width:100%;padding:13px;border-radius:10px;border:1px solid #555;background:#171b2c;color:white;font-size:16px}
-#search{width:100%}
-#games{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px;margin-top:15px}
-.card{background:#171b2c;border:1px solid #303a59;border-radius:15px;padding:15px;text-align:center}
-.emoji{font-size:40px}
-button{border:0;border-radius:9px;padding:11px;background:#16bce9;color:#06121b;font-weight:bold;font-size:15px;cursor:pointer;margin:4px}
+#search{width:100%;padding:14px;border-radius:10px;background:#171e32;color:white;border:1px solid #42516f;font-size:16px}
+#games{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px}
+.card{background:#171e32;border:1px solid #344461;border-radius:14px;padding:14px;text-align:center}
+.card .emoji{font-size:38px}
+button{border:0;border-radius:9px;padding:12px 16px;background:#29c9ed;color:#07121b;font-weight:bold;font-size:15px;margin:4px;cursor:pointer;touch-action:manipulation}
 .card button{width:100%}
 button:disabled{opacity:.5}
-#gameBox{display:none;position:fixed;inset:0;background:#090b18;z-index:10;overflow:auto;padding:12px}
-.gameTop{display:flex;justify-content:space-between;align-items:center;gap:8px}
-#gameTitle{color:#36d9ff;font-size:20px}
-#playArea{max-width:750px;margin:12px auto;background:#171b2c;border:1px solid #394465;border-radius:16px;padding:15px;text-align:center;min-height:350px}
-#message{color:#a8eaff;min-height:28px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:380px;margin:15px auto}
-.cell{background:#303a59;border-radius:8px;min-height:55px;display:grid;place-items:center;font-size:21px;font-weight:bold}
-canvas{display:block;background:#080d1b;border:1px solid #53617f;border-radius:9px;max-width:100%;margin:12px auto;touch-action:none}
+#gameBox{display:none;position:fixed;inset:0;z-index:5;background:#090d1b;overflow:auto;padding:12px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#gameTitle{font-size:20px;color:#39d9ff}
+#playArea{max-width:760px;margin:12px auto;background:#171e32;border:1px solid #344461;border-radius:15px;padding:14px;text-align:center;min-height:350px}
+#instructions{color:#c5d6e9}
+#message{color:#75e8ff;min-height:28px;font-weight:bold}
+canvas{display:block;width:min(100%,600px);height:auto;background:#050914;border:1px solid #465779;border-radius:9px;margin:12px auto;touch-action:none}
 .controls{display:flex;justify-content:center;flex-wrap:wrap;gap:5px}
-.big{font-size:30px}
-footer{text-align:center;padding:25px;color:#aaa}
+.grid{display:grid;gap:5px;max-width:390px;margin:14px auto}
+.tile{background:#34415f;border-radius:7px;min-height:54px;display:grid;place-items:center;font-weight:bold;font-size:20px}
+input{padding:11px;border-radius:8px;border:1px solid #61718c;background:#0d1425;color:white;font-size:17px;max-width:100%}
+footer{text-align:center;padding:25px;color:#9aa8bd}
 </style>
 </head>
 <body>
@@ -46,15 +46,21 @@ footer{text-align:center;padding:25px;color:#aaa}
 <footer>HJH Gaming Arcade</footer>
 
 <div id="gameBox">
- <div class="gameTop">
+ <div class="top">
   <button onclick="closeGame()">← BACK</button>
   <h2 id="gameTitle">Game</h2>
   <button onclick="closeGame()">✕</button>
  </div>
- <div id="playArea"></div>
+ <div id="playArea">
+  <p id="instructions"></p>
+  <div id="message"></div>
+  <div id="content"></div>
+ </div>
 </div>
 
 <script>
+"use strict";
+
 const gameList=[
 ["Snake","🐍","snake"],
 ["2048","🔢","2048"],
@@ -68,13 +74,13 @@ const gameList=[
 ["Minesweeper","💣","mines"],
 ["Asteroids","🚀","asteroids"],
 ["Tower Defense","🏰","tower"],
-["Trap the Cat","🐱","cat"],
-["Simon Says","🎨","sequence"],
+["Trap the Cat","🐈","cat"],
+["Simon Says","🎨","simon"],
 ["Connect Four","🔴","connect"],
 ["Checkers Challenge","♟️","checkers"],
 ["Word Guess","🔤","word"],
 ["Codebreaker","🔐","code"],
-["Reflex Challenge","⚡","reaction"],
+["Reflex Challenge","⚡","reflex"],
 ["Sliding Puzzle","🧩","sliding"],
 ["Whack-a-Mole","🔨","mole"],
 ["Maze Runner","🌀","maze"],
@@ -89,9 +95,8 @@ const gameList=[
 ];
 
 const games=document.getElementById("games");
-const area=document.getElementById("playArea");
-let current=null,score=0,timer=null,snakeTimer=null,board=[];
-let cleanup=null;
+const area=document.getElementById("content");
+let timer=null,raf=null,cleanup=null,score=0;
 
 function drawGames(){
  games.innerHTML="";
@@ -116,13 +121,14 @@ function filterGames(){
 }
 function startGame(i){
  stopGame();
- current=gameList[i];score=0;
  document.getElementById("gameBox").style.display="block";
- document.getElementById("gameTitle").textContent=current[1]+" "+current[0];
- launch(current[2]);
+ document.getElementById("gameTitle").textContent=gameList[i][1]+" "+gameList[i][0];
+ score=0;
+ launch(gameList[i][2]);
 }
 function stopGame(){
- clearInterval(timer);clearInterval(snakeTimer);clearTimeout(timer);
+ if(timer){clearInterval(timer);clearTimeout(timer);timer=null;}
+ if(raf){cancelAnimationFrame(raf);raf=null;}
  if(cleanup){cleanup();cleanup=null;}
 }
 function closeGame(){
@@ -130,189 +136,84 @@ function closeGame(){
  document.getElementById("gameBox").style.display="none";
  area.innerHTML="";
 }
-function heading(instructions){
- area.innerHTML=`<p>${instructions}</p><div id="message"></div><div id="content"></div>`;
+function setup(instructions){
+ document.getElementById("instructions").textContent=instructions;
+ document.getElementById("message").textContent="";
+ area.innerHTML="";
 }
-function say(s){
- const m=document.getElementById("message");
- if(m)m.textContent=s;
+function say(s){document.getElementById("message").textContent=s;}
+function addButton(label,fn){
+ const b=document.createElement("button");
+ b.textContent=label;b.onclick=fn;area.appendChild(b);return b;
 }
-function content(){return document.getElementById("content");}
+function addControls(labels){
+ const d=document.createElement("div");d.className="controls";area.appendChild(d);
+ labels.forEach(([label,fn])=>{
+  const b=document.createElement("button");b.textContent=label;b.onclick=fn;d.appendChild(b);
+ });
+ return d;
+}
+function canvasGame(instructions,w=600,h=360){
+ setup(instructions);
+ const c=document.createElement("canvas");c.width=w;c.height=h;
+ area.appendChild(c);
+ const ctx=c.getContext("2d");
+ return {c,ctx,w,h};
+}
+function loop(fn){
+ let active=true;
+ function frame(){if(!active)return;fn();if(active)raf=requestAnimationFrame(frame);}
+ raf=requestAnimationFrame(frame);
+ cleanup=()=>{active=false;if(raf)cancelAnimationFrame(raf);};
+}
 function launch(mode){
- const modes={
- tap:tapGame,reaction:reactionGame,memory:memoryGame,lights:lightsGame,
- tic:ticGame,sequence:sequenceGame,math:mathGame,word:wordGame,
- "2048":game2048,snake:snakeGame,brick:brickGame,pong:pongGame,
- flappy:flappyGame,bubble:bubbleGame,sudoku:sudokuGame,mines:minesGame,
- asteroids:asteroidsGame,tower:towerGame,cat:catGame,connect:connectGame,
- checkers:checkersGame,code:codeGame,sliding:slidingGame,mole:moleGame,
- maze:mazeGame,space:spaceGame,balloon:balloonGame,stack:stackGame,
- color:colorGame,golf:golfGame,racing:racingGame
+ const all={
+ snake, "2048":game2048, brick, pong, flappy, bubble, memory, tic,
+ sudoku, mines, asteroids, tower, cat, simon, connect, checkers,
+ word, code, reflex, sliding, mole, maze, space, balloon, stack,
+ color, lights, golf, racing, math
  };
- (modes[mode]||mathGame)();
+ (all[mode]||math)();
 }
 
-/* ORIGINAL GAME TYPES KEPT */
-function tapGame(){
- heading("Tap the target as many times as possible in 20 seconds!");
- let left=20;
- content().innerHTML=`<h2 id="score">Score: 0</h2><h2 id="time">Time: 20</h2><button class="big" id="target">TAP!</button>`;
- const t=document.getElementById("target");
- t.onclick=()=>{
-  score++;document.getElementById("score").textContent="Score: "+score;
-  t.style.marginLeft=Math.random()*45+"%";
- };
- timer=setInterval(()=>{
-  left--;document.getElementById("time").textContent="Time: "+left;
-  if(left<=0){clearInterval(timer);say("Game over! Final score: "+score);}
- },1000);
-}
-function reactionGame(){
- heading("Wait for the button to turn green. Then tap it!");
- content().innerHTML=`<button id="react" disabled>WAIT...</button><h2 id="result"></h2>`;
- const b=document.getElementById("react");
- timer=setTimeout(()=>{
-  if(!b.isConnected)return;
-  b.disabled=false;b.textContent="TAP NOW!";b.style.background="#42e878";
-  const start=Date.now();
-  b.onclick=()=>{
-   document.getElementById("result").textContent=(Date.now()-start)+" milliseconds!";
-   b.disabled=true;
-  };
- },2000+Math.random()*3000);
-}
-function memoryGame(){
- heading("Find all matching pairs!");
- let vals=["🍎","🍎","🚀","🚀","🐱","🐱","⚽","⚽","⭐","⭐","🎮","🎮"];
- vals.sort(()=>Math.random()-.5);
- let first=null,locked=false,found=0;
- content().innerHTML='<div class="grid" id="memory"></div><p id="pairs">Pairs: 0 / 6</p>';
- vals.forEach(v=>{
-  const b=document.createElement("button");b.textContent="?";b.style.height="65px";
-  b.onclick=()=>{
-   if(locked||b.textContent!=="?")return;
-   b.textContent=v;
-   if(!first){first=b;return;}
-   if(first.textContent===v){
-    first=null;found++;
-    document.getElementById("pairs").textContent="Pairs: "+found+" / 6";
-    if(found===6)say("You won!");
-   }else{
-    locked=true;let old=first;first=null;
-    setTimeout(()=>{if(old.isConnected){old.textContent="?";b.textContent="?";}locked=false;},700);
-   }
-  };
-  document.getElementById("memory").appendChild(b);
- });
-}
-function lightsGame(){
- heading("Turn off all the lights!");
- board=Array.from({length:25},()=>Math.random()>.5);
- function render(){
-  content().innerHTML='<div class="grid" id="lightgrid" style="grid-template-columns:repeat(5,1fr)"></div>';
-  board.forEach((v,i)=>{
-   const b=document.createElement("button");b.textContent=v?"💡":"·";b.style.height="55px";b.style.background=v?"#d8ad29":"#303a59";
-   b.onclick=()=>{
-    [i,i-5,i+5].forEach(j=>{if(j>=0&&j<25)board[j]=!board[j];});
-    if(i%5>0)board[i-1]=!board[i-1];
-    if(i%5<4)board[i+1]=!board[i+1];
-    render();if(board.every(x=>!x))say("Puzzle solved!");
-   };
-   document.getElementById("lightgrid").appendChild(b);
-  });
+/* 1. SNAKE */
+function snake(){
+ setup("Eat the red food. Use the direction buttons. Don't hit the walls or yourself.");
+ let body=[[4,4],[3,4],[2,4]],dir=[1,0],food=[7,5],alive=true;
+ const c=document.createElement("canvas");c.width=400;c.height=400;area.appendChild(c);
+ const x=c.getContext("2d");
+ addControls([["⬆",()=>turn(0,-1)],["⬅",()=>turn(-1,0)],["⬇",()=>turn(0,1)],["➡",()=>turn(1,0)]]);
+ function turn(a,b){if(a!==-dir[0]||b!==-dir[1])dir=[a,b];}
+ function draw(){
+  x.clearRect(0,0,400,400);
+  for(let i=0;i<10;i++)for(let j=0;j<10;j++){x.strokeStyle="#283753";x.strokeRect(i*40,j*40,40,40);}
+  x.fillStyle="#ff5757";x.fillRect(food[0]*40+5,food[1]*40+5,30,30);
+  x.fillStyle="#42e889";body.forEach(p=>x.fillRect(p[0]*40+3,p[1]*40+3,34,34));
  }
- render();
+ function tick(){
+  if(!alive)return;
+  let h=[body[0][0]+dir[0],body[0][1]+dir[1]];
+  if(h[0]<0||h[0]>9||h[1]<0||h[1]>9||body.some(p=>p[0]===h[0]&&p[1]===h[1])){alive=false;say("Game over! Score: "+score);return;}
+  body.unshift(h);
+  if(h[0]===food[0]&&h[1]===food[1]){
+   score++;food=[Math.floor(Math.random()*10),Math.floor(Math.random()*10)];
+   while(body.some(p=>p[0]===food[0]&&p[1]===food[1]))food=[Math.floor(Math.random()*10),Math.floor(Math.random()*10)];
+  }else body.pop();
+  draw();
+ }
+ draw();timer=setInterval(tick,180);
+ cleanup=()=>{alive=false;};
 }
-function ticGame(){
- heading("You are X. Play against the computer!");
- board=Array(9).fill("");
- const c=content();
- function winner(){
-  const lines=[[0,1,2],[3,4,5],[6,7,8],[0,4,8],[2,4,6],[0,3,6],[1,4,7],[2,5,8]];
-  if(lines.some(l=>l.every(i=>board[i]==="X")))return "You win!";
-  if(lines.some(l=>l.every(i=>board[i]==="O")))return "Computer wins!";
-  if(board.every(Boolean))return "Draw!";
-  return "";
- }
- function render(){
-  c.innerHTML='<div class="grid" id="tic" style="grid-template-columns:repeat(3,1fr)"></div>';
-  board.forEach((v,i)=>{
-   const b=document.createElement("button");b.style.height="75px";b.style.fontSize="28px";b.textContent=v||" ";
-   b.onclick=()=>move(i);document.getElementById("tic").appendChild(b);
-  });
-  const r=document.createElement("button");r.textContent="Restart";r.onclick=ticGame;c.appendChild(r);
- }
- function move(i){
-  if(board[i]||winner())return;
-  board[i]="X";
-  if(winner()){say(winner());render();return;}
-  const empty=board.map((v,j)=>v?null:j).filter(v=>v!==null);
-  if(empty.length)board[empty[Math.floor(Math.random()*empty.length)]]="O";
-  if(winner())say(winner());render();
- }
- render();
-}
-function sequenceGame(){
- heading("Remember the color sequence!");
- const colors=["red","blue","green","orange"];let sequence=[],user=[];
- function render(){
-  content().innerHTML="<h2>Level "+(sequence.length+1)+"</h2><div id='colors'></div><button id='show'>Start / Show sequence</button>";
-  colors.forEach(color=>{
-   const b=document.createElement("button");b.style.background=color;b.style.width="65px";b.style.height="65px";
-   b.onclick=()=>pick(color);document.getElementById("colors").appendChild(b);
-  });
-  document.getElementById("show").onclick=()=>{
-   sequence.push(colors[Math.floor(Math.random()*4)]);user=[];
-   say(sequence.join(" - "));
-   setTimeout(()=>say("Your turn!"),1000);
-  };
- }
- function pick(color){
-  if(user.length>=sequence.length||sequence.length===0)return;
-  user.push(color);
-  if(color!==sequence[user.length-1]){say("Game over!");return;}
-  if(user.length===sequence.length){say("Correct!");setTimeout(render,700);}
- }
- render();
-}
-function mathGame(){
- heading("Solve the math questions!");
- let a,b,answer;
- function question(){
-  a=Math.floor(Math.random()*20)+1;b=Math.floor(Math.random()*20)+1;answer=a+b;
-  content().innerHTML=`<h2 class="big">${a} + ${b} = ?</h2><input id="answer" type="number" placeholder="Your answer"><button id="check">CHECK</button><h3>Score: ${score}</h3>`;
-  document.getElementById("check").onclick=()=>{
-   if(Number(document.getElementById("answer").value)===answer){score+=10;say("Correct!");question();}
-   else say("Try again!");
-  };
- }
- question();
-}
-function wordGame(){
- heading("Guess the hidden word!");
- const words=["ARCADE","GAMING","ROCKET","SNAKE","PUZZLE","PLANET"];
- const word=words[Math.floor(Math.random()*words.length)];let used=[],tries=6;
- content().innerHTML=`<h2 id="blanks">${"_ ".repeat(word.length)}</h2><input id="letter" maxlength="1" placeholder="Guess a letter"><button id="guess">GUESS</button><p id="tries">Tries left: 6</p>`;
- document.getElementById("guess").onclick=()=>{
-  const l=document.getElementById("letter").value.toUpperCase();document.getElementById("letter").value="";
-  if(!l||used.includes(l)||tries<=0)return;used.push(l);if(!word.includes(l))tries--;
-  document.getElementById("blanks").textContent=[...word].map(x=>used.includes(x)?x:"_").join(" ");
-  document.getElementById("tries").textContent="Tries left: "+tries;
-  if([...word].every(x=>used.includes(x)))say("You got it!");
-  else if(tries<=0)say("The word was "+word);
- };
-}
+
+/* 2. 2048 */
 function game2048(){
- heading("Combine matching numbers with the arrow buttons!");
+ setup("Combine equal numbers. Use the arrow buttons to move the tiles.");
  let b=Array(16).fill(0);
  function add(){let e=b.map((v,i)=>v?null:i).filter(v=>v!==null);if(e.length)b[e[Math.floor(Math.random()*e.length)]]=2;}
  add();add();
- function render(){
-  content().innerHTML='<div class="grid" id="g2048"></div><div class="controls"><button id="left">←</button><button id="up">↑</button><button id="right">→</button><button id="down">↓</button></div><h3>Score: '+score+'</h3>';
-  b.forEach(v=>{const d=document.createElement("div");d.className="cell";d.textContent=v||"";document.getElementById("g2048").appendChild(d);});
-  document.getElementById("left").onclick=()=>move(0);document.getElementById("up").onclick=()=>move(1);
-  document.getElementById("right").onclick=()=>move(2);document.getElementById("down").onclick=()=>move(3);
- }
+ const board=document.createElement("div");board.className="grid";board.style.gridTemplateColumns="repeat(4,1fr)";area.appendChild(board);
+ const info=document.createElement("p");area.appendChild(info);
+ function draw(){board.innerHTML="";b.forEach(v=>{let d=document.createElement("div");d.className="tile";d.textContent=v||"";board.appendChild(d);});info.textContent="Score: "+score;}
  function move(dir){
   let old=b.slice();
   for(let line=0;line<4;line++){
@@ -324,127 +225,236 @@ function game2048(){
    }
    ids.forEach((id,k)=>b[id]=out[k]||0);
   }
-  if(old.some((v,i)=>v!==b[i]))add();render();
+  if(old.some((v,i)=>v!==b[i]))add();
+  draw();
  }
- render();
-}
-function snakeGame(){
- heading("Use the arrow buttons to move the snake!");
- let x=2,y=2,dx=1,dy=0,body=[[2,2]],food=[5,5],alive=true;
- content().innerHTML='<div id="snakeBoard" style="display:grid;grid-template-columns:repeat(8,1fr);gap:3px;max-width:360px;margin:auto"></div><div class="controls"><button id="su">↑</button><button id="sl">←</button><button id="sd">↓</button><button id="sr">→</button></div><h3 id="snakeScore">Score: 0</h3>';
- function direction(a,b){if(a!==-dx||b!==-dy){dx=a;dy=b;}}
- document.getElementById("su").onclick=()=>direction(0,-1);document.getElementById("sd").onclick=()=>direction(0,1);
- document.getElementById("sl").onclick=()=>direction(-1,0);document.getElementById("sr").onclick=()=>direction(1,0);
- function render(){
-  const grid=document.getElementById("snakeBoard");if(!grid)return;grid.innerHTML="";
-  for(let j=0;j<64;j++){
-   let xx=j%8,yy=Math.floor(j/8),d=document.createElement("div");d.style.height="35px";d.style.borderRadius="4px";
-   d.style.background=body.some(p=>p[0]===xx&&p[1]===yy)?"#34e889":food[0]===xx&&food[1]===yy?"#ff5757":"#303a59";
-   grid.appendChild(d);
-  }
- }
- render();
- snakeTimer=setInterval(()=>{
-  if(!alive)return;x+=dx;y+=dy;
-  if(x<0||x>7||y<0||y>7||body.some(p=>p[0]===x&&p[1]===y)){alive=false;clearInterval(snakeTimer);say("Game over! Score: "+score);return;}
-  body.unshift([x,y]);
-  if(x===food[0]&&y===food[1]){score+=10;food=[Math.floor(Math.random()*8),Math.floor(Math.random()*8)];document.getElementById("snakeScore").textContent="Score: "+score;}
-  else body.pop();
-  render();
- },300);
+ addControls([["⬅",()=>move(0)],["⬆",()=>move(1)],["➡",()=>move(2)],["⬇",()=>move(3)]]);
+ draw();
 }
 
-/* CANVAS GAME HELPER */
-function canvasGame(instructions,w=600,h=360){
- heading(instructions);
- content().innerHTML=`<canvas id="gameCanvas" width="${w}" height="${h}"></canvas><div class="controls" id="gameControls"></div><p id="gameStats"></p>`;
- const c=document.getElementById("gameCanvas"),ctx=c.getContext("2d");
- return {c,ctx,controls:document.getElementById("gameControls"),stats:document.getElementById("gameStats")};
-}
-function control(label,fn){
- const b=document.createElement("button");b.textContent=label;b.onclick=fn;document.getElementById("gameControls").appendChild(b);return b;
-}
-
-/* BRICK BREAKER */
-function brickGame(){
- const {c,ctx}=canvasGame("Move the paddle and break every brick. Use the buttons or touch the canvas.");
- let x=300,y=270,vx=3,vy=-3,p=250,pw=100,bricks=[];
- for(let r=0;r<4;r++)for(let col=0;col<8;col++)bricks.push({x:12+col*72,y:25+r*25,on:true});
- let left=false,right=false,alive=true;
- control("◀",()=>p=Math.max(0,p-35));control("▶",()=>p=Math.min(500,p+35));
- c.onpointermove=e=>{let r=c.getBoundingClientRect();p=(e.clientX-r.left)*c.width/r.width-pw/2;p=Math.max(0,Math.min(500,p));};
- function frame(){
-  if(!alive)return;ctx.clearRect(0,0,600,360);
-  ctx.fillStyle="#36d9ff";bricks.forEach(b=>{if(b.on){ctx.fillRect(b.x,b.y,64,16);}});
-  ctx.fillStyle="#42e878";ctx.fillRect(p,330,pw,12);
-  ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fillStyle="white";ctx.fill();
-  x+=vx;y+=vy;if(x<8||x>592)vx*=-1;if(y<8)vy*=-1;
-  if(y>320&&x>p&&x<p+pw){vy=-Math.abs(vy);vx+=(x-(p+pw/2))*.035;}
-  bricks.forEach(b=>{if(b.on&&x>b.x&&x<b.x+64&&y>b.y&&y<b.y+16){b.on=false;vy*=-1;score++;}});
-  if(y>365){alive=false;say("Game over! Bricks broken: "+score);}
-  if(bricks.every(b=>!b.on)){alive=false;say("You cleared every brick!");}
-  if(alive)timer=setTimeout(frame,16);
- }
- frame();cleanup=()=>{alive=false;};
-}
-
-/* PONG */
-function pongGame(){
- const {c,ctx}=canvasGame("Move your paddle to hit the ball past the computer. First to 5 wins.");
- let py=145,ey=145,x=300,y=180,vx=4,vy=2,player=0,enemy=0,alive=true;
- control("▲",()=>py=Math.max(0,py-25));control("▼",()=>py=Math.min(290,py+25));
- c.onpointermove=e=>{let r=c.getBoundingClientRect();py=(e.clientY-r.top)*c.height/r.height-35;py=Math.max(0,Math.min(290,py));};
- function frame(){
-  if(!alive)return;ctx.clearRect(0,0,600,360);ctx.setLineDash([8,8]);ctx.strokeStyle="#53617f";ctx.beginPath();ctx.moveTo(300,0);ctx.lineTo(300,360);ctx.stroke();ctx.setLineDash([]);
-  ctx.fillStyle="#36d9ff";ctx.fillRect(15,py,12,70);ctx.fillStyle="#ffcc55";ctx.fillRect(573,ey,12,70);
+/* 3. BRICK BREAKER */
+function brick(){
+ const {c,ctx}=canvasGame("Break the bricks with the bouncing ball. Move your paddle with your finger or the buttons.");
+ let x=300,y=270,vx=3.2,vy=-3.5,p=250,pw=100,alive=true;
+ let bricks=[];
+ for(let r=0;r<5;r++)for(let col=0;col<8;col++)bricks.push({x:10+col*73,y:25+r*25,on:true});
+ c.onpointermove=e=>{let r=c.getBoundingClientRect();p=(e.clientX-r.left)*600/r.width-pw/2;p=Math.max(0,Math.min(500,p));};
+ addControls([["⬅ MOVE",()=>p=Math.max(0,p-35)],["MOVE ➡",()=>p=Math.min(500,p+35)]]);
+ function draw(){
+  ctx.clearRect(0,0,600,360);
+  bricks.forEach((b,i)=>{if(b.on){ctx.fillStyle=["#ff5c75","#ffb347","#43d9ff","#9d83ff"][i%4];ctx.fillRect(b.x,b.y,65,17);}});
+  ctx.fillStyle="#42e889";ctx.fillRect(p,330,pw,12);
   ctx.beginPath();ctx.arc(x,y,8,0,7);ctx.fillStyle="white";ctx.fill();
-  x+=vx;y+=vy;if(y<8||y>352)vy*=-1;
-  ey+=((y-35)-ey)*.045;ey=Math.max(0,Math.min(290,ey));
-  if(x<27&&y>py&&y<py+70){vx=Math.abs(vx)*1.06;vx=Math.min(vx,8);}
-  if(x>573&&y>ey&&y<ey+70){vx=-Math.abs(vx)*1.06;}
-  if(x<0){enemy++;x=300;y=180;vx=4;vy=2;}
-  if(x>600){player++;x=300;y=180;vx=-4;vy=2;}
-  if(player>=5||enemy>=5){alive=false;say(player>=5?"You won Pong!":"Computer wins!");}
-  const s=document.getElementById("gameStats");s.textContent="You "+player+" — "+enemy+" Computer";
-  if(alive)timer=setTimeout(frame,16);
+  ctx.fillStyle="white";ctx.fillText("Bricks left: "+bricks.filter(b=>b.on).length,12,350);
  }
- frame();cleanup=()=>alive=false;
+ function frame(){
+  if(!alive)return;
+  x+=vx;y+=vy;
+  if(x<8||x>592)vx*=-1;
+  if(y<8)vy=Math.abs(vy);
+  if(vy>0&&y+8>=330&&y<345&&x>p&&x<p+pw){vy=-Math.abs(vy);vx=((x-(p+pw/2))/pw)*7;}
+  bricks.forEach(b=>{
+   if(b.on&&x>b.x-8&&x<b.x+73&&y>b.y-8&&y<b.y+25){
+    b.on=false;vy*=-1;score++;
+   }
+  });
+  if(y>370){alive=false;say("Game over! Bricks broken: "+score);}
+  if(bricks.every(b=>!b.on)){alive=false;say("You broke every brick! You win!");}
+  draw();
+ }
+ draw();loop(frame);cleanup=()=>alive=false;
 }
 
-/* FLAPPY FLYER */
-function flappyGame(){
- const {c,ctx}=canvasGame("Tap the screen or FLAP to fly through the gaps.");
- let bird=170,vel=0,pipes=[],frames=0,alive=true;
- control("FLAP",()=>vel=-6);
+/* 4. PONG */
+function pong(){
+ const {c,ctx}=canvasGame("REAL PONG: move your paddle to hit the ball past the computer. First to 5 points wins.");
+ let py=145,ey=145,x=300,y=180,vx=4,vy=2.5,player=0,computer=0,alive=true;
+ function reset(direction){x=300;y=180;vx=4*direction;vy=(Math.random()>.5?2.5:-2.5);}
+ c.onpointermove=e=>{let r=c.getBoundingClientRect();py=(e.clientY-r.top)*360/r.height-35;py=Math.max(0,Math.min(290,py));};
+ addControls([["⬆ UP",()=>py=Math.max(0,py-25)],["⬇ DOWN",()=>py=Math.min(290,py+25)]]);
+ function frame(){
+  if(!alive)return;
+  ctx.clearRect(0,0,600,360);
+  ctx.setLineDash([8,8]);ctx.strokeStyle="#62718d";ctx.beginPath();ctx.moveTo(300,0);ctx.lineTo(300,360);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle="#36d9ff";ctx.fillRect(15,py,13,70);
+  ctx.fillStyle="#ffcc55";ctx.fillRect(572,ey,13,70);
+  ctx.beginPath();ctx.arc(x,y,8,0,7);ctx.fillStyle="white";ctx.fill();
+  x+=vx;y+=vy;
+  if(y<8||y>352)vy*=-1;
+  ey+=((y-35)-ey)*.055;ey=Math.max(0,Math.min(290,ey));
+  if(vx<0&&x<28&&x>12&&y>py-5&&y<py+75){vx=Math.abs(vx)*1.05;vy+=(y-(py+35))*.08;}
+  if(vx>0&&x>570&&x<588&&y>ey-5&&y<ey+75){vx=-Math.abs(vx)*1.05;vy+=(y-(ey+35))*.08;}
+  if(x<0){computer++;reset(1);}
+  if(x>600){player++;reset(-1);}
+  ctx.fillStyle="white";ctx.font="22px Arial";ctx.fillText(player+"  -  "+computer,275,25);
+  if(player>=5||computer>=5){alive=false;say(player>=5?"YOU WIN PONG!":"Computer wins. Try again!");}
+ }
+ loop(frame);cleanup=()=>alive=false;
+}
+
+/* 5. FLAPPY FLYER */
+function flappy(){
+ const {c,ctx}=canvasGame("Tap FLAP or the game area to fly through the pipe gaps.");
+ let bird=180,vel=0,pipes=[],ticks=0,alive=true;
+ addButton("FLAP",()=>vel=-6);
  c.onclick=()=>vel=-6;
  function frame(){
-  if(!alive)return;ctx.clearRect(0,0,600,360);frames++;vel+=.28;bird+=vel;
-  if(frames%95===0){let gap=105,top=35+Math.random()*170;pipes.push({x:610,top,gap});}
-  ctx.fillStyle="#36d9ff";ctx.beginPath();ctx.arc(130,bird,13,0,7);ctx.fill();
-  ctx.fillStyle="#42e878";
-  pipes.forEach(p=>{p.x-=3;ctx.fillRect(p.x,0,48,p.top);ctx.fillRect(p.x,p.top+p.gap,48,360);if(p.x+48===130)score++;if(130+13>p.x&&130-13<p.x+48&&(bird-13<p.top||bird+13>p.top+p.gap))alive=false;});
+  if(!alive)return;
+  ctx.clearRect(0,0,600,360);ticks++;vel+=.3;bird+=vel;
+  if(ticks%95===0)pipes.push({x:610,top:40+Math.random()*155,gap:115,passed:false});
+  ctx.fillStyle="#ffe15b";ctx.beginPath();ctx.arc(130,bird,13,0,7);ctx.fill();
+  ctx.fillStyle="#42e889";
+  pipes.forEach(p=>{
+   p.x-=3;
+   ctx.fillRect(p.x,0,48,p.top);ctx.fillRect(p.x,p.top+p.gap,48,360);
+   if(!p.passed&&p.x+48<130){p.passed=true;score++;}
+   if(130+12>p.x&&130-12<p.x+48&&(bird-12<p.top||bird+12>p.top+p.gap))alive=false;
+  });
   pipes=pipes.filter(p=>p.x>-50);
   if(bird<0||bird>360)alive=false;
-  if(!alive)say("Game over! Score: "+score);
-  else timer=setTimeout(frame,16);
+  ctx.fillStyle="white";ctx.fillText("Score: "+score,12,22);
+  if(!alive)say("Flight over! Score: "+score);
  }
- frame();cleanup=()=>alive=false;
+ loop(frame);cleanup=()=>alive=false;
 }
 
-/* BUBBLE POP */
-function bubbleGame(){
- const {c,ctx}=canvasGame("Pop groups of three or more matching bubbles. Tap a bubble to clear its color group.");
- let colors=["#ff5757","#36d9ff","#ffe15b","#a879ff"],balls=[];
- for(let r=0;r<7;r++)for(let col=0;col<9;col++)balls.push({x:35+col*66,y:30+r*42,color:colors[Math.floor(Math.random()*4)]});
- c.onclick=e=>{
-  let r=c.getBoundingClientRect(),x=(e.clientX-r.left)*c.width/r.width,y=(e.clientY-r.top)*c.height/r.height;
-  let hit=balls.find(b=>Math.hypot(b.x-x,b.y-y)<23);if(!hit)return;
-  let group=balls.filter(b=>b.color===hit.color&&Math.hypot(b.x-hit.x,b.y-hit.y)<100);
-  if(group.length>=3){balls=balls.filter(b=>!group.includes(b));score+=group.length;say("Popped "+group.length+" bubbles! Score: "+score);draw();}
-  else say("Find a group of at least three!");
- };
+/* 6. BUBBLE POP */
+function bubble(){
+ const {c,ctx}=canvasGame("Tap a bubble. Clear connected groups of three or more bubbles of the same color.");
+ const colors=["#ff5757","#36d9ff","#ffe15b","#b184ff","#42e889"];
+ let balls=[];
+ for(let r=0;r<7;r++)for(let col=0;col<9;col++)balls.push({x:35+col*66,y:30+r*42,color:colors[Math.floor(Math.random()*colors.length)]});
  function draw(){ctx.clearRect(0,0,600,360);balls.forEach(b=>{ctx.beginPath();ctx.arc(b.x,b.y,19,0,7);ctx.fillStyle=b.color;ctx.fill();});}
+ c.onclick=e=>{
+  let r=c.getBoundingClientRect(),x=(e.clientX-r.left)*600/r.width,y=(e.clientY-r.top)*360/r.height;
+  let hit=balls.find(b=>Math.hypot(b.x-x,b.y-y)<22);if(!hit)return;
+  let group=[],seen=new Set(),queue=[hit];
+  while(queue.length){let b=queue.pop();if(seen.has(b))continue;seen.add(b);group.push(b);
+   balls.forEach(n=>{if(!seen.has(n)&&n.color===hit.color&&Math.hypot(n.x-b.x,n.y-b.y)<48)queue.push(n);});
+  }
+  if(group.length>=3){balls=balls.filter(b=>!seen.has(b));score+=group.length;say("Popped "+group.length+" bubbles. Score: "+score);draw();}
+  else say("That group needs at least three connected bubbles.");
+ };
  draw();cleanup=()=>c.onclick=null;
 }
 
-/* SUD
+/* 7. MEMORY MATCH */
+function memory(){
+ setup("Flip two cards at a time and find all six matching pairs.");
+ let vals=["🍎","🍎","🚀","🚀","🐱","🐱","⚽","⚽","⭐","⭐","🎮","🎮"].sort(()=>Math.random()-.5);
+ let first=null,locked=false,found=0;
+ const g=document.createElement("div");g.className="grid";g.style.gridTemplateColumns="repeat(4,1fr)";area.appendChild(g);
+ vals.forEach(v=>{
+  let b=document.createElement("button");b.textContent="?";b.style.height="65px";g.appendChild(b);
+  b.onclick=()=>{
+   if(locked||b.textContent!=="?")return;b.textContent=v;
+   if(!first){first=b;return;}
+   if(first.textContent===v){first=null;found++;say("Pairs: "+found+" / 6");if(found===6)say("You found every pair!");}
+   else{locked=true;let old=first;first=null;timer=setTimeout(()=>{if(old.isConnected){old.textContent="?";b.textContent="?";}locked=false;},700);}
+  };
+ });
+}
+
+/* 8. TIC TAC TOE */
+function tic(){
+ setup("You are X. Play against the computer.");
+ let b=Array(9).fill("");
+ const g=document.createElement("div");g.className="grid";g.style.gridTemplateColumns="repeat(3,1fr)";area.appendChild(g);
+ const lines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+ function result(){if(lines.some(l=>l.every(i=>b[i]==="X")))return "You win!";if(lines.some(l=>l.every(i=>b[i]==="O")))return "Computer wins!";if(b.every(Boolean))return "Draw!";return "";}
+ function draw(){g.innerHTML="";b.forEach((v,i)=>{let d=document.createElement("button");d.textContent=v||" ";d.style.height="75px";d.style.fontSize="28px";d.onclick=()=>move(i);g.appendChild(d);});}
+ function move(i){if(b[i]||result())return;b[i]="X";if(result()){say(result());draw();return;}
+  let empty=b.map((v,i)=>v?null:i).filter(v=>v!==null);if(empty.length)b[empty[Math.floor(Math.random()*empty.length)]]="O";
+  if(result())say(result());draw();
+ }
+ addButton("RESTART",()=>{b=Array(9).fill("");say("");draw();});draw();
+}
+
+/* 9. SUDOKU SPRINT - 4x4 MINI SUDOKU */
+function sudoku(){
+ setup("Complete the 4×4 mini Sudoku. Each row and column must contain 1, 2, 3, and 4 once.");
+ let puzzle=[[1,0,3,0],[0,4,0,2],[2,0,4,0],[0,3,0,1]];
+ let solution=[[1,2,3,4],[3,4,1,2],[2,1,4,3],[4,3,2,1]];
+ const g=document.createElement("div");g.className="grid";g.style.gridTemplateColumns="repeat(4,1fr)";area.appendChild(g);
+ let fields=[];
+ puzzle.forEach((row,r)=>row.forEach((v,col)=>{
+  let inp=document.createElement("input");inp.type="number";inp.min=1;inp.max=4;inp.value=v||"";inp.disabled=!!v;inp.style.width="100%";inp.style.textAlign="center";g.appendChild(inp);fields.push({inp,r,col});
+ }));
+ addButton("CHECK ANSWERS",()=>{
+  let ok=fields.every(f=>Number(f.inp.value)===solution[f.r][f.col]);
+  say(ok?"Puzzle solved!":"Some numbers are incorrect. Keep trying!");
+ });
+}
+
+/* 10. MINESWEEPER */
+function mines(){
+ setup("Reveal the squares. Avoid the five hidden mines. Clear all safe squares to win.");
+ let mine=new Set();while(mine.size<5)mine.add(Math.floor(Math.random()*25));
+ let opened=new Set(),dead=false;
+ const g=document.createElement("div");g.className="grid";g.style.gridTemplateColumns="repeat(5,1fr)";area.appendChild(g);
+ for(let i=0;i<25;i++){
+  let b=document.createElement("button");b.textContent="?";g.appendChild(b);
+  b.onclick=()=>{
+   if(dead||opened.has(i))return;opened.add(i);
+   if(mine.has(i)){b.textContent="💣";dead=true;say("Mine hit! Game over.");g.querySelectorAll("button").forEach(x=>x.disabled=true);return;}
+   let row=Math.floor(i/5),col=i%5;
+   let n=[[row-1,col],[row+1,col],[row,col-1],[row,col+1],[row-1,col-1],[row-1,col+1],[row+1,col-1],[row+1,col+1]]
+   .filter(([r,c])=>r>=0&&r<5&&c>=0&&c<5&&mine.has(r*5+c)).length;
+   b.textContent=n||"·";b.disabled=true;
+   if(opened.size===20)say("You cleared every safe square!");
+  };
+ }
+}
+
+/* 11. ASTEROIDS */
+function asteroids(){
+ shooter("Asteroids: move your ship left and right and shoot the rocks.",true);
+}
+
+/* 12. TOWER DEFENSE */
+function tower(){
+ setup("Place towers in lanes, then defend your base from the incoming wave.");
+ let towers=[],health=5;
+ const lanes=document.createElement("div");area.appendChild(lanes);
+ for(let i=0;i<3;i++){
+  let b=document.createElement("button");b.textContent="Place tower in lane "+(i+1);
+  b.onclick=()=>{if(towers.length>=3)return;towers.push(i);b.disabled=true;b.textContent="Tower ready ✓";};lanes.appendChild(b);
+ }
+ addButton("START WAVE",()=>{
+  let stopped=towers.length*2,remaining=Math.max(0,8-stopped);health-=remaining;
+  say(health>0?"Wave stopped! Base health: "+health:"The enemies reached your base. Defense failed.");
+ });
+}
+
+/* 13. TRAP THE CAT */
+function cat(){
+ setup("Block the cat's path. Tap empty squares to place obstacles.");
+ let catPos=12,blocks=new Set(),finished=false;
+ const g=document.createElement("div");g.className="grid";g.style.gridTemplateColumns="repeat(5,1fr)";area.appendChild(g);
+ function draw(){
+  g.innerHTML="";
+  for(let i=0;i<25;i++){
+   let b=document.createElement("button");
+   b.textContent=i===catPos?"🐈":blocks.has(i)?"⬛":"·";
+   b.onclick=()=>{
+    if(finished||blocks.has(i)||i===catPos)return;
+    blocks.add(i);
+    let r=Math.floor(catPos/5),c=catPos%5;
+    let options=[[r-1,c],[r+1,c],[r,c-1],[r,c+1]].filter(([a,b])=>a>=0&&a<5&&b>=0&&b<5&&!blocks.has(a*5+b));
+    if(!options.length){finished=true;say("You trapped the cat!");draw();return;}
+    let next=options[Math.floor(Math.random()*options.length)];catPos=next[0]*5+next[1];
+    if(catPos%5===0||catPos%5===4||Math.floor(catPos/5)===0||Math.floor(catPos/5)===4){finished=true;say("The cat escaped!");}
+    draw();
+   };
+   g.appendChild(b);
+  }
+ }
+ draw();
+}
+
+/* 14. SIMON SAYS */
+function simon(){
+ setup("Watch the color sequence, then repeat it in the same order.");
+ const colors=["red","blue","green","orange"];let seq=[],pos=0,locked=false;
+ const g=document.createElement("div");g.className="controls";area.appendChild(g);
+ colors.forEach(color=>{let b=document.createElement("button");b.style.background=color;b.style.width="65px";b.style.hei
