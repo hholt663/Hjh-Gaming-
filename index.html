@@ -1,65 +1,1090 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1b">
 <title>HJH Gaming</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#080d1b;color:#f4f7ff;font:16px Arial,sans-serif}header{text-align:center;padding:26px 12px;background:linear-gradient(120deg,#17134b,#06445a)}h1{margin:0;color:#45dcff;font-size:clamp(30px,7vw,46px)}header p{margin:8px 0 0}main{max-width:1100px;margin:auto;padding:16px}input{font:inherit;padding:12px;border:1px solid #40516f;border-radius:9px;background:#111b30;color:white;max-width:100%}#search{width:100%;margin-bottom:15px}.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:13px}.card,.panel{background:#121c31;border:1px solid #293a59;border-radius:13px;padding:15px}.card h2,.panel h2{margin:0 0 9px;color:#65e2ff}.card p{min-height:38px;color:#c1cce0}.btn,button{border:0;border-radius:9px;padding:11px 14px;background:#087fa7;color:white;font-weight:bold;cursor:pointer}.btn{width:100%}button:disabled{opacity:.5}.panel{margin-top:18px}.panel[hidden]{display:none}.muted{color:#c1cce0}.row,.controls{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}.controls button{flex:1;min-width:65px}.grid{display:grid;gap:8px;margin:12px 0}.grid button{min-height:58px;font-size:22px}#status{min-height:26px;color:#ffe08a;font-weight:bold;margin:8px 0}.playfield{display:block;width:100%;max-width:600px;height:auto;background:#050a14;border:1px solid #52617d;border-radius:8px;touch-action:none}a{color:#65e2ff}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #080d1b;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  text-align: center;
+  padding: 30px 12px;
+  background: linear-gradient(120deg, #17134b, #06445a);
+}
+
+header h1 {
+  margin: 0;
+  color: #45dcff;
+  font-size: clamp(30px, 8vw, 48px);
+}
+
+header p {
+  margin-bottom: 0;
+}
+
+main {
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+  padding: 16px;
+}
+
+#search {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  border: 1px solid #40516f;
+  background: #111b30;
+  color: white;
+  font-size: 16px;
+}
+
+.games {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: #121c31;
+  border: 1px solid #293a59;
+  border-radius: 13px;
+  padding: 17px;
+}
+
+.card h2 {
+  color: #65e2ff;
+  margin-top: 0;
+}
+
+.card p {
+  color: #c1cce0;
+  min-height: 38px;
+  line-height: 1.4;
+}
+
+button {
+  border: 0;
+  border-radius: 9px;
+  padding: 12px 16px;
+  background: #087fa7;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button:active {
+  transform: scale(.97);
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.play {
+  width: 100%;
+  background: #078cb8;
+}
+
+.panel {
+  background: #121c31;
+  border: 1px solid #293a59;
+  border-radius: 13px;
+  padding: 16px;
+  margin-top: 18px;
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+#gameTitle {
+  color: #65e2ff;
+  margin-top: 0;
+}
+
+#instructions {
+  color: #c1cce0;
+  line-height: 1.5;
+}
+
+#status {
+  color: #ffe08a;
+  min-height: 25px;
+  font-weight: bold;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+
+#area {
+  width: 100%;
+}
+
+.row, .controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 13px 0;
+}
+
+.controls button {
+  flex: 1;
+  min-width: 60px;
+}
+
+input {
+  max-width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #40516f;
+  background: #080d1b;
+  color: white;
+  font-size: 17px;
+}
+
+.grid {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.grid button {
+  min-width: 0;
+  min-height: 60px;
+  font-size: 22px;
+}
+
+.playfield {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  margin: 12px auto;
+  border: 2px solid #40516f;
+  border-radius: 9px;
+  background: #050a14;
+  touch-action: none;
+}
+
+.small {
+  font-size: 13px;
+  color: #aabbd3;
+}
+
+#back {
+  background: #49556b;
+}
+
+#restart {
+  background: #087fa7;
+}
+
+@media(max-width:480px) {
+  main {
+    padding: 10px;
+  }
+
+  .games {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .card h2 {
+    font-size: 17px;
+  }
+
+  .card p {
+    font-size: 13px;
+  }
+
+  .card button {
+    font-size: 13px;
+    padding: 11px 5px;
+  }
+}
 </style>
 </head>
+
 <body>
-<header><h1>HJH GAMING</h1><p>Choose a game and press PLAY</p></header>
+
+<header>
+  <h1>HJH GAMING</h1>
+  <p>Pick a game. Press PLAY. Have fun!</p>
+</header>
+
 <main>
-<input id="search" type="search" placeholder="Search games..." aria-label="Search games">
+
+<input
+  id="search"
+  type="search"
+  placeholder="Search games..."
+  autocomplete="off"
+>
+
 <div id="games" class="games"></div>
+
 <section id="panel" class="panel" hidden>
-<h2 id="gameTitle"></h2><p id="instructions" class="muted"></p><div id="status" aria-live="polite"></div><div id="area"></div>
-<div class="row"><button id="restart">RESTART</button><button id="back">BACK TO GAMES</button></div>
+
+  <h2 id="gameTitle"></h2>
+
+  <p id="instructions"></p>
+
+  <div id="status" aria-live="polite"></div>
+
+  <div id="area"></div>
+
+  <div class="row">
+    <button id="restart">RESTART</button>
+    <button id="back">BACK TO GAMES</button>
+  </div>
+
 </section>
 </main>
+
 <script>
-'use strict';
-const catalog=[
- ['Pong','Move your paddle and keep the ball in play.'],
- ['Brick Breaker','Break every brick with the bouncing ball.'],
- ['Snake','Eat the food and avoid walls and yourself.'],
- ['Tic-Tac-Toe','Get three marks in a row.'],
- ['Memory Match','Find all six matching pairs.'],
- ['Simon Says','Repeat the growing color sequence.'],
- ['Reaction Test','Wait for green, then tap as quickly as possible.'],
- ['Number Guess','Find the hidden number from 1 to 20.'],
- ['Rock Paper Scissors','Play against the computer.'],
- ['Whack-a-Mole','Tap the mole before time runs out.'],
- ['Math Sprint','Answer multiplication questions.'],
- ['Click Challenge','Tap the target as many times as you can in 10 seconds.']
+"use strict";
+
+/* =================================
+   GAME CATALOG
+================================= */
+
+const catalog = [
+  ["Pong", "Play classic paddle and ball Pong."],
+  ["Brick Breaker", "Break the bricks using your bouncing ball."],
+  ["Snake", "Eat food and grow your snake."],
+  ["Tic-Tac-Toe", "Get three marks in a row."],
+  ["Memory Match", "Find all matching pairs."],
+  ["Simon Says", "Remember and repeat the color sequence."],
+  ["Reaction Test", "Wait for green and test your reaction."],
+  ["Number Guess", "Guess the hidden number."],
+  ["Rock Paper Scissors", "Challenge the computer."],
+  ["Whack-a-Mole", "Hit the mole before time runs out."],
+  ["Math Sprint", "Solve multiplication problems."],
+  ["Click Challenge", "Click as many times as possible."]
 ];
-const $=id=>document.getElementById(id), games=$('games'), panel=$('panel'), area=$('area'), status=$('status');
-let active='', cleanups=[];
-function say(s){status.textContent=s}
-function later(fn){cleanups.push(fn)}
-function cleanup(){cleanups.forEach(fn=>{try{fn()}catch(e){}});cleanups=[];area.replaceChildren();say('')}
-function button(label,fn,parent=area){const b=document.createElement('button');b.textContent=label;b.addEventListener('click',fn);parent.appendChild(b);return b}
-function field(type='text',placeholder=''){const i=document.createElement('input');i.type=type;i.placeholder=placeholder;area.appendChild(i);return i}
-function canvas(){const c=document.createElement('canvas');c.width=600;c.height=360;c.className='playfield';area.appendChild(c);return c}
-function render(){games.replaceChildren();const q=$('search').value.trim().toLowerCase();catalog.filter(([n,d])=>(n+' '+d).toLowerCase().includes(q)).forEach(([name,desc])=>{const card=document.createElement('article');card.className='card';const h=document.createElement('h2');h.textContent=name;const p=document.createElement('p');p.textContent=desc;const b=button('PLAY',()=>start(name),card);b.className='btn';card.prepend(h,p);games.appendChild(card)})}
-function start(name){cleanup();active=name;games.hidden=true;panel.hidden=false;$('gameTitle').textContent=name;$('instructions').textContent=catalog.find(x=>x[0]===name)[1];try{launch[name]()}catch(err){say('This game encountered an error. Press RESTART to try again.');console.error(err)}window.scrollTo({top:panel.offsetTop,behavior:'smooth'})}
-function back(){cleanup();active='';panel.hidden=true;games.hidden=false;window.scrollTo({top:0,behavior:'smooth'})}
-$('search').addEventListener('input',render);$('back').addEventListener('click',back);$('restart').addEventListener('click',()=>{if(active)start(active)});render();
-const launch={
-'Number Guess'(){let answer=1+Math.floor(Math.random()*20),count=0;const i=field('number','Enter 1 to 20');i.min='1';i.max='20';button('GUESS',()=>{const n=Number(i.value);if(!Number.isInteger(n)||n<1||n>20){say('Enter a whole number from 1 to 20.');return}count++;say(n===answer?'Correct! You got it in '+count+' guesses.':n<answer?'Too low. Try again!':'Too high. Try again!')});},
-'Rock Paper Scissors'(){['Rock','Paper','Scissors'].forEach(choice=>button(choice,()=>{const choices=['Rock','Paper','Scissors'],cpu=choices[Math.floor(Math.random()*3)];const win=(choice==='Rock'&&cpu==='Scissors')||(choice==='Paper'&&cpu==='Rock')||(choice==='Scissors'&&cpu==='Paper');say('You chose '+choice+'. Computer chose '+cpu+'. '+(choice===cpu?'Tie!':win?'You win!':'Computer wins!'))}))},
-'Tic-Tac-Toe'(){let cells=Array(9).fill(''),turn='X',done=false;const g=document.createElement('div');g.className='grid';g.style.gridTemplateColumns='repeat(3,1fr)';area.appendChild(g);const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];function draw(){g.replaceChildren();cells.forEach((v,i)=>{const b=button(v||' ',()=>{if(done||cells[i])return;cells[i]=turn;if(wins.some(line=>line.every(k=>cells[k]===turn))){done=true;say(turn+' wins!')}else if(cells.every(Boolean)){done=true;say('It is a draw!')}else turn=turn==='X'?'O':'X';draw()},g);b.style.minHeight='72px';b.style.fontSize='28px'})}draw()},
-'Memory Match'(){const values=['🍎','🚀','🐱','⚽','🌟','🎵','🍎','🚀','🐱','⚽','🌟','🎵'].sort(()=>Math.random()-.5);let opened=[],matched=new Set(),locked=false;const g=document.createElement('div');g.className='grid';g.style.gridTemplateColumns='repeat(4,1fr)';area.appendChild(g);function draw(){g.replaceChildren();values.forEach((v,i)=>{const b=button(matched.has(i)||opened.includes(i)?v:'?',()=>{if(locked||matched.has(i)||opened.includes(i))return;opened.push(i);draw();if(opened.length===2){if(values[opened[0]]===values[opened[1]]){opened.forEach(k=>matched.add(k));opened=[];say('Matched '+matched.size/2+' of 6 pairs.');if(matched.size===12)say('You found every pair!')}else{locked=true;const id=setTimeout(()=>{opened=[];locked=false;draw()},700);later(()=>clearTimeout(id))}}},g);b.style.minHeight='58px'})}draw()},
-'Simon Says'(){const colors=['red','blue','green','orange'];let sequence=[],position=0,accepting=false;const g=document.createElement('div');g.className='controls';area.appendChild(g);const pads=colors.map(color=>{const b=button(color.toUpperCase(),()=>{if(!accepting)return;if(color!==sequence[position]){accepting=false;say('Not quite. Press RESTART to play again.');return}position++;if(position===sequence.length){accepting=false;say('Correct! Level '+sequence.length);const id=setTimeout(show,650);later(()=>clearTimeout(id))}},g);b.style.background=color;return b});function show(){accepting=false;position=0;sequence.push(colors[Math.floor(Math.random()*4)]);say('Watch: '+sequence.join(' → '));sequence.forEach((color,i)=>{const id=setTimeout(()=>{pads.forEach((p,j)=>p.style.outline=colors[j]===color?'4px solid white':'none');if(i===sequence.length-1){const end=setTimeout(()=>{pads.forEach(p=>p.style.outline='none');accepting=true;say('Your turn! Repeat the sequence.')},450);later(()=>clearTimeout(end))}},i*600);later(()=>clearTimeout(id))})}button('START',show)},
-'Reaction Test'(){let phase='ready',timer=null,started=0;const b=button('START',()=>{if(phase==='ready'){phase='waiting';b.disabled=false;b.textContent='WAIT...';b.style.background='#a66b13';say('Wait for green. Do not tap early.');timer=setTimeout(()=>{phase='go';started=performance.now();b.textContent='TAP NOW';b.style.background='#159447';say('TAP!')},1200+Math.random()*2600)}else if(phase==='waiting'){clearTimeout(timer);phase='ready';b.textContent='START';b.style.background='';say('Too early! Press START to try again.')}else if(phase==='go'){say('Your reaction time: '+Math.round(performance.now()-started)+' ms.');phase='ready';b.textContent='START';b.style.background=''}});later(()=>clearTimeout(timer))},
-'Whack-a-Mole'(){let score=0,seconds=15,pos=-1,ended=false;const g=document.createElement('div');g.className='grid';g.style.gridTemplateColumns='repeat(3,1fr)';area.appendChild(g);const pads=Array.from({length:9},(_,i)=>button('·',()=>{if(!ended&&i===pos){score++;say('Score: '+score)}},g));function move(){pos=Math.floor(Math.random()*9);pads.forEach((b,i)=>b.textContent=i===pos?'🐹':'·')}move();const moveTimer=setInterval(move,650),clock=setInterval(()=>{seconds--;if(seconds<=0){ended=true;clearInterval(moveTimer);clearInterval(clock);say('Time is up! Final score: '+score)}},1000);later(()=>{clearInterval(moveTimer);clearInterval(clock)})},
-'Math Sprint'(){let a=0,b=0,score=0;const q=document.createElement('h3');area.appendChild(q);const i=field('number','Your answer');function next(){a=2+Math.floor(Math.random()*11);b=2+Math.floor(Math.random()*11);q.textContent=a+' × '+b+' = ?';i.value=''}button('SUBMIT',()=>{if(i.value.trim()===''){say('Type an answer first.');return}if(Number(i.value)===a*b){score++;say('Correct! Score: '+score)}else say('Not quite. Correct answer: '+a*b+'. Score: '+score);next()});next()},
-'Click Challenge'(){let score=0,remaining=10,ended=false;const b=button('TAP ME!',()=>{if(!ended)score++});b.style.fontSize='24px';b.style.padding='22px 30px';say('Score: 0 · Time: 10 seconds');const timer=setInterval(()=>{remaining--;say('Score: '+score+' · Time: '+remaining+' seconds');if(remaining<=0){ended=true;clearInterval(timer);b.disabled=true;say('Time! Final score: '+score)}},1000);later(()=>clearInterval(timer))},
-'Snake'(){const c=canvas(),ctx=c.getContext('2d'),unit=20;let snake=[{x:10,y:9},{x:9,y:9},{x:8,y:9}],dir={x:1,y:0},food={x:18,y:9},dead=false;function key(e){const k=e.key;if(k==='ArrowUp'&&dir.y!==1)dir={x:0,y:-1};if(k==='ArrowDown'&&dir.y!==-1)dir={x:0,y:1};if(k==='ArrowLeft'&&dir.x!==1)dir={x:-1,y:0};if(k==='ArrowRight'&&dir.x!==-1)dir={x:1,y:0}}window.addEventListener('keydown',key);later(()=>window.removeEventListener('keydown',key));const controls=document.createElement('div');controls.className='controls';area.appendChild(controls);[['↑',0,-1],['↓',0,1],['←',-1,0],['→',1,0]].forEach(([label,dx,dy])=>button(label,()=>{if((dx!==0&&dir.x!==-dx)||(dy!==0&&dir.y!==-dy))dir={x:dx,y:dy}},controls));const timer=setInterval(()=>{if(dead)return;const head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};if(head.x<0||head.x>=30||head.y<0||head.y>=18||snake.some(s=>s.x===head.x&&s.y===head.y)){dead=true;clearInterval(timer);say('Game over! Score: '+(snake.length-3));return}snake.unshift(head);if(head.x===food.x&&head.y===food.y){do{food={x:Math.floor(Math.random()*30),y:Math.floor(Math.random()*18)}}while(snake.some(s=>s.x===food.x&&s.y===food.y))}else snake.pop();ctx.clearRect(0,0,600,360);ctx.fillStyle='#ffcc55';ctx.fillRect(food.x*unit,food.y*unit,unit-2,unit-2);ctx.fillStyle='#43df91';snake.forEach(s=>ctx.fillRect(s.x*unit,s.y*unit,unit-2,unit-2))},130);later(()=>clearInterval(timer));say('Use your keyboard arrow keys to steer.')},
-'Pong'(){const c=canvas(),ctx=c.getContext('2d');let player=137,opponent=137,x=300,y=180,dx=3,dy=2,score=0,raf=0;const keys=new Set();const down=e=>keys.add(e.key),up=e=>keys.delete(e.key);window.addEventListener('keydown',down);window.addEventListener('keyup',up);function touchMove(e){const r=c.getBoundingClientRect();player=Math.max(0,Math.min(274,(e.clientY-r.top)*360/r.height-43))}c.addEventListener('pointermove',touchMove);later(()=>{window.removeEventListener('keydown',down);window.removeEventListener('keyup',up);c.removeEventListener('pointermove',touchMove);cancelAnimationFrame(raf)});function frame(){ctx.clearRect(0,0,600,360);ctx.fillStyle='white';ctx.fillRect(15,player,12,86);ctx.fillRect(573,opponent,12,86);ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fill();ctx.font='16px Arial';ctx.fillText('Score: '+score,260,22);if(keys.has('ArrowUp'))player=Math.max(0,player-5);if(keys.has('ArrowDown'))player=Math.min(274,player+5);opponent+=((y-43)-opponent)*.045;x+=dx;y+=dy;if(y<8||y>352)dy=-dy;if(dx<0&&x<27&&y>=player&&y<=player+86){dx=3;score++}if(dx>0&&x>573&&y>=opponent&&y<=opponent+86)dx=-3;if(x<0||x>600){x=300;y=180;dx=x<0?3:-3;dy=2;say('Point! Score: '+score)}raf=requestAnimationFrame(frame)}raf=requestAnimationFrame(frame);say('Use the arrow keys or drag your finger up and down on the game area.')},
-'Brick Breaker'(){const c=canvas(),ctx=c.getContext('2d');let x=300,y=285,dx=3,dy=-3,paddle=250,score=0,raf=0,done=false;const bricks=Array.from({length:30},(_,i)=>({x:20+(i%6)*96,y:25+Math.floor(i/6)*25,on:true}));function move(e){const r=c.getBoundingClientRect();paddle=Math.max(0,Math.min(500,(e.clientX-r.left)*600/r.width-50))}c.addEventListener('pointermove',move);later(()=>{c.removeEventListener('pointermove',move);cancelAnimationFrame(raf)});function frame(){ctx.clearRect(0,0,600,360);ctx.fillStyle='#ffb84d';bricks.forEach(b=>{if(b.on)ctx.fillRect(b.x,b.y,76,15)});ctx.fillStyle='white';ctx.fillRect(paddle,330,100,10);ctx.beginPath();ctx.arc(x,y,7,0,Math.PI*2);ctx.fill();x+=dx;y+=dy;if(x<7||x>593)dx=-dx;if(y<7)dy=-dy;if(y>=323&&y<=340&&x>=paddle&&x<=paddle+100)dy=-Math.abs(dy);bricks.forEach(b=>{if(b.on&&x>=b.x&&x<=b.x+76&&y>=b.y&&y<=b.y+15){b.on=false;dy=-dy;score++;say('Bricks cleared: '+score+'/30')}});if(score===30||y>360){done=true;say(score===30?'You cleared every brick!':'Game over. Bricks cleared: '+score);return}raf=requestAnimationFrame(frame)}raf=requestAnimationFrame(frame);say('Move your finger or mouse to control the paddle.')}
-};
-</script>
-</body>
-</html>
+
+const $ = id => document.getElementById(id);
+
+const games = $("games");
+const panel = $("panel");
+const area = $("area");
+const status = $("status");
+
+let activeGame = "";
+let cleanupTasks = [];
+
+/* =================================
+   GAME MANAGEMENT
+================================= */
+
+function say(message) {
+  status.textContent = message;
+}
+
+function cleanup() {
+  cleanupTasks.forEach(fn => {
+    try {
+      fn();
+    } catch (e) {}
+  });
+
+  cleanupTasks = [];
+  area.replaceChildren();
+  say("");
+}
+
+function registerCleanup(fn) {
+  cleanupTasks.push(fn);
+}
+
+function makeButton(label, callback, parent = area) {
+  const button = document.createElement("button");
+  button.textContent = label;
+  button.type = "button";
+  button.addEventListener("click", callback);
+  parent.appendChild(button);
+  return button;
+}
+
+function makeInput(type = "text", placeholder = "") {
+  const input = document.createElement("input");
+  input.type = type;
+  input.placeholder = placeholder;
+  area.appendChild(input);
+  return input;
+}
+
+function makeCanvas() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 600;
+  canvas.height = 360;
+  canvas.className = "playfield";
+  area.appendChild(canvas);
+  return canvas;
+}
+
+function timer(fn, delay) {
+  const id = setTimeout(fn, delay);
+  registerCleanup(() => clearTimeout(id));
+  return id;
+}
+
+function interval(fn, delay) {
+  const id = setInterval(fn, delay);
+  registerCleanup(() => clearInterval(id));
+  return id;
+}
+
+function animation(fn) {
+  let id = 0;
+  let stopped = false;
+
+  function frame() {
+    if (stopped) return;
+    fn();
+    if (!stopped) id = requestAnimationFrame(frame);
+  }
+
+  id = requestAnimationFrame(frame);
+
+  registerCleanup(() => {
+    stopped = true;
+    cancelAnimationFrame(id);
+  });
+}
+
+function renderGames() {
+  games.replaceChildren();
+
+  const search = $("search").value.toLowerCase().trim();
+
+  catalog
+    .filter(([name, description]) =>
+      (name + " " + description).toLowerCase().includes(search)
+    )
+    .forEach(([name, description]) => {
+
+      const card = document.createElement("article");
+      card.className = "card";
+
+      const title = document.createElement("h2");
+      title.textContent = name;
+
+      const desc = document.createElement("p");
+      desc.textContent = description;
+
+      const play = makeButton(
+        "PLAY",
+        () => startGame(name),
+        card
+      );
+
+      play.className = "play";
+
+      card.prepend(title, desc);
+      games.appendChild(card);
+    });
+}
+
+function startGame(name) {
+  cleanup();
+
+  activeGame = name;
+
+  games.hidden = true;
+  panel.hidden = false;
+
+  $("gameTitle").textContent = name;
+
+  $("instructions").textContent =
+    catalog.find(game => game[0] === name)[1];
+
+  try {
+    launch[name]();
+  } catch (error) {
+    console.error(error);
+    say("Game error. Press RESTART to try again.");
+  }
+
+  panel.scrollIntoView({behavior: "smooth", block: "start"});
+}
+
+function backToGames() {
+  cleanup();
+
+  activeGame = "";
+
+  panel.hidden = true;
+  games.hidden = false;
+
+  window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+$("search").addEventListener("input", renderGames);
+
+$("back").addEventListener("click", backToGames);
+
+$("restart").addEventListener("click", () => {
+  if (activeGame) startGame(activeGame);
+});
+
+renderGames();
+
+/* =================================
+   INDIVIDUAL GAMES
+================================= */
+
+const launch = {
+
+/* ---------------------------------
+   NUMBER GUESS
+--------------------------------- */
+
+"Number Guess"() {
+
+  const answer = Math.floor(Math.random() * 20) + 1;
+  let attempts = 0;
+
+  const input = makeInput("number", "Enter a number from 1 to 20");
+
+  input.min = 1;
+  input.max = 20;
+
+  makeButton("GUESS", () => {
+
+    const guess = Number(input.value);
+
+    if (!Number.isInteger(guess) || guess < 1 || guess > 20) {
+      say("Enter a whole number between 1 and 20.");
+      return;
+    }
+
+    attempts++;
+
+    if (guess === answer) {
+      say("YOU WIN! Guesses: " + attempts);
+    } else if (guess < answer) {
+      say("Too low! Try a higher number.");
+    } else {
+      say("Too high! Try a lower number.");
+    }
+
+    input.value = "";
+    input.focus();
+
+  });
+
+  say("Guess the hidden number!");
+},
+
+/* ---------------------------------
+   ROCK PAPER SCISSORS
+--------------------------------- */
+
+"Rock Paper Scissors"() {
+
+  const choices = ["Rock", "Paper", "Scissors"];
+
+  choices.forEach(choice => {
+
+    makeButton(choice, () => {
+
+      const computer =
+        choices[Math.floor(Math.random() * 3)];
+
+      let result;
+
+      if (choice === computer) {
+        result = "It's a tie!";
+      } else if (
+        (choice === "Rock" && computer === "Scissors") ||
+        (choice === "Paper" && computer === "Rock") ||
+        (choice === "Scissors" && computer === "Paper")
+      ) {
+        result = "YOU WIN!";
+      } else {
+        result = "Computer wins!";
+      }
+
+      say("You: " + choice + " | Computer: " +
+          computer + " | " + result);
+
+    });
+
+  });
+
+  say("Choose Rock, Paper, or Scissors.");
+},
+
+/* ---------------------------------
+   TIC TAC TOE
+--------------------------------- */
+
+"Tic-Tac-Toe"() {
+
+  let cells = Array(9).fill("");
+  let turn = "X";
+  let finished = false;
+
+  const winningLines = [
+    [0,1,2], [3,4,5], [6,7,8],
+    [0,3,6], [1,4,7], [2,5,8],
+    [0,4,8], [2,4,6]
+  ];
+
+  const grid = document.createElement("div");
+  grid.className = "grid";
+  grid.style.gridTemplateColumns = "repeat(3, 1fr)";
+  area.appendChild(grid);
+
+  function draw() {
+
+    grid.replaceChildren();
+
+    cells.forEach((value, index) => {
+
+      const button = makeButton(
+        value || " ",
+        () => {
+
+          if (finished || cells[index]) return;
+
+          cells[index] = turn;
+
+          const won = winningLines.some(line =>
+            line.every(i => cells[i] === turn)
+          );
+
+          if (won) {
+            finished = true;
+            say(turn + " WINS!");
+          } else if (cells.every(Boolean)) {
+            finished = true;
+            say("DRAW GAME!");
+          } else {
+            turn = turn === "X" ? "O" : "X";
+            say("Player " + turn + "'s turn.");
+          }
+
+          draw();
+
+        },
+        grid
+      );
+
+      button.style.minHeight = "85px";
+      button.style.fontSize = "30px";
+
+    });
+  }
+
+  draw();
+  say("Player X goes first.");
+},
+
+/* ---------------------------------
+   MEMORY MATCH
+--------------------------------- */
+
+"Memory Match"() {
+
+  const symbols = [
+    "🍎","🚀","🐱","⚽","🌟","🎵",
+    "🍎","🚀","🐱","⚽","🌟","🎵"
+  ];
+
+  symbols.sort(() => Math.random() - 0.5);
+
+  let opened = [];
+  let matched = new Set();
+  let locked = false;
+
+  const grid = document.createElement("div");
+  grid.className = "grid";
+  grid.style.gridTemplateColumns = "repeat(4, 1fr)";
+  area.appendChild(grid);
+
+  function draw() {
+
+    grid.replaceChildren();
+
+    symbols.forEach((symbol, index) => {
+
+      const visible =
+        matched.has(index) || opened.includes(index);
+
+      const button = makeButton(
+        visible ? symbol : "?",
+        () => {
+
+          if (locked || matched.has(index) ||
+              opened.includes(index)) return;
+
+          opened.push(index);
+          draw();
+
+          if (opened.length === 2) {
+
+            const [first, second] = opened;
+
+            if (symbols[first] === symbols[second]) {
+
+              matched.add(first);
+              matched.add(second);
+              opened = [];
+
+              say("Matches: " + matched.size / 2 + " / 6");
+
+              if (matched.size === 12) {
+                say("YOU FOUND ALL THE PAIRS! YOU WIN!");
+              }
+
+              draw();
+
+            } else {
+
+              locked = true;
+
+              timer(() => {
+                opened = [];
+                locked = false;
+                draw();
+              }, 850);
+
+            }
+          }
+
+        },
+        grid
+      );
+
+      button.style.minHeight = "65px";
+    });
+  }
+
+  draw();
+  say("Find all six matching pairs.");
+},
+
+/* ---------------------------------
+   SIMON SAYS
+--------------------------------- */
+
+"Simon Says"() {
+
+  const colors = ["red", "blue", "green", "orange"];
+
+  let sequence = [];
+  let position = 0;
+  let accepting = false;
+  let round = 0;
+
+  const controls = document.createElement("div");
+  controls.className = "grid";
+  controls.style.gridTemplateColumns = "repeat(2, 1fr)";
+  area.appendChild(controls);
+
+  const pads = colors.map(color => {
+
+    const button = makeButton(color.toUpperCase(), () => {
+
+      if (!accepting) return;
+
+      if (color !== sequence[position]) {
+        accepting = false;
+        say("GAME OVER! You reached round " + round +
+            ". Press RESTART to try again.");
+        return;
+      }
+
+      position++;
+
+      if (position === sequence.length) {
+        accepting = false;
+        say("CORRECT! Get ready for the next round.");
+
+        timer(showSequence, 700);
+      }
+
+    }, controls);
+
+    button.style.background = color;
+    button.style.minHeight = "90px";
+
+    return button;
+  });
+
+  function showSequence() {
+
+    accepting = false;
+    position = 0;
+    round++;
+
+    sequence.push(
+      colors[Math.floor(Math.random() * colors.length)]
+    );
+
+    say("Round " + round + " - Watch the colors!");
+
+    sequence.forEach((color, index) => {
+
+      timer(() => {
+
+        pads.forEach(button => {
+          button.style.outline = "none";
+        });
+
+        const padIndex = colors.indexOf(color);
+
+        pads[padIndex].style.outline = "5px solid white";
+
+        timer(() => {
+          pads[padIndex].style.outline = "none";
+
+          if (index === sequence.length - 1) {
+            accepting = true;
+            say("YOUR TURN! Repeat the sequence.");
+          }
+
+        }, 300);
+
+      }, index * 650);
+
+    });
+  }
+
+  makeButton("START GAME", showSequence);
+
+  say("Remember the colors in the correct order.");
+},
+
+/* ---------------------------------
+   REACTION TEST
+--------------------------------- */
+
+"Reaction Test"() {
+
+  let phase = "ready";
+  let startTime = 0;
+  let waitTimer = null;
+
+  const button = makeButton("START", () => {
+
+    if (phase === "ready") {
+
+      phase = "waiting";
+      button.textContent = "WAIT...";
+      button.style.background = "#a66b13";
+
+      say("Wait until the button turns green!");
+
+      waitTimer = setTimeout(() => {
+
+        phase = "go";
+        startTime = performance.now();
+
+        button.textContent = "TAP NOW!";
+        button.style.background = "#159447";
+
+        say("TAP NOW!");
+
+      }, 1500 + Math.random() * 3000);
+
+    } else if (phase === "waiting") {
+
+      clearTimeout(waitTimer);
+
+      phase = "ready";
+      button.textContent = "TRY AGAIN";
+      button.style.background = "";
+
+      say("Too early! Wait until green.");
+
+    } else if (phase === "go") {
+
+      const result = Math.round(performance.now() - startTime);
+
+      phase = "ready";
+
+      button.textContent = "START AGAIN";
+      button.style.background = "";
+
+      say("Your reaction time: " + result + " milliseconds!");
+
+    }
+
+  });
+
+  registerCleanup(() => clearTimeout(waitTimer));
+
+  say("Press START and wait for green.");
+},
+
+/* ---------------------------------
+   WHACK A MOLE
+--------------------------------- */
+
+"Whack-a-Mole"() {
+
+  let score = 0;
+  let remaining = 15;
+  let position = -1;
+  let finished = false;
+
+  const grid = document.createElement("div");
+  grid.className = "grid";
+  grid.style.gridTemplateColumns = "repeat(3, 1fr)";
+  area.appendChild(grid);
+
+  const pads = Array.from({length: 9}, (_, index) => {
+
+    const button = makeButton("·", () => {
+
+      if (finished) return;
+
+      if (index === position) {
+        score++;
+        say("Score: " + score + " | Time: " + remaining);
+        moveMole();
+      }
+
+    }, grid);
+
+    button.style.minHeight = "75px";
+    return button;
+  });
+
+  function moveMole() {
+
+    position = Math.floor(Math.random() * 9);
+
+    pads.forEach((button, index) => {
+      button.textContent = index === position ? "🐹" : "·";
+    });
+
+  }
+
+  moveMole();
+
+  const moleTimer = interval(moveMole, 700);
+
+  const clock = interval(() => {
+
+    remaining--;
+
+    if (remaining <= 0) {
+
+      finished = true;
+      clearInterval(moleTimer);
+      clearInterval(clock);
+
+      pads.forEach(button => button.disabled = true);
+
+      say("TIME UP! Final score: " + score);
+
+    } else {
+      say("Score: " + score + " | Time: " + remaining);
+    }
+
+  }, 1000);
+
+  say("Tap the mole as many times as possible!");
+},
+
+/* ---------------------------------
+   MATH SPRINT
+--------------------------------- */
+
+"Math Sprint"() {
+
+  let first = 0;
+  let second = 0;
+  let score = 0;
+  let question = 0;
+
+  const title = document.createElement("h2");
+  area.appendChild(title);
+
+  const input = makeInput("number", "Your answer");
+
+  function nextQuestion() {
+
+    first = Math.floor(Math.random() * 11) + 2;
+    second = Math.floor(Math.random() * 11) + 2;
+
+    question++;
+    title.textContent = first + " × " + second + " = ?";
+    input.value = "";
+    input.focus();
+
+  }
+
+  makeButton("SUBMIT", () => {
+
+    if (input.value.trim() === "") {
+      say("Enter an answer first.");
+      return;
+    }
+
+    if (Number(input.value) === first * second) {
+      score++;
+      say("CORRECT! Score: " + score);
+    } else {
+      say("Incorrect! The answer was " + first * second +
+          ". Score: " + score);
+    }
+
+    nextQuestion();
+
+  });
+
+  nextQuestion();
+},
+
+/* ---------------------------------
+   CLICK CHALLENGE
+--------------------------------- */
+
+"Click Challenge"() {
+
+  let score = 0;
+  let remaining = 10;
+  let running = false;
+
+  const button = makeButton("START", () => {
+
+    if (running) {
+      score++;
+      button.textContent = "TAP! " + score;
+      return;
+    }
+
+    running = true;
+    score = 0;
+    remaining = 10;
+
+    button.textContent = "TAP! 0";
+
+    say("Score: 0 | Time: 10");
+
+    const clock = interval(() => {
+
+      remaining--;
+
+      if (remaining <= 0) {
+
+        clearInterval(clock);
+        running = false;
+        button.disabled = true;
+
+        say("TIME UP! Final score: " + score);
+
+      } else {
+
+        say("Score: " + score + " | Time: " + remaining);
+
+      }
+
+    }, 1000);
+
+  });
+
+  button.style.fontSize = "24px";
+  button.style.padding = "25px 35px";
+
+  say("Press START, then tap as fast as possible!");
+},
+
+/* ---------------------------------
+   SNAKE
+--------------------------------- */
+
+"Snake"() {
+
+  const canvas = makeCanvas();
+  const ctx = canvas.getContext("2d");
+
+  const size = 20;
+  const cols = 30;
+  const rows = 18;
+
+  let snake = [
+    {x: 10, y: 9},
+    {x: 9, y: 9},
+    {x: 8, y: 9}
+  ];
+
+  let direction = {x: 1, y: 0};
+  let nextDirection = {x: 1, y: 0};
+
+  let food = {x: 20, y: 9};
+  let dead = false;
+
+  function changeDirection(x, y) {
+
+    if (x === -direction.x && y === -direction.y) return;
+
+    nextDirection = {x, y};
+  }
+
+  function keyboard(e) {
+
+    const keys = {
+      ArrowUp: [0, -1],
+      ArrowDown: [0, 1],
+      ArrowLeft: [-1, 0],
+      ArrowRight: [1, 0]
+    };
+
+    if (keys[e.key]) {
+      e.preventDefault();
+      changeDirection(...keys[e.key]);
+    }
+
+  }
+
+  window.addEventListener("keydown", keyboard);
+
+  registerCleanup(() =>
+    window.removeEventListener("keydown", keyboard)
+  );
+
+  const controls = document.createElement("div");
+  controls.className = "controls";
+  area.appendChild(controls);
+
+  [
+    ["↑", 0, -1],
+    ["↓", 0, 1],
+    ["←", -1, 0],
+    ["→", 1, 0]
+  ].forEach(([label, x, y]) => {
+    makeButton(label, () => changeDirection(x, y), controls);
+  });
+
+  function newFood() {
+
+    do {
+      food = {
+        x:
