@@ -12,11 +12,11 @@
 body::before{content:"HJH";position:fixed;inset:0;display:grid;place-items:center;z-index:-1;pointer-events:none;font-size:clamp(150px,32vw,420px);font-weight:1000;letter-spacing:-.09em;color:transparent;-webkit-text-stroke:3px rgba(143,202,255,.10);text-shadow:0 0 55px rgba(128,87,238,.10);transform:rotate(-18deg);user-select:none}
 header{text-align:center;padding:28px 14px;background:linear-gradient(120deg,#12295a,#632a9c,#087b88)}
 header h1{font-size:clamp(32px,7vw,50px);margin:5px}header p{margin:8px}
-nav{position:sticky;top:0;z-index:5;display:flex;justify-content:center;flex-wrap:wrap;gap:7px;padding:10px;background:#111b30}
+
 button{border:0;border-radius:8px;padding:10px 14px;background:var(--accent);color:white;font-weight:bold;cursor:pointer;margin:3px}
 button:hover{filter:brightness(1.15)}button:disabled{opacity:.45;cursor:not-allowed}
 main{max-width:1150px;margin:auto;padding:16px}section{margin-bottom:25px}h2{border-bottom:2px solid var(--accent);padding-bottom:9px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:14px}.intro{text-align:center;margin:16px 0 20px}.intro h2{margin-top:4px}.eyebrow{letter-spacing:.18em;font-size:12px;font-weight:800;color:#9bdcff}.add-game{text-align:center}
 .card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
 .card p{color:var(--muted);min-height:38px;font-size:14px}.card button{width:100%}
 .art{height:92px;border-radius:9px;display:grid;place-items:center;font-size:42px;background:linear-gradient(135deg,#29447e,#803d9c)}
@@ -39,7 +39,7 @@ input,select{font-size:16px;min-height:44px}
 canvas{display:block;width:min(100%,520px);height:auto;margin:12px auto;touch-action:manipulation}
 @media(max-width:600px){
  main{padding:10px}header{padding:22px 12px}header h1{font-size:clamp(28px,9vw,42px)}
- nav{justify-content:stretch;gap:5px;padding:7px}nav button{flex:1 1 calc(50% - 8px);padding:10px 7px;font-size:14px}
+ 
  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.card{padding:10px;min-width:0}.card h3{font-size:16px}.card p{font-size:13px;min-height:0}.art{height:72px;font-size:36px}
  #player{padding:9px;margin:14px 0}#gameArea{padding:5px}
  .gamegrid{width:min(100%,350px);gap:4px}.gamegrid button{min-width:0;min-height:46px;padding:4px;margin:1px}
@@ -47,7 +47,7 @@ canvas{display:block;width:min(100%,520px);height:auto;margin:12px auto;touch-ac
  .piano{width:100%;gap:2px}.piano button{flex:1 1 0;width:auto;min-width:0;height:clamp(82px,25vw,110px);padding:5px 2px;font-size:12px}
  iframe{height:65vh;min-height:340px}input,select{width:min(100%,380px)}
 }
-@media(max-width:360px){.grid{grid-template-columns:1fr}.card p{min-height:0}nav button{font-size:13px}}
+@media(max-width:360px){.grid{grid-template-columns:1fr}.card p{min-height:0}}
 </style>
 </head>
 <body>
@@ -57,28 +57,30 @@ canvas{display:block;width:min(100%,520px);height:auto;margin:12px auto;touch-ac
 <p><strong>Houston Jordan Holt is the creator of this website.</strong></p>
 <h3>#Houstonisthebest</h3>
 </header>
-<nav>
-<button type="button" data-section="home">Home</button>
-<button type="button" data-section="mine">Games by Houston Holt</button>
-<button type="button" data-section="library">Game Library</button>
-<button type="button" data-section="other">Other Creators — Embedded Games</button>
-</nav>
 <main>
-<section id="home">
-<div class="panel"><h2>Welcome to HJH Gaming</h2><p>Every game collection is shown below on this homepage. Choose any Play button to launch it here.</p><input id="search" type="search" placeholder="Search games..." aria-label="Search games"></div>
-<h2>⭐ HJH Original Games</h2><div class="grid" id="featured"></div>
-</section>
-<section id="mine"><h2>👑 More HJH Games Created by Houston Holt</h2><p class="muted">All original HJH games are listed here and can be launched right on this page.</p><div class="grid" id="myGames"></div></section>
-<section id="library"><h2>🕹️ All Games in the HJH Game Library</h2><div class="grid" id="libraryGames"></div></section>
-<section id="other">
-<h2>🌎 Games from Other Creators</h2>
-<p class="muted">Third-party games appear here when their hosts allow embedding. Use the Open Game link if a host blocks the player.</p>
-<div class="grid" id="embedGames"></div>
-<div class="panel" style="margin-top:18px"><h3>Add another game URL</h3><p class="muted">Paste an HTTPS game URL only if its creator or host allows embedding.</p><input id="customURL" type="url" placeholder="https://example.com/game/"><input id="customName" placeholder="Game name"><button id="addEmbed" type="button">Add game</button><p id="customMsg" aria-live="polite"></p></div>
+<section id="allGames">
+  <div class="panel intro">
+    <p class="eyebrow">ONE PAGE · EVERY GAME</p>
+    <h2>Welcome to HJH Gaming</h2>
+    <p>Every HJH original, arcade challenge, and community game is listed together below. Find a game and launch it right here.</p>
+    <input id="search" type="search" placeholder="Search all games..." aria-label="Search all games">
+    <p id="gameCount" class="muted" aria-live="polite"></p>
+  </div>
+  <div class="grid" id="allGameCards"></div>
+  <div class="panel add-game" style="margin-top:18px">
+    <h3>🌐 Add a community game</h3>
+    <p class="muted">Add an HTTPS game link. Some websites block embedding; if they do, use the link shown in the game player.</p>
+    <input id="customURL" type="url" placeholder="https://example.com/game/" aria-label="Game URL">
+    <input id="customName" placeholder="Game name" aria-label="Game name">
+    <button id="addEmbed" type="button">Add game</button>
+    <p id="customMsg" aria-live="polite"></p>
+  </div>
 </section>
 <section id="player" class="hidden">
-<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h2 id="gameTitle">Game</h2><button id="closeGame" type="button">✖ Close Game</button></div>
-<div id="gameArea"></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+    <h2 id="gameTitle">Game</h2><button id="closeGame" type="button">✖ Close Game</button>
+  </div>
+  <div id="gameArea"></div>
 </section>
 </main>
 <footer>HJH Gaming © 2026 · Created by Houston Jordan Holt · #Houstonisthebest</footer>
@@ -144,8 +146,6 @@ const songs = [
 
 let activeCleanup = null;
 function stopGame(){if(activeCleanup){activeCleanup();activeCleanup=null;} $("player").classList.add("hidden");$("gameArea").replaceChildren();}
-function showSection(id){const target=$(id);if(target)target.scrollIntoView({behavior:"smooth",block:"start"});}
-document.querySelectorAll("[data-section]").forEach(b=>b.addEventListener("click",()=>showSection(b.dataset.section)));
 $("closeGame").addEventListener("click",stopGame);
 function showGame(name,html){$("player").classList.remove("hidden");$("gameTitle").textContent=name;$("gameArea").innerHTML=html;$("player").scrollIntoView({behavior:"smooth",block:"start"});}
 function makeCard(g,embedded=false){
@@ -158,18 +158,27 @@ function makeCard(g,embedded=false){
  article.append(art,h,p,b);return article;
 }
 function render(){
- $("myGames").replaceChildren(...originals.map(g=>makeCard(g)));
- $("libraryGames").replaceChildren(...library.map(g=>makeCard(g)));
- $("featured").replaceChildren(...originals.concat(library.slice(0,4)).map(g=>makeCard(g)));
- $("embedGames").replaceChildren(...embeds.map(g=>makeCard(g,true)));
+ const cards = originals.map(g=>makeCard(g))
+   .concat(library.map(g=>makeCard(g)))
+   .concat(embeds.map(g=>makeCard(g,true)));
+ $("allGameCards").replaceChildren(...cards);
+ updateGameCount();
+}
+function updateGameCount(){
+ const visible=[...$("allGameCards").querySelectorAll(".card")].filter(c=>!c.hidden).length;
+ $("gameCount").textContent=`${visible} games shown · ${originals.length+library.length+embeds.length} games and links in the collection`;
 }
 render();
-$("search").addEventListener("input",()=>{const q=$("search").value.trim().toLowerCase();document.querySelectorAll(".card").forEach(c=>c.hidden=!c.dataset.name.includes(q));});
+$("search").addEventListener("input",()=>{
+ const q=$("search").value.trim().toLowerCase();
+ document.querySelectorAll("#allGameCards .card").forEach(c=>c.hidden=!c.dataset.name.includes(q));
+ updateGameCount();
+});
 $("addEmbed").addEventListener("click",()=>{
  const raw=$("customURL").value.trim(),name=$("customName").value.trim()||"Community Game";
  try{const u=new URL(raw);if(u.protocol!=="https:")throw new Error("HTTPS required");
  const g={name,icon:"🌐",desc:"Community-submitted game link. Embedding depends on the host.",url:u.href,credit:"Original host"};
- embeds.push(g);$("embedGames").append(makeCard(g,true));$("customMsg").textContent="Added. If the host blocks iframe embedding, use its Open Game link.";
+ embeds.push(g);$("allGameCards").append(makeCard(g,true));updateGameCount();$("customMsg").textContent="Added. If the host blocks iframe embedding, use its Open Game link.";
  $("customURL").value="";$("customName").value="";
  }catch(e){$("customMsg").textContent="Please enter a valid HTTPS game URL.";}
 });
@@ -190,7 +199,7 @@ function fineNights(){
  activeCleanup=()=>clearInterval(interval);
 }
 function pianoRush(){
- showGame("HJH Piano Rush",`<div class="panel"><p>Choose a song challenge. These rounds use original note patterns, not the songs' recorded melodies. Every key plays a piano tone.</p><select id="songChoice" aria-label="Choose song">${songs.map((s,i)=>`<option value="${i}">${escapeHTML(s.name)} · ${s.difficulty} · ${s.pace}</option>`).join("")}</select><h3 id="songTitle"></h3><p>Difficulty: <strong id="pDifficulty"></strong> · Pace: <strong id="pPace"></strong> · BPM setting: <strong id="pTempo"></strong></p><h3>Score: <span id="pScore">0</span> · Streak: <span id="pStreak">0</span></h3><h3>Target note: <span id="pTarget">C</span></h3><p id="pCountdown" class="muted">Choose a song and press Start Round.</p><button id="pStart">Start Round</button><div class="piano" id="pKeys"></div><p id="pMessage" class="muted">Tap the target piano note. Faster rounds give you less time.</p></div>`);
+ showGame("HJH Piano Rush",`<div class="panel"><p>Choose a song-themed challenge. The game uses original note patterns and synthesized piano tones, not the commercial recording or an exact instrumental.</p><select id="songChoice" aria-label="Choose song">${songs.map((s,i)=>`<option value="${i}">${escapeHTML(s.name)} · ${s.difficulty} · ${s.pace}</option>`).join("")}</select><h3 id="songTitle"></h3><p>Difficulty: <strong id="pDifficulty"></strong> · Pace: <strong id="pPace"></strong> · BPM setting: <strong id="pTempo"></strong></p><h3>Score: <span id="pScore">0</span> · Streak: <span id="pStreak">0</span></h3><h3>Target note: <span id="pTarget">C</span></h3><p id="pCountdown" class="muted">Choose a song and press Start Round.</p><button id="pStart">Start Round</button><div class="piano" id="pKeys"></div><p id="pMessage" class="muted">Tap the target piano note. Faster rounds give you less time.</p></div>`);
  const notes=["C","D","E","F","G","A","B"],freq=[261.63,293.66,329.63,349.23,392,440,493.88];
  let target=0,score=0,streak=0,active=false,roundTimer=null,roundEnds=0,audio=null;
  const choice=()=>songs[Number($("songChoice").value)||0];
@@ -212,4 +221,9 @@ function sequenceGame(name){
  $("seqGrid").innerHTML=colors.map((c,i)=>`<button style="background:${c}" data-i="${i}">${i+1}</button>`).join("");
  function show(){locked=true;$("seqMsg").textContent="Watch: "+seq.map(x=>x+1).join(" ");timeout=setTimeout(()=>{locked=false;pos=0;$("seqMsg").textContent="Your turn!";},Math.min(3000,600+seq.length*250));}
  $("seqStart").onclick=()=>{seq=[Math.floor(Math.random()*4)];pos=0;level=1;$("seqLevel").textContent=level;show();};
- $("seqGrid").querySelecto
+ $("seqGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>{if(locked||!seq.length)return;const i=Number(b.dataset.i);if(seq[pos]!==i){$("seqMsg").textContent="Not quite. Press Start to retry.";locked=true;return;}pos++;if(pos===seq.length){level++;$("seqLevel").textContent=level;seq.push(Math.floor(Math.random()*4));show();}});
+ activeCleanup=()=>clearTimeout(timeout);
+}
+function game2048(){
+ let a=Array(16).fill(0);function add(){const e=a.map((v,i)=>v? -1:i).filter(i=>i>=0);if(e.length)a[e[Math.floor(Math.random()*e.length)]]=Math.random()<.9?2:4;}add();add();
+ showGame("2048",`<p>Use arrow keys or buttons to combine matching tiles.</p><div class="board" id="b2048"></div><div><button
