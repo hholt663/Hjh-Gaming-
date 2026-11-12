@@ -4,52 +4,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090b18">
 <title>HJH Gaming Arcade</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#090b18;color:white;font-family:Arial,sans-serif}
-header{text-align:center;padding:24px 12px;background:linear-gradient(120deg,#17134b,#092d48)}
-h1{margin:0;color:#36d9ff;font-size:36px}
-header p{color:#ddd}
+header{text-align:center;padding:25px;background:linear-gradient(120deg,#17134b,#092d48)}
+h1{color:#36d9ff;margin:0;font-size:36px}
 main{max-width:1100px;margin:auto;padding:15px}
-input{width:100%;padding:14px;border:1px solid #444;border-radius:12px;background:#171b2c;color:white;font-size:16px;margin:12px 0}
-#games{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px}
+input{width:100%;padding:14px;border-radius:10px;border:1px solid #555;background:#171b2c;color:white;font-size:16px}
+#games{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px;margin-top:15px}
 .card{background:#171b2c;border:1px solid #303a59;border-radius:15px;padding:15px;text-align:center}
 .emoji{font-size:40px}
-.card h3{font-size:16px;min-height:36px}
-button{border:0;border-radius:10px;padding:11px 15px;background:#16bce9;color:#06121b;font-weight:bold;font-size:15px;cursor:pointer}
-button:active{transform:scale(.96)}
+.card button,button{border:0;border-radius:10px;padding:12px;background:#16bce9;color:#06121b;font-weight:bold;font-size:15px;cursor:pointer;margin:4px}
 .card button{width:100%}
 #gameBox{display:none;position:fixed;inset:0;background:#090b18;z-index:10;overflow:auto;padding:15px}
-.gameTop{display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:800px;margin:0 auto 15px}
-#gameTitle{color:#38d9ff}
-#playArea{max-width:800px;margin:auto;background:#171b2c;border:1px solid #394465;border-radius:16px;padding:18px;text-align:center;min-height:350px}
-#playArea button{margin:5px}
-#playArea .big{font-size:30px;font-weight:bold;margin:20px}
+.gameTop{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#gameTitle{color:#36d9ff}
+#playArea{max-width:750px;margin:15px auto;background:#171b2c;border:1px solid #394465;border-radius:16px;padding:18px;text-align:center;min-height:350px}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;max-width:380px;margin:15px auto}
-.cell{background:#303a59;border-radius:9px;min-height:65px;display:grid;place-items:center;font-size:23px;font-weight:bold}
-.target{width:75px;height:75px;border-radius:50%;background:#24d6ff;margin:12px auto;display:grid;place-items:center;color:#06121b;font-weight:bold}
-#message{color:#a8eaff;min-height:25px}
+.cell{background:#303a59;border-radius:8px;min-height:65px;display:grid;place-items:center;font-size:22px;font-weight:bold}
+.target{width:85px;height:85px;border-radius:50%;background:#36d9ff}
+#message{color:#a8eaff;min-height:28px}
 footer{text-align:center;padding:25px;color:#aaa}
 </style>
 </head>
 <body>
+
 <header>
 <h1>HJH GAMING</h1>
-<p>30 games. One arcade. Play anywhere.</p>
+<p>30 Games. One Arcade. Play Anywhere.</p>
 </header>
+
 <main>
 <h2>🎮 Game Arcade</h2>
 <input id="search" placeholder="Search games..." oninput="filterGames()">
 <p id="count">30 games available</p>
 <div id="games"></div>
 </main>
+
 <footer>HJH Gaming Arcade</footer>
 
 <div id="gameBox">
 <div class="gameTop">
-<button onclick="closeGame()">← Back</button>
+<button onclick="closeGame()">← BACK</button>
 <h2 id="gameTitle">Game</h2>
 <button onclick="closeGame()">✕</button>
 </div>
@@ -58,280 +55,452 @@ footer{text-align:center;padding:25px;color:#aaa}
 
 <script>
 const gameList=[
-["Snake","🐍","snake"],["2048","🔢","2048"],["Brick Breaker","🧱","tap"],
-["Pong Challenge","🏓","reaction"],["Flappy Flyer","🐤","tap"],
-["Bubble Pop","🫧","tap"],["Memory Match","🧠","memory"],
-["Tic Tac Toe","⭕","tic"],["Sudoku Sprint","🔢","math"],
-["Minesweeper","💣","lights"],["Asteroids","🚀","reaction"],
-["Tower Defense","🏰","tap"],["Trap the Cat","🐱","lights"],
-["Simon Says","🎨","sequence"],["Connect Four","🔴","tic"],
-["Checkers Challenge","♟️","tic"],["Word Guess","🔤","word"],
-["Codebreaker","🔐","math"],["Reflex Challenge","⚡","reaction"],
-["Sliding Puzzle","🧩","lights"],["Whack-a-Mole","🔨","tap"],
-["Maze Runner","🌀","lights"],["Space Defender","👾","reaction"],
-["Balloon Pop","🎈","tap"],["Stack Tower","🏗️","reaction"],
-["Color Match","🌈","sequence"],["Lights Out","💡","lights"],
-["Golf Mini","⛳","reaction"],["Racing Challenge","🏎️","tap"],
+["Snake","🐍","snake"],
+["2048","🔢","2048"],
+["Brick Breaker","🧱","tap"],
+["Pong Challenge","🏓","reaction"],
+["Flappy Flyer","🐤","tap"],
+["Bubble Pop","🫧","tap"],
+["Memory Match","🧠","memory"],
+["Tic Tac Toe","⭕","tic"],
+["Sudoku Sprint","🔢","math"],
+["Minesweeper","💣","lights"],
+["Asteroids","🚀","reaction"],
+["Tower Defense","🏰","tap"],
+["Trap the Cat","🐱","lights"],
+["Simon Says","🎨","sequence"],
+["Connect Four","🔴","tic"],
+["Checkers Challenge","♟️","tic"],
+["Word Guess","🔤","word"],
+["Codebreaker","🔐","math"],
+["Reflex Challenge","⚡","reaction"],
+["Sliding Puzzle","🧩","lights"],
+["Whack-a-Mole","🔨","tap"],
+["Maze Runner","🌀","lights"],
+["Space Defender","👾","reaction"],
+["Balloon Pop","🎈","tap"],
+["Stack Tower","🏗️","reaction"],
+["Color Match","🌈","sequence"],
+["Lights Out","💡","lights"],
+["Golf Mini","⛳","reaction"],
+["Racing Challenge","🏎️","tap"],
 ["Number Master","🧮","math"]
 ];
 
 const games=document.getElementById("games");
 const area=document.getElementById("playArea");
-let current=null,score=0,timer=null,round=0,board=[],turn="X",sequence=[],userSequence=[];
+
+let current=null;
+let score=0;
+let timer=null;
+let board=[];
+let snakeTimer=null;
 
 function drawGames(){
- games.innerHTML="";
- gameList.forEach((g,i)=>{
-  const card=document.createElement("div");
-  card.className="card";
-  card.dataset.name=g[0].toLowerCase();
-  card.innerHTML=`<div class="emoji">${g[1]}</div><h3>${g[0]}</h3><button onclick="startGame(${i})">PLAY</button>`;
-  games.appendChild(card);
- });
+games.innerHTML="";
+gameList.forEach((g,i)=>{
+const card=document.createElement("div");
+card.className="card";
+card.dataset.name=g[0].toLowerCase();
+card.innerHTML=`
+<div class="emoji">${g[1]}</div>
+<h3>${g[0]}</h3>
+<button>PLAY</button>`;
+card.querySelector("button").onclick=()=>startGame(i);
+games.appendChild(card);
+});
 }
+
 function filterGames(){
- const q=document.getElementById("search").value.toLowerCase();
- let n=0;
- document.querySelectorAll(".card").forEach(c=>{
-  c.style.display=c.dataset.name.includes(q)?"block":"none";
-  if(c.style.display!=="none")n++;
- });
- document.getElementById("count").textContent=n+" games found";
+const q=document.getElementById("search").value.toLowerCase();
+let count=0;
+document.querySelectorAll(".card").forEach(c=>{
+const show=c.dataset.name.includes(q);
+c.style.display=show?"block":"none";
+if(show)count++;
+});
+document.getElementById("count").textContent=count+" games found";
 }
+
 function startGame(i){
- clearInterval(timer);
- current=gameList[i];
- score=0;round=0;
- document.getElementById("gameBox").style.display="block";
- document.getElementById("gameTitle").textContent=current[1]+" "+current[0];
- launch(current[2]);
+clearInterval(timer);
+clearInterval(snakeTimer);
+current=gameList[i];
+score=0;
+document.getElementById("gameBox").style.display="block";
+document.getElementById("gameTitle").textContent=current[1]+" "+current[0];
+launch(current[2]);
 }
+
 function closeGame(){
- clearInterval(timer);
- document.getElementById("gameBox").style.display="none";
- area.innerHTML="";
+clearInterval(timer);
+clearInterval(snakeTimer);
+document.getElementById("gameBox").style.display="none";
+area.innerHTML="";
 }
+
 function heading(instructions){
- area.innerHTML=`<p>${instructions}</p><div id="message"></div><div id="content"></div>`;
+area.innerHTML=`
+<p>${instructions}</p>
+<div id="message"></div>
+<div id="content"></div>`;
 }
-function say(t){document.getElementById("message").textContent=t}
-function saveScore(){
- const key="hjh_"+current[0];
- const old=Number(localStorage.getItem(key)||0);
- if(score>old)localStorage.setItem(key,score);
+
+function say(message){
+document.getElementById("message").textContent=message;
 }
+
 function launch(mode){
- if(mode==="tap")tapGame();
- else if(mode==="reaction")reactionGame();
- else if(mode==="memory")memoryGame();
- else if(mode==="lights")lightsGame();
- else if(mode==="tic")ticGame();
- else if(mode==="sequence")sequenceGame();
- else if(mode==="math")mathGame();
- else if(mode==="word")wordGame();
- else if(mode==="2048")game2048();
- else if(mode==="snake")snakeGame();
+switch(mode){
+case "tap":tapGame();break;
+case "reaction":reactionGame();break;
+case "memory":memoryGame();break;
+case "lights":lightsGame();break;
+case "tic":ticGame();break;
+case "sequence":sequenceGame();break;
+case "math":mathGame();break;
+case "word":wordGame();break;
+case "2048":game2048();break;
+case "snake":snakeGame();break;
 }
+}
+
 function tapGame(){
- heading("Tap the target as many times as you can in 20 seconds!");
- let left=20;
- document.getElementById("content").innerHTML=`<h2 id="score">Score: 0</h2><h2 id="time">Time: 20</h2><button class="target" id="target">TAP!</button>`;
- const target=document.getElementById("target");
- target.onclick=()=>{
-  score++;document.getElementById("score").textContent="Score: "+score;
-  target.style.marginLeft=Math.random()*65+"%";
-  target.style.marginTop=Math.random()*20+"px";
- };
- timer=setInterval(()=>{
-  left--;document.getElementById("time").textContent="Time: "+left;
-  if(left<=0){clearInterval(timer);saveScore();say("Time's up! Final score: "+score);}
- },1000);
+heading("Tap the target as many times as possible in 20 seconds!");
+let left=20;
+document.getElementById("content").innerHTML=`
+<h2 id="score">Score: 0</h2>
+<h2 id="time">Time: 20</h2>
+<button class="target" id="target">TAP!</button>`;
+const target=document.getElementById("target");
+target.onclick=()=>{
+score++;
+document.getElementById("score").textContent="Score: "+score;
+target.style.marginLeft=Math.random()*55+"%";
+};
+timer=setInterval(()=>{
+left--;
+document.getElementById("time").textContent="Time: "+left;
+if(left<=0){
+clearInterval(timer);
+say("Game over! Final score: "+score);
 }
+},1000);
+}
+
 function reactionGame(){
- heading("Wait for the green button. Then tap it as quickly as possible!");
- document.getElementById("content").innerHTML='<button id="react" disabled>WAIT...</button><h2 id="result"></h2>';
- const b=document.getElementById("react");
- const delay=1500+Math.random()*3500;
- timer=setTimeout(()=>{
-  b.disabled=false;b.textContent="TAP NOW!";b.style.background="#42e878";
-  const start=Date.now();
-  b.onclick=()=>{
-   const ms=Date.now()-start;
-   document.getElementById("result").textContent=ms+" milliseconds!";
-   score=Math.max(0,5000-ms);saveScore();b.disabled=true;
-  };
- },delay);
+heading("Wait for the button to turn green. Then tap it!");
+document.getElementById("content").innerHTML=`
+<button id="react" disabled>WAIT...</button>
+<h2 id="result"></h2>`;
+const b=document.getElementById("react");
+timer=setTimeout(()=>{
+b.disabled=false;
+b.textContent="TAP NOW!";
+b.style.background="#42e878";
+const start=Date.now();
+b.onclick=()=>{
+document.getElementById("result").textContent=
+(Date.now()-start)+" milliseconds!";
+b.disabled=true;
+};
+},2000+Math.random()*3000);
 }
+
 function memoryGame(){
- heading("Remember the cards. Find all matching pairs!");
- let vals=["🍎","🍎","🚀","🚀","🐱","🐱","⚽","⚽","⭐","⭐","🎮","🎮"];
- vals.sort(()=>Math.random()-.5);
- let first=null,locked=false,found=0;
- document.getElementById("content").innerHTML='<div class="grid" id="memory"></div><p id="pairs">Pairs: 0 / 6</p>';
- const grid=document.getElementById("memory");
- vals.forEach(v=>{
-  const b=document.createElement("button");b.textContent="?";
-  b.onclick=()=>{
-   if(locked||b.textContent!=="?")return;
-   b.textContent=v;
-   if(!first){first=b;return}
-   if(first.textContent===v){
-    found++;score+=10;first=null;
-    document.getElementById("pairs").textContent="Pairs: "+found+" / 6";
-    if(found===6){saveScore();say("You found every pair!");}
-   }else{
-    locked=true;let old=first;first=null;
-    setTimeout(()=>{old.textContent="?";b.textContent="?";locked=false;},700);
-   }
-  };
-  grid.appendChild(b);
- });
+heading("Find all matching pairs!");
+let vals=["🍎","🍎","🚀","🚀","🐱","🐱","⚽","⚽","⭐","⭐","🎮","🎮"];
+vals.sort(()=>Math.random()-.5);
+let first=null,locked=false,found=0;
+document.getElementById("content").innerHTML=`
+<div class="grid" id="memory"></div>
+<p id="pairs">Pairs: 0 / 6</p>`;
+vals.forEach(v=>{
+const b=document.createElement("button");
+b.textContent="?";
+b.style.height="65px";
+b.onclick=()=>{
+if(locked||b.textContent!=="?")return;
+b.textContent=v;
+if(!first){first=b;return;}
+if(first.textContent===v){
+first=null;
+found++;
+document.getElementById("pairs").textContent="Pairs: "+found+" / 6";
+if(found===6)say("You won!");
+}else{
+locked=true;
+let old=first;
+first=null;
+setTimeout(()=>{
+old.textContent="?";
+b.textContent="?";
+locked=false;
+},700);
 }
+};
+document.getElementById("memory").appendChild(b);
+});
+}
+
 function lightsGame(){
- heading("Turn off every light. Tap squares to change their neighbors!");
- let n=5;board=Array.from({length:n*n},()=>Math.random()>.55);
- function render(){
-  const c=document.getElementById("content");c.innerHTML='<div class="grid" id="lightgrid" style="grid-template-columns:repeat(5,1fr)"></div>';
-  board.forEach((v,i)=>{
-   const b=document.createElement("button");b.textContent=v?"💡":"·";
-   b.style.background=v?"#f5d34d":"#303a59";
-   b.onclick=()=>{
-    [i,i-5,i+5,i-1,i+1].forEach(j=>{
-     if(j>=0&&j<25&&!(Math.abs(j%5-i%5)>1))board[j]=!board[j];
-    });
-    score++;render();
-    if(board.every(x=>!x)){saveScore();say("Puzzle solved!");}
-   };
-   document.getElementById("lightgrid").appendChild(b);
-  });
- }
- render();
+heading("Turn off all the lights!");
+board=Array.from({length:25},()=>Math.random()>.5);
+function render(){
+const c=document.getElementById("content");
+c.innerHTML='<div class="grid" id="lightgrid" style="grid-template-columns:repeat(5,1fr)"></div>';
+board.forEach((v,i)=>{
+const b=document.createElement("button");
+b.textContent=v?"💡":"·";
+b.style.height="55px";
+b.style.background=v?"#d8ad29":"#303a59";
+b.onclick=()=>{
+[i,i-5,i+5].forEach(j=>{
+if(j>=0&&j<25)board[j]=!board[j];
+});
+if(i%5>0)board[i-1]=!board[i-1];
+if(i%5<4)board[i+1]=!board[i+1];
+render();
+if(board.every(x=>!x))say("Puzzle solved!");
+};
+document.getElementById("lightgrid").appendChild(b);
+});
 }
+render();
+}
+
 function ticGame(){
- heading("Play against the computer. You are X!");
- board=Array(9).fill("");
- turn="X";
- const c=document.getElementById("content");
- function render(){
-  c.innerHTML='<div class="grid" style="grid-template-columns:repeat(3,1fr)" id="tic"></div><button onclick="launch(\\'tic\\')">Restart</button>';
-  board.forEach((v,i)=>{
-   const b=document.createElement("button");b.style.height="75px";b.style.fontSize="28px";b.textContent=v||" ";
-   b.onclick=()=>move(i);document.getElementById("tic").appendChild(b);
-  });
- }
- function winner(){
-  const lines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-  return lines.some(l=>l.every(i=>board[i]==="X"))?"You win!":lines.some(l=>l.every(i=>board[i]==="O"))?"Computer wins!":board.every(Boolean)?"Draw!":"";
- }
- function move(i){
-  if(board[i]||winner())return;
-  board[i]="X";
-  if(winner()){say(winner());if(winner()==="You win!")score=100;saveScore();render();return;}
-  const empty=board.map((v,j)=>v?null:j).filter(v=>v!==null);
-  if(empty.length)board[empty[Math.floor(Math.random()*empty.length)]]="O";
-  if(winner()){say(winner());saveScore();}
-  render();
- }
- render();
+heading("You are X. Play against the computer!");
+board=Array(9).fill("");
+const c=document.getElementById("content");
+function winner(){
+const lines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+if(lines.some(l=>l.every(i=>board[i]==="X")))return "You win!";
+if(lines.some(l=>l.every(i=>board[i]==="O")))return "Computer wins!";
+if(board.every(Boolean))return "Draw!";
+return "";
 }
+function render(){
+c.innerHTML='<div class="grid" id="tic" style="grid-template-columns:repeat(3,1fr)"></div>';
+board.forEach((v,i)=>{
+const b=document.createElement("button");
+b.style.height="75px";
+b.style.fontSize="28px";
+b.textContent=v||" ";
+b.onclick=()=>move(i);
+document.getElementById("tic").appendChild(b);
+});
+const restart=document.createElement("button");
+restart.textContent="Restart";
+restart.onclick=ticGame;
+c.appendChild(restart);
+}
+function move(i){
+if(board[i]||winner())return;
+board[i]="X";
+if(winner()){say(winner());render();return;}
+const empty=board.map((v,j)=>v?null:j).filter(v=>v!==null);
+if(empty.length){
+board[empty[Math.floor(Math.random()*empty.length)]]="O";
+}
+if(winner())say(winner());
+render();
+}
+render();
+}
+
 function sequenceGame(){
- heading("Watch the color sequence, then repeat it!");
- sequence=[];userSequence=[];round=0;
- const colors=["red","blue","green","orange"];
- const c=document.getElementById("content");
- function show(){
-  c.innerHTML='<h2>Level '+(round+1)+'</h2><div id="buttons"></div><button id="begin">Show sequence</button>';
-  const box=document.getElementById("buttons");
-  colors.forEach(color=>{
-   const b=document.createElement("button");b.style.background=color;b.style.width="65px";b.style.height="65px";b.textContent=" ";
-   b.onclick=()=>pick(color);box.appendChild(b);
-  });
-  document.getElementById("begin").onclick=()=>{
-   sequence.push(colors[Math.floor(Math.random()*4)]);
-   say(sequence.join(" - "));
-   setTimeout(()=>say("Your turn!"),1000);
-  };
- }
- function pick(color){
-  userSequence.push(color);
-  if(color!==sequence[userSequence.length-1]){say("Game over! Score: "+round);saveScore();return;}
-  if(userSequence.length===sequence.length){round++;score=round*10;userSequence=[];say("Correct!");setTimeout(show,700);}
- }
- show();
+heading("Remember the color sequence!");
+const colors=["red","blue","green","orange"];
+let sequence=[];
+let user=[];
+const c=document.getElementById("content");
+function render(){
+c.innerHTML="<h2>Level "+(sequence.length+1)+"</h2><div id='colors'></div><button id='show'>Show sequence</button>";
+colors.forEach(color=>{
+const b=document.createElement("button");
+b.style.background=color;
+b.style.width="65px";
+b.style.height="65px";
+b.onclick=()=>pick(color);
+document.getElementById("colors").appendChild(b);
+});
+document.getElementById("show").onclick=()=>{
+sequence.push(colors[Math.floor(Math.random()*4)]);
+user=[];
+say(sequence.join(" - "));
+setTimeout(()=>say("Your turn!"),1000);
+};
 }
+function pick(color){
+if(user.length>=sequence.length||sequence.length===0)return;
+user.push(color);
+if(color!==sequence[user.length-1]){
+say("Game over!");
+return;
+}
+if(user.length===sequence.length){
+say("Correct!");
+setTimeout(render,700);
+}
+}
+render();
+}
+
 function mathGame(){
- heading("Solve as many math questions as you can!");
- let a,b,answer;
- function question(){
-  a=Math.floor(Math.random()*20)+1;b=Math.floor(Math.random()*20)+1;answer=a+b;
-  document.getElementById("content").innerHTML=`<h2 class="big">${a} + ${b} = ?</h2><input id="answer" type="number" placeholder="Your answer"><button id="check">Check</button><h3>Score: ${score}</h3>`;
-  document.getElementById("check").onclick=()=>{
-   if(Number(document.getElementById("answer").value)===answer){score+=10;say("Correct!");question();}
-   else say("Try again!");
-  };
- }
- question();
+heading("Solve the math questions!");
+let a,b,answer;
+function question(){
+a=Math.floor(Math.random()*20)+1;
+b=Math.floor(Math.random()*20)+1;
+answer=a+b;
+document.getElementById("content").innerHTML=`
+<h2 class="big">${a} + ${b} = ?</h2>
+<input id="answer" type="number" placeholder="Your answer">
+<button id="check">CHECK</button>
+<h3>Score: ${score}</h3>`;
+document.getElementById("check").onclick=()=>{
+if(Number(document.getElementById("answer").value)===answer){
+score+=10;
+say("Correct!");
+question();
+}else say("Try again!");
+};
 }
+question();
+}
+
 function wordGame(){
- heading("Guess the hidden word!");
- const words=["ARCADE","GAMING","ROCKET","SNAKE","PUZZLE","PLANET"];
- const word=words[Math.floor(Math.random()*words.length)];
- let tries=6;
- document.getElementById("content").innerHTML=`<h2 id="blanks">${"_ ".repeat(word.length)}</h2><input id="letter" maxlength="1" placeholder="Guess one letter"><button id="guess">Guess</button><p id="tries">Tries left: 6</p>`;
- let used=[];
- document.getElementById("guess").onclick=()=>{
-  const l=document.getElementById("letter").value.toUpperCase();document.getElementById("letter").value="";
-  if(!l||used.includes(l))return;used.push(l);
-  if(word.includes(l))score+=10;else tries--;
-  document.getElementById("blanks").textContent=[...word].map(x=>used.includes(x)?x:"_").join(" ");
-  document.getElementById("tries").textContent="Tries left: "+tries;
-  if([...word].every(x=>used.includes(x))){say("You got it!");saveScore();}
-  else if(tries<=0){say("The word was "+word);saveScore();}
- };
+heading("Guess the hidden word!");
+const words=["ARCADE","GAMING","ROCKET","SNAKE","PUZZLE","PLANET"];
+const word=words[Math.floor(Math.random()*words.length)];
+let used=[],tries=6;
+document.getElementById("content").innerHTML=`
+<h2 id="blanks">${"_ ".repeat(word.length)}</h2>
+<input id="letter" maxlength="1" placeholder="Guess a letter">
+<button id="guess">GUESS</button>
+<p id="tries">Tries left: 6</p>`;
+document.getElementById("guess").onclick=()=>{
+const l=document.getElementById("letter").value.toUpperCase();
+document.getElementById("letter").value="";
+if(!l||used.includes(l))return;
+used.push(l);
+if(!word.includes(l))tries--;
+document.getElementById("blanks").textContent=
+[...word].map(x=>used.includes(x)?x:"_").join(" ");
+document.getElementById("tries").textContent="Tries left: "+tries;
+if([...word].every(x=>used.includes(x)))say("You got it!");
+else if(tries<=0)say("The word was "+word);
+};
 }
+
 function game2048(){
- heading("Use the arrow buttons to combine matching numbers!");
- let b=Array(16).fill(0);
- function add(){let e=b.map((v,i)=>v?null:i).filter(v=>v!==null);if(e.length)b[e[Math.floor(Math.random()*e.length)]]=2;}
- add();add();
- function render(){
-  document.getElementById("content").innerHTML='<div class="grid" id="g2048"></div><div><button onclick="move2048(0)">←</button><button onclick="move2048(1)">↑</button><button onclick="move2048(2)">→</button><button onclick="move2048(3)">↓</button></div><p>Score: '+score+'</p>';
-  b.forEach(v=>{let d=document.createElement("div");d.className="cell";d.textContent=v||"";d.style.background=v?"#315c82":"#303a59";document.getElementById("g2048").appendChild(d);});
- }
- window.move2048=(dir)=>{
-  let old=b.slice();
-  for(let line=0;line<4;line++){
-   let ids=Array.from({length:4},(_,k)=>dir===0?line*4+k:dir===2?line*4+3-k:dir===1?k*4+line:(3-k)*4+line);
-   let vals=ids.map(i=>b[i]).filter(Boolean),out=[];
-   for(let k=0;k<vals.length;k++){if(vals[k]===vals[k+1]){out.push(vals[k]*2);score+=vals[k]*2;k++;}else out.push(vals[k]);}
-   ids.forEach((id,k)=>b[id]=out[k]||0);
-  }
-  if(old.some((v,i)=>v!==b[i]))add();
-  render();saveScore();
- };
- render();
+heading("Combine matching numbers using the arrow buttons!");
+let b=Array(16).fill(0);
+function add(){
+let e=b.map((v,i)=>v?null:i).filter(v=>v!==null);
+if(e.length)b[e[Math.floor(Math.random()*e.length)]]=2;
 }
+add();add();
+function render(){
+document.getElementById("content").innerHTML=`
+<div class="grid" id="g2048"></div>
+<div>
+<button id="left">←</button>
+<button id="up">↑</button>
+<button id="right">→</button>
+<button id="down">↓</button>
+</div>
+<h3>Score: ${score}</h3>`;
+b.forEach(v=>{
+const d=document.createElement("div");
+d.className="cell";
+d.textContent=v||"";
+document.getElementById("g2048").appendChild(d);
+});
+document.getElementById("left").onclick=()=>move(0);
+document.getElementById("up").onclick=()=>move(1);
+document.getElementById("right").onclick=()=>move(2);
+document.getElementById("down").onclick=()=>move(3);
+}
+function move(dir){
+let old=b.slice();
+for(let line=0;line<4;line++){
+let ids=Array.from({length:4},(_,k)=>
+dir===0?line*4+k:
+dir===2?line*4+3-k:
+dir===1?k*4+line:(3-k)*4+line);
+let vals=ids.map(i=>b[i]).filter(Boolean);
+let out=[];
+for(let k=0;k<vals.length;k++){
+if(vals[k]===vals[k+1]){
+out.push(vals[k]*2);
+score+=vals[k]*2;
+k++;
+}else out.push(vals[k]);
+}
+ids.forEach((id,k)=>b[id]=out[k]||0);
+}
+if(old.some((v,i)=>v!==b[i]))add();
+render();
+}
+render();
+}
+
 function snakeGame(){
- heading("Use the arrow buttons to move. Eat the red food!");
- let x=2,y=2,dx=1,dy=0,food=[4,4],body=[[2,2]],alive=true;
- document.getElementById("content").innerHTML='<div id="snakeBoard" style="display:grid;grid-template-columns:repeat(8,1fr);gap:3px;max-width:360px;margin:auto"></div><div><button onclick="snakeDir(0,-1)">↑</button><br><button onclick="snakeDir(-1,0)">←</button><button onclick="snakeDir(0,1)">↓</button><button onclick="snakeDir(1,0)">→</button></div><h3 id="snakeScore">Score: 0</h3>';
- window.snakeDir=(a,b)=>{if(a!==-dx||b!==-dy){dx=a;dy=b;}};
- function render(){
-  const board=document.getElementById("snakeBoard");if(!board)return;
-  board.innerHTML="";
-  for(let j=0;j<64;j++){
-   let d=document.createElement("div");d.style.height="35px";d.style.background=(x===j%8&&y===Math.floor(j/8))?"#34e889":(food[0]===j%8&&food[1]===Math.floor(j/8))?"#ff5757":"#303a59";d.style.borderRadius="4px";board.appendChild(d);
-  }
- }
- render();
- timer=setInterval(()=>{
-  if(!alive)return;
-  x+=dx;y+=dy;
-  if(x<0||x>7||y<0||y>7){alive=false;clearInterval(timer);say("Game over! Score: "+score);saveScore();return;}
-  if(x===food[0]&&y===food[1]){score+=10;food=[Math.floor(Math.random()*8),Math.floor(Math.random()*8)];document.getElementById("snakeScore").textContent="Score: "+score;}
-  render();
- },300);
+heading("Use the arrow buttons to move the snake!");
+let x=2,y=2,dx=1,dy=0;
+let food=[5,5];
+let alive=true;
+document.getElementById("content").innerHTML=`
+<div id="snakeBoard" style="display:grid;grid-template-columns:repeat(8,1fr);gap:3px;max-width:360px;margin:auto"></div>
+<div>
+<button id="su">↑</button><br>
+<button id="sl">←</button>
+<button id="sd">↓</button>
+<button id="sr">→</button>
+</div>
+<h3 id="snakeScore">Score: 0</h3>`;
+function direction(a,b){
+if(a!==-dx||b!==-dy){dx=a;dy=b;}
 }
+document.getElementById("su").onclick=()=>direction(0,-1);
+document.getElementById("sd").onclick=()=>direction(0,1);
+document.getElementById("sl").onclick=()=>direction(-1,0);
+document.getElementById("sr").onclick=()=>direction(1,0);
+function render(){
+const grid=document.getElementById("snakeBoard");
+if(!grid)return;
+grid.innerHTML="";
+for(let j=0;j<64;j++){
+const d=document.createElement("div");
+d.style.height="35px";
+d.style.borderRadius="4px";
+d.style.background=
+x===j%8&&y===Math.floor(j/8)?"#34e889":
+food[0]===j%8&&food[1]===Math.floor(j/8)?"#ff5757":"#303a59";
+grid.appendChild(d);
+}
+}
+render();
+snakeTimer=setInterval(()=>{
+if(!alive)return;
+x+=dx;y+=dy;
+if(x<0||x>7||y<0||y>7){
+alive=false;
+clearInterval(snakeTimer);
+say("Game over! Score: "+score);
+return;
+}
+if(x===food[0]&&y===food[1]){
+score+=10;
+food=[Math.floor(Math.random()*8),Math.floor(Math.random()*8)];
+document.getElementById("snakeScore").textContent="Score: "+score;
+}
+render();
+},300);
+}
+
 drawGames();
 </script>
 </body>
