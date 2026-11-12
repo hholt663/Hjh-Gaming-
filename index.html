@@ -107,7 +107,7 @@ function launchEmbed(id){
  const game=embedGames[id];if(!game)return;show(game.title);
  const frame=el('iframe');frame.src=game.url;frame.title=game.title;frame.loading='eager';
  frame.allow='fullscreen; autoplay; gamepad';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';
- const note=el('p','hint');note.textContent='Loading the game inside HJH Gaming… If the game host blocks embedding, this frame may stay blank; that restriction is controlled by the game host.';
+ const note=el('p','hint');note.textContent='Loading inside HJH Gaming. Some game providers block in-page embedding; if this frame stays blank, that provider restriction cannot be overridden by website code.';
  area.insertBefore(frame,note);cleanup=()=>{frame.src='about:blank';};
 }
 function launch(id){
@@ -144,20 +144,19 @@ function game2048(){
  window.addEventListener('keydown',key);const ctr=el('div','controls');[['←',0],['→',1],['↑',2],['↓',3]].forEach(([t,d])=>{const q=el('button','',ctr);q.textContent=t;q.onclick=()=>move(d);});const reset=el('button','secondary');reset.textContent='New game';reset.onclick=()=>launch('2048');draw();msg('Use arrow keys or the on-screen buttons to slide tiles.');cleanup=()=>window.removeEventListener('keydown',key);
 }
 function pong(){
- const c=el('canvas');c.width=340;c.height=230;const ctx=c.getContext('2d');let x=170,y=115,vx=3,vy=2,p=91,ai=91,score=0,raf,keys={};const s=el('div','score');
- function frame(){ctx.fillStyle='#070b18';ctx.fillRect(0,0,340,230);ctx.setLineDash([5,7]);ctx.strokeStyle='#526080';ctx.beginPath();ctx.moveTo(170,0);ctx.lineTo(170,230);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#37e7ff';ctx.fillRect(12,p,8,48);ctx.fillStyle='#ff42bd';ctx.fillRect(320,ai,8,48);ctx.fillStyle='white';ctx.beginPath();ctx.arc(x,y,7,0,Math.PI*2);ctx.fill();p=Math.max(0,Math.min(182,p+(keys.up?-5:keys.down?5:0)));ai+=((y-24)-ai)*.055;x+=vx;y+=vy;if(y<7||y>223)vy*=-1;if(x<22&&y>p&&y<p+48){vx=Math.abs(vx)*1.04;}if(x>312&&y>ai&&y<ai+48){vx=-Math.abs(vx)*1.04;}if(x<0||x>340){if(x>340)score++;x=170;y=115;vx=x<0?3:-3;vy=2;}s.textContent='Score: '+score+' (first to 5)';if(score>=5){s.textContent='You win! Score: 5';return;}raf=requestAnimationFrame(frame);}
+ const c=el('canvas');c.width=340;c.height=230;const ctx=c.getContext('2d');let x=170,y=115,vx=3,vy=2,p=91,ai=91,playerScore=0,computerScore=0,raf,keys={};const s=el('div','score');
+ function resetBall(direction){x=170;y=115;vx=3*direction;vy=(Math.random()>.5?1:-1)*2;}
+ function frame(){ctx.fillStyle='#070b18';ctx.fillRect(0,0,340,230);ctx.setLineDash([5,7]);ctx.strokeStyle='#526080';ctx.beginPath();ctx.moveTo(170,0);ctx.lineTo(170,230);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#37e7ff';ctx.fillRect(12,p,8,48);ctx.fillStyle='#ff42bd';ctx.fillRect(320,ai,8,48);ctx.fillStyle='white';ctx.beginPath();ctx.arc(x,y,7,0,Math.PI*2);ctx.fill();p=Math.max(0,Math.min(182,p+(keys.up?-5:keys.down?5:0)));ai+=((y-24)-ai)*.055;x+=vx;y+=vy;if(y<7||y>223)vy*=-1;if(x<22&&y>p&&y<p+48){vx=Math.abs(vx)*1.04;}if(x>312&&y>ai&&y<ai+48){vx=-Math.abs(vx)*1.04;}if(x<0){computerScore++;resetBall(1);}if(x>340){playerScore++;resetBall(-1);}s.textContent=`You: ${playerScore} · Computer: ${computerScore} (first to 5)`;if(playerScore>=5||computerScore>=5){s.textContent=playerScore>=5?'You win!':'Computer wins!';return;}raf=requestAnimationFrame(frame);}
  function key(e){if(e.key==='ArrowUp')keys.up=true;if(e.key==='ArrowDown')keys.down=true;}function up(e){if(e.key==='ArrowUp')keys.up=false;if(e.key==='ArrowDown')keys.down=false;}
- window.addEventListener('keydown',key);window.addEventListener('keyup',up);const ctr=el('div','controls');[['▲','up'],['▼','down']].forEach(([t,k])=>{const b=el('button','',ctr);b.textContent=t;b.addEventListener('pointerdown',()=>keys[k]=true);['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>keys[k]=false));});frame();msg('Move your paddle with ↑ and ↓ or the touch buttons.');cleanup=()=>{cancelAnimationFrame(raf);window.removeEventListener('keydown',key);window.removeEventListener('keyup',up);};
+ window.addEventListener('keydown',key);window.addEventListener('keyup',up);const ctr=el('div','controls');[['▲','up'],['▼','down']].forEach(([t,k])=>{const b=el('button','',ctr);b.textContent=t;b.addEventListener('pointerdown',()=>keys[k]=true);['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>keys[k]=false));});const restart=el('button','secondary');restart.textContent='Restart';restart.onclick=()=>launch('pong');frame();msg('Move your paddle with ↑ and ↓ or hold the touch buttons. First to 5 wins.');cleanup=()=>{cancelAnimationFrame(raf);window.removeEventListener('keydown',key);window.removeEventListener('keyup',up);};
 }
 function lights(){
- let b=Array.from({length:25},()=>Math.random()>.5);const board=el('div','board');board.style.gridTemplateColumns='repeat(5,1fr)';const s=el('div','score');
+ let b=Array(25).fill(false);const board=el('div','board');board.style.gridTemplateColumns='repeat(5,1fr)';const s=el('div','score');
  function draw(){board.replaceChildren();b.forEach((v,i)=>{const d=el('div','cell'+(v?' on':''),board);d.textContent=v?'●':'○';d.onclick=()=>{const row=Math.floor(i/5),col=i%5;[i,row>0?i-5:-1,row<4?i+5:-1,col>0?i-1:-1,col<4?i+1:-1].forEach(j=>{if(j>=0)b[j]=!b[j];});draw();};});s.textContent=b.every(v=>!v)?'You solved it!':'Lights on: '+b.filter(Boolean).length;}
- const r=el('button','secondary');r.textContent='Shuffle';r.onclick=()=>{b=Array.from({length:25},()=>Math.random()>.5);draw();};msg('Tap a tile to flip it and its up/down/left/right neighbors.');draw();
+ function flipAt(i){const row=Math.floor(i/5),col=i%5;[i,row>0?i-5:-1,row<4?i+5:-1,col>0?i-1:-1,col<4?i+1:-1].forEach(j=>{if(j>=0)b[j]=!b[j];});}
+ const r=el('button','secondary');r.textContent='New puzzle';r.onclick=()=>{b=Array(25).fill(false);for(let k=0;k<28;k++)flipAt(Math.floor(Math.random()*25));draw();};msg('Tap a tile to flip it and its up/down/left/right neighbors. Every generated puzzle is solvable.');r.click();
 }
 function mole(){
  let score=0,left=20,active=-1,timer=null;const board=el('div','board');board.style.gridTemplateColumns='repeat(3,1fr)';const s=el('div','score');
  function draw(){board.replaceChildren();for(let i=0;i<9;i++){const d=el('div','cell',board);d.textContent=i===active?'🐹':'🕳️';d.onclick=()=>{if(i===active){score++;active=-1;draw();}};}s.textContent='Score: '+score+' | Time: '+left+'s';}
- const start=el('button');start.textContent='Start / Restart';start.onclick=()=>{clearInterval(timer);score=0;left=20;active=-1;draw();timer=setInterval(()=>{left--;active=Math.floor(Math.random()*9);draw();if(left<=0){clearInterval(timer);active=-1;draw();s.textContent='Time up! Final score: '+score;}},1000);};msg('Press Start, then tap the hamster as quickly as you can.');draw();cleanup=()=>clearInterval(timer);
-}
-function puzzle(){
- let vals=[1,2,3,4,5,6,7,8,0],moves=0;const board=el('div','board');board.style.gridTemplateColumns='repeat(3,1fr)';const s=
+ const start=el(
