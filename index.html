@@ -171,7 +171,7 @@ function fineNights(){
  $("fnCamera").onclick=()=>action(4,"You checked the cameras. The hallway is quiet.");
  $("fnDoor").onclick=()=>action(3,"You checked the door. Everything looks calm.");
  $("fnClue").onclick=()=>action(2,"You searched the desk and found a clue.");
- $("fnRestart").onclick=fineNights;
+ $("fnRestart").onclick=()=>{clearInterval(interval);fineNights();};
  interval=setInterval(()=>{t++;power=Math.max(0,power-1);$("fnPower").textContent=power;$("fnTime").textContent=["12 AM","1 AM","2 AM","3 AM","4 AM","5 AM","6 AM"][Math.min(6,Math.floor(t/10))];if(t>=60)finish(true);else if(!power)finish(false);},1000);
  activeCleanup=()=>clearInterval(interval);
 }
@@ -206,4 +206,4 @@ function game2048(){
  showGame("2048",`<p>Use arrow keys or buttons to combine matching tiles.</p><div class="board" id="b2048"></div><div><button data-dir="up">↑</button><br><button data-dir="left">←</button><button data-dir="down">↓</button><button data-dir="right">→</button></div><button id="restart2048">Restart</button><p id="score2048"></p>`);
  let score=0;
  function draw(){$("b2048").innerHTML=a.map(v=>`<div class="tile">${v||""}</div>`).join("");$("score2048").textContent="Score: "+score;}
- function move(dir){let changed=false;for(let k=0;k<4;k++){const ids=Array.from({length:4},(_,j)=>dir==="left"?k*4+j:dir==="right"?k*
+ function move(dir){let changed=false;for(let k=0;k<4;k++){const ids=Array.from({length:4},(_,j)=>di
